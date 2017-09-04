@@ -43,6 +43,7 @@ public class TexasMasterImpl implements TexasMaster {
             } else if (common.size() == 5) {
             }
         }
+        return null;
     }
 
     private Double getPossibility(List<Double> poss, int check) {
