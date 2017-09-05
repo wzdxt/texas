@@ -22,7 +22,8 @@ public class AnchorMatcherImpl implements AnchorMatcher {
             anchor = ImageIO.read(f);
         } catch (IOException ignored) {
         }
-        Result result =
+        Result result = new Result();
+        result.mistake = (int)1e10;
         int xTo = screen.getWidth() - configure.getAnchor().getWidth();
         int yTo = screen.getHeight() - configure.getAnchor().getHeight();
         for (int x1 = 0; x1 < xTo; x1++) {

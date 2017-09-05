@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties("displayer")
 public class DisplayerConfigure {
     Anchor anchor;
+    Check check;
 
     @Data
     public static class Anchor {
@@ -22,4 +23,11 @@ public class DisplayerConfigure {
         int height;
         double mistake;
     }
+
+    @Data
+    public static class Check {
+        int rgbMistake;
+        int lineStep;
+    }
+
 }
