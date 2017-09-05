@@ -83,10 +83,10 @@ public class DisplayerImpl implements Displayer {
         y2 = Math.min(y2 + configure.getAnchor().getFix(), screenHeight);
         BufferedImage screenCapture = screenCapture(x1, y1, x2, y2);
         AnchorMatcher.Result result = anchorMatcher.match(screenCapture);
-        screenParam.setGameX1(result.x1);
-        screenParam.setGameX2(result.x2);
-        screenParam.setGameY1(result.y1);
-        screenParam.setGameY2(result.y2);
+        screenParam.setGameX1(x1 + result.x1);
+        screenParam.setGameX2(x1 + result.x2);
+        screenParam.setGameY1(y1 + result.y1);
+        screenParam.setGameY2(y1 + result.y2);
         screenParam.setWidth(result.x2 - result.x1);
         screenParam.setHeight(result.y2 - result.y1);
         screenParam.setRate(result.mistake);
