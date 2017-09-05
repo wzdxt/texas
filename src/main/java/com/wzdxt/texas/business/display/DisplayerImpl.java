@@ -17,8 +17,8 @@ import java.io.IOException;
 @Component
 @Slf4j
 public class DisplayerImpl implements Displayer {
-    //    @Autowired
-//    private AnchorMatcher anchorMatcher;
+    @Autowired
+    private AnchorMatcher anchorMatcher;
     @Autowired
     private DisplayerConfigure configure;
     @Autowired
@@ -58,7 +58,7 @@ public class DisplayerImpl implements Displayer {
     }
 
     Point getMousePosDelay() {
-        int sec = configure.getAnchorDelay();
+        int sec = configure.getAnchor().getDelay();
         try {
             System.out.println("starting get mouse position ...");
             for (int i = 0; i < sec; i++) {
@@ -72,20 +72,24 @@ public class DisplayerImpl implements Displayer {
     }
 
     void matchAnchor() {
-        Point p1 = getMousePosDelay();
-        Point p2 = getMousePosDelay();
-        Point p3 = getMousePosDelay();
-        Point p4 = getMousePosDelay();
-        int x1 = (p1.x + p3.x) / 2;
-        int x2 = (p2.x + p4.x) / 2;
-        int y1 = (p1.y + p2.y) / 2;
-        int y2 = (p3.y + p4.y) / 2;
-        x1 = Math.max(x1 - configure.getAnchorFix(), 0);
-        y1 = Math.max(y1 - configure.getAnchorFix(), 0);
-        x2 = Math.min(x2 + configure.getAnchorFix(), screenWidth);
-        y2 = Math.min(y2 + configure.getAnchorFix(), screenHeight);
+        Point p = getMousePosDelay();
+        int x1 = p.x;
+        int y1 = p.y;
+        int x2 = x1 + configure.getAnchor().getWidth();
+        int y2 = y1 + configure.getAnchor().getHeight();
+        x1 = Math.max(x1 - configure.getAnchor().getFix(), 0);
+        y1 = Math.max(y1 - configure.getAnchor().getFix(), 0);
+        x2 = Math.min(x2 + configure.getAnchor().getFix(), screenWidth);
+        y2 = Math.min(y2 + configure.getAnchor().getFix(), screenHeight);
         BufferedImage screenCapture = screenCapture(x1, y1, x2, y2);
-        save(screenCapture);
+        AnchorMatcher.Result result = anchorMatcher.match(screenCapture);
+        screenParam.setGameX1(result.x1);
+        screenParam.setGameX2(result.x2);
+        screenParam.setGameY1(result.y1);
+        screenParam.setGameY2(result.y2);
+        screenParam.setWidth(result.x2 - result.x1);
+        screenParam.setHeight(result.y2 - result.y1);
+        screenParam.setRate(result.mistake);
     }
 
     private void save(BufferedImage bi) {

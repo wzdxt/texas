@@ -10,9 +10,16 @@ import org.springframework.stereotype.Component;
  */
 @Data
 @Component
+@ConfigurationProperties("displayer")
 public class DisplayerConfigure {
-    @Value("${displayer.anchor.fix}")
-    int anchorFix;
-    @Value("${displayer.anchor.delay}")
-    int anchorDelay;
+    Anchor anchor;
+
+    @Data
+    public static class Anchor {
+        int fix;
+        int delay;
+        int width;
+        int height;
+        double mistake;
+    }
 }
