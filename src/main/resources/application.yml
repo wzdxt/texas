@@ -9,6 +9,10 @@ texas:
     river:
       check: 40
       threshold: 80,90,95
+displayer:
+  anchor:
+    delay: 3
+    fix: 10
 logging:
   level: debug
 
