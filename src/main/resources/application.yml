@@ -10,10 +10,10 @@ texas:
       check: 40
       threshold: 80,90,95
 displayer:   # 线条大坐标不变, 区块大坐标+1
-  anchor:
-    delay: 3
-    fix: 10
-    methods:
+  anchor:   # 定位窗口配置
+    delay: 3    # 取点倒计时
+    fix: 10     # 边界兼容宽度
+    methods:    # 定位检查方法
       - horizon: 0
       - horizon: 10
       - horizon: 20
@@ -23,16 +23,16 @@ displayer:   # 线条大坐标不变, 区块大坐标+1
       - line: 0, 0, 162, 70 # x1, y1, x2, y2
       - line: 162, 0, 0, 70 # x1, y1, x2, y2
       - area: 30, 20, 130, 50 # x1, y1, x2, y2
-  check:
-    rgbMistake: 100
+  check:    # 检查像素配置
+    rgbMistake: 100  # 允许容错
     lineStep: 1
-  phase:
+  phase:    # 程序阶段
     main_page:
     waiting:
     watching:
     my_turn:
-  status:
+  status:   # 游戏状态
 
-  operation:
+  operation:    # 操作定义配置
 
 
