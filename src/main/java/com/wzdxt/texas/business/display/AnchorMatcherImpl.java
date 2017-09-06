@@ -22,12 +22,19 @@ public class AnchorMatcherImpl implements AnchorMatcher {
             anchor = ImageIO.read(f);
         } catch (IOException ignored) {
         }
-        Result result =
-        int xTo = screen.getWidth() - configure.getAnchor().getWidth();
-        int yTo = screen.getHeight() - configure.getAnchor().getHeight();
+        int width = configure.getAnchor().getWidth();
+        int height = configure.getAnchor().getHeight();
+        Result result = new Result();
+        result.setMistake(1e5);
+        int xTo = screen.getWidth() - width;
+        int yTo = screen.getHeight() - height;
         for (int x1 = 0; x1 < xTo; x1++) {
             for (int y1 = 0; y1 < yTo; y1++) {
+                for (int i = x1; i < x1 + width; i++) {
+                    for (int j = y1; j < y1 + height; j++) {
 
+                    }
+                }
             }
         }
         return null;
