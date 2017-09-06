@@ -77,5 +77,9 @@ public class ImageComparator {
         }
         return Tuple.of(choose, mistake);
     }
+
+    public double getPixRate(BufferedImage image) {
+        
+    }
 }
 
