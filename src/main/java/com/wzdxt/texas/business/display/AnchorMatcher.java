@@ -12,7 +12,7 @@ public interface AnchorMatcher {
 
     @Data
     class Result {
-        int x1, x2, y1, y2;
+        int x1, x2, y1, y2;  // 最右最下坐标+1
         int mistake;
     }
 }

@@ -1,8 +1,11 @@
 package com.wzdxt.texas.business.display.operation;
 
+import com.wzdxt.texas.business.display.util.LineUtil;
 import com.wzdxt.texas.config.DisplayerConfigure;
 
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by wzdxt on 2017/9/5.
@@ -23,28 +26,20 @@ public class CheckLine extends AbsCheck {
 
     @Override
     public int check() {
-        int cnt = 0;
-        int mistake = 0;
+        List<Integer> mistake = new ArrayList<>();
 
-        int dx = x2 - x1;
-        int dy = y2 - y1;
-        int length = (int)Math.round(Math.sqrt(dx * dx + dy * dy));
-        int step = length / configure.getCheck().getLineStep();
-        int px = x1, py = y1;
         BufferedImage bi = screenCapture();
-        while ((x2 - px) * (px - x1) >= 0 && (y2 - py) * (py - y1) >= 0) {
+
+        LineUtil.help(x1, y1, x2, y2, configure.getCheck().getLineStep(), (px, py) -> {
             int cx = px - x1;
             if (cx < 0) cx += bi.getWidth();
             int cy = py - y1;
             if (cy < 0) cy += bi.getHeight();
             int checkRgb = bi.getRGB(cx, cy);
-            mistake += calcRgbMistake(rgb, checkRgb);
-            cnt++;
-            px += dx / step;
-            py += dy / step;
-        }
+            mistake.add(calcRgbMistake(rgb, checkRgb));
+        });
 
-        return mistake / cnt;
+        return mistake.stream().reduce(0, (s, i) -> s+i) / mistake.size();
     }
 
     BufferedImage screenCapture() {

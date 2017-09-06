@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.awt.*;
+import java.awt.image.BufferedImage;
+
 import static org.junit.Assert.*;
 
 /**
@@ -16,9 +19,17 @@ import static org.junit.Assert.*;
 public class DisplayerImplTest {
     @Autowired
     DisplayerImpl displayer;
+    @Autowired
+    ScreenParam screenParam;
+
     @Test
     public void matchAnchor() throws Exception {
         displayer.matchAnchor();
+        BufferedImage bi = new Robot().createScreenCapture(
+                new Rectangle(screenParam.getGameX1(), screenParam.getGameY1(),
+                        screenParam.getWidth(), screenParam.getHeight()));
+        System.out.println(screenParam);
+        displayer.save(bi);
     }
 
 }

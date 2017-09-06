@@ -16,5 +16,4 @@ import org.springframework.stereotype.Component;
 public class ScreenParam {
     int width, height;
     int gameX1, gameY1, gameX2, gameY2;
-    double rate;
 }

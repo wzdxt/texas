@@ -5,6 +5,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * Created by dai_x on 17-9-5.
  */
@@ -17,11 +20,9 @@ public class DisplayerConfigure {
 
     @Data
     public static class Anchor {
-        int fix;
-        int delay;
-        int width;
-        int height;
-        double mistake;
+        int fix;    // 边界容错
+        int delay;  // 取点延时
+        List<Map<String, int[]>> methods;   // 对比方法
     }
 
     @Data
@@ -29,5 +30,6 @@ public class DisplayerConfigure {
         int rgbMistake;
         int lineStep;
     }
+
 
 }

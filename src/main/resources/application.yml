@@ -9,13 +9,21 @@ texas:
     river:
       check: 40
       threshold: 80,90,95
-displayer:
+displayer:   # 所有大坐标+1
   anchor:
     delay: 3
     fix: 10
+    methods:
+      - horizon: 0
+      - horizon: 10
+      - horizon: 20
+      - vertical: 0
+      - vertical: 10
+      - vertical: 20
+      - line: 0, 0, 163, 71 # x1, y1, x2, y2
+      - line: 162, 0, 1, 71 # x1, y1, x2, y2
+      - area: 30, 20, 130, 50 # x1, y1, x2, y2
   check:
     rgbMistake: 100
     lineStep: 1
-logging:
-  level: debug
 

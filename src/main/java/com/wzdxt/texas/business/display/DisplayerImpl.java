@@ -75,8 +75,8 @@ public class DisplayerImpl implements Displayer {
         Point p = getMousePosDelay();
         int x1 = p.x;
         int y1 = p.y;
-        int x2 = x1 + configure.getAnchor().getWidth();
-        int y2 = y1 + configure.getAnchor().getHeight();
+        int x2 = x1 + AnchorHolder.getAnchor().getWidth();
+        int y2 = y1 + AnchorHolder.getAnchor().getHeight();
         x1 = Math.max(x1 - configure.getAnchor().getFix(), 0);
         y1 = Math.max(y1 - configure.getAnchor().getFix(), 0);
         x2 = Math.min(x2 + configure.getAnchor().getFix(), screenWidth);
@@ -89,10 +89,11 @@ public class DisplayerImpl implements Displayer {
         screenParam.setGameY2(y1 + result.y2);
         screenParam.setWidth(result.x2 - result.x1);
         screenParam.setHeight(result.y2 - result.y1);
-        screenParam.setRate(result.mistake);
+
+        log.info(String.format("match anchor finished. mistake: %d, %s", result.getMistake(), screenParam));
     }
 
-    private void save(BufferedImage bi) {
+    void save(BufferedImage bi) {
         File f = new File("save.bmp");
         try {
             ImageIO.write(bi, "bmp", f);
