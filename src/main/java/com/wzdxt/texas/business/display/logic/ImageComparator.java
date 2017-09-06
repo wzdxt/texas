@@ -39,8 +39,8 @@ public class ImageComparator {
 
     public int calcAreaMistake(BufferedImage screen, BufferedImage anchor, int x1, int y1, int x2, int y2) {
         List<Integer> mistake = new ArrayList<>();
-        LineUtil.help(x1, y1, x2, y1, configure.getCheck().getLineStep(), (x, _1) -> {
-            LineUtil.help(x, y1, x, y2, configure.getCheck().getLineStep(), (_2, y) -> {
+        LineUtil.help(x1, y1, x2 - 1, y1, configure.getCheck().getLineStep(), (x, _1) -> {
+            LineUtil.help(x, y1, x, y2 - 1, configure.getCheck().getLineStep(), (_2, y) -> {
                 int rgb = anchor.getRGB(x, y);
                 int checkRgb = screen.getRGB(x, y);
                 mistake.add(RgbUtil.calcRgbMistake(rgb, checkRgb));
