@@ -1,6 +1,5 @@
 package com.wzdxt.texas.business.display.operation;
 
-import com.wzdxt.texas.business.display.Displayer;
 import com.wzdxt.texas.business.display.util.RgbUtil;
 import com.wzdxt.texas.config.DisplayerConfigure;
 
@@ -45,14 +44,15 @@ public abstract class AbsCheck implements Operation {
     }
 
     @Override
-    public void perform() {
-        while (true) {
+    public boolean perform() {
+        for (int i = 0; i < 5; i++) {
             int mistake = check();
             if (mistake < configure.getCheck().getRgbMistake()) {
-                break;
+                return true;
             }
             delay(1);
         }
+        return false;
     }
 
     abstract int check();

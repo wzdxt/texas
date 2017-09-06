@@ -3,7 +3,6 @@ package com.wzdxt.texas.business.display.operation;
 import com.wzdxt.texas.config.DisplayerConfigure;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
 /**
  * Created by wzdxt on 2017/9/5.
@@ -16,15 +15,15 @@ public abstract class AbsAction implements Operation {
     }
 
     @Override
-    public void perform() {
+    public boolean perform() {
         try {
-            this.doPerform();
+            return this.doPerform();
         } catch (AWTException | InterruptedException e) {
             throw new RuntimeException(e);
         }
     }
 
-    abstract void doPerform() throws AWTException, InterruptedException;
+    abstract boolean doPerform() throws AWTException, InterruptedException;
 
 
 }

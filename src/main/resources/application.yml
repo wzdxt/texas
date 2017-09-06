@@ -47,7 +47,7 @@ displayer:   # 线条大坐标不变, 区块大坐标+1
     弃:
     牌:
   check:    # 检查像素配置
-    rgbMistake: 100  # 允许容错
+    rgbMistake: 200  # 允许容错
     lineStep: 1
   phase:    # 程序阶段
     main_page:

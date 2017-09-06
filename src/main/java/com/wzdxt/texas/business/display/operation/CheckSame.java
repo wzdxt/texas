@@ -1,5 +1,6 @@
 package com.wzdxt.texas.business.display.operation;
 
+import com.wzdxt.texas.business.display.util.LineUtil;
 import com.wzdxt.texas.config.DisplayerConfigure;
 
 import java.awt.image.BufferedImage;
@@ -13,6 +14,9 @@ public class CheckSame extends AbsCheck {
     int x1, y1, x2, y2;
 
 
+    /**
+     * for line
+     */
     public CheckSame(DisplayerConfigure configure, int x1, int y1, int x2, int y2) {
         super(configure);
         this.x1 = x1;
@@ -23,33 +27,28 @@ public class CheckSame extends AbsCheck {
 
     @Override
     public int check() {
-        int cnt = 0;
-        int mistake = 0;
+        int ret = 0;
+        List<Integer> mistake = new ArrayList<>();
 
-        int dx = x2 - x1;
-        int dy = y2 - y1;
-        int length = (int)Math.round(Math.sqrt(dx * dx + dy * dy));
-        int step = length / configure.getCheck().getLineStep();
-        int px = x1, py = y1;
         BufferedImage bi = screenCapture();
         List<Integer> allRgb = new ArrayList<>();
-        while ((x2 - px) * (px - x1) >= 0 && (y2 - py) * (py - y1) >= 0) {
-            int cx = px - x1;
-            if (cx < 0) cx += bi.getWidth();
-            int cy = py - y1;
-            if (cy < 0) cy += bi.getHeight();
-            int checkRgb = bi.getRGB(cx, cy);
+        LineUtil.help(x1, y1, x2, y2, configure.getCheck().getLineStep(), (x, y) -> {
+            int checkRgb = bi.getRGB(x, y);
             allRgb.add(checkRgb);
-            px += dx / step;
-            py += dy / step;
-        }
+        });
 
-        // calc avg
-        // calc mistake
+        int aveR = mistake.stream().map(m -> m & 0xff0000 >> 16).reduce(0, (s, i) -> s + i) / mistake.size();
+        ret += mistake.stream().map(m -> m & 0xff0000 >> 16).map(r -> Math.abs(r - aveR))
+                .reduce(0, (s, i) -> s + i) / mistake.size();
+        int aveG = mistake.stream().map(m -> m & 0x00ff00 >> 8).reduce(0, (s, i) -> s + i) / mistake.size();
+        ret += mistake.stream().map(m -> m & 0x00ff00 >> 8).map(g -> Math.abs(g - aveG))
+                .reduce(0, (s, i) -> s + i) / mistake.size();
+        int aveB = mistake.stream().map(m -> m & 0x0000ff).reduce(0, (s, i) -> s + i) / mistake.size();
+        ret += mistake.stream().map(m -> m & 0x0000ff).map(b -> Math.abs(b - aveB))
+                .reduce(0, (s, i) -> s + i) / mistake.size();
 
-        return mistake / cnt;
+        return ret;
     }
-
 
 
     BufferedImage screenCapture() {

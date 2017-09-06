@@ -1,5 +1,6 @@
 package com.wzdxt.texas.business.display;
 
+import com.wzdxt.texas.TestUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ import static org.junit.Assert.*;
 @SpringBootTest
 public class DisplayerImplTest {
     @Autowired
-    DisplayerImpl displayer;
+    Displayer displayer;
     @Autowired
     ScreenParam screenParam;
 
@@ -29,7 +30,7 @@ public class DisplayerImplTest {
                 new Rectangle(screenParam.getGameX1(), screenParam.getGameY1(),
                         screenParam.getWidth(), screenParam.getHeight()));
         System.out.println(screenParam);
-        displayer.save(bi);
+        TestUtil.save(bi);
     }
 
 }

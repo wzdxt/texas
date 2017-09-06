@@ -19,13 +19,14 @@ public class ActionClick extends AbsAction {
     }
 
     @Override
-    public void doPerform() throws AWTException, InterruptedException {
+    public boolean doPerform() throws AWTException, InterruptedException {
         Robot robot = new Robot();
         robot.mouseMove(x, y);
         robot.mousePress(BUTTON1_DOWN_MASK);
         Thread.sleep(100);
         robot.mouseRelease(BUTTON1_DOWN_MASK);
         Thread.sleep(100);
+        return true;
     }
 
     public static void main(String[] args) {
