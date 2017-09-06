@@ -19,8 +19,9 @@ public class GameStatus {
     // my turn
 
 
-    public enum  Phase {
-        NOT_IN_GAME,
+    public enum Phase {
+        NONE,
+        MAIN_PAGE,
         WAITING,
         WATCHING,
         MY_TURN;

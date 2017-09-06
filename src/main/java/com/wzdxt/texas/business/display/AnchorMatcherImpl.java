@@ -63,7 +63,7 @@ public class AnchorMatcherImpl implements AnchorMatcher {
                         coodinate[0], coodinate[1], coodinate[2], coodinate[3]);
             } else if (method.containsKey("area")) {
                 int[] coordinate = method.get("area");
-                mistake += imageComparator.calcLineMistake(checkImage, anchor,
+                mistake += imageComparator.calcAreaMistake(checkImage, anchor,
                         coordinate[0], coordinate[1], coordinate[2], coordinate[3]);
             } else if (method.containsKey("horizon")) {
                 int[] coodinate = method.get("horizon");

@@ -26,4 +26,13 @@ displayer:   # 所有大坐标+1
   check:
     rgbMistake: 100
     lineStep: 1
+  phase:
+    main_page:
+    waiting:
+    watching:
+    my_turn:
+  status:
+
+  operation:
+
 
