@@ -13,6 +13,9 @@ displayer:
   anchor:
     delay: 3
     fix: 10
+  check:
+    rgbMistake: 100
+    lineStep: 1
 logging:
   level: debug
 

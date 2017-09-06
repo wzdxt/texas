@@ -13,6 +13,6 @@ public interface AnchorMatcher {
     @Data
     class Result {
         int x1, x2, y1, y2;
-        double mistake;
+        int mistake;
     }
 }

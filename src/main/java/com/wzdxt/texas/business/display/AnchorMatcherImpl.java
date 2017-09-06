@@ -25,7 +25,7 @@ public class AnchorMatcherImpl implements AnchorMatcher {
         int width = configure.getAnchor().getWidth();
         int height = configure.getAnchor().getHeight();
         Result result = new Result();
-        result.setMistake(1e5);
+        result.setMistake((int) 1e10);
         int xTo = screen.getWidth() - width;
         int yTo = screen.getHeight() - height;
         for (int x1 = 0; x1 < xTo; x1++) {
