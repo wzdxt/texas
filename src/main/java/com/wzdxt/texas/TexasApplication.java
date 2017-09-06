@@ -12,12 +12,14 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.ComponentScan;
 
 @Slf4j
 @SpringBootApplication
 @EnableConfigurationProperties
 @AllArgsConstructor
+@EnableCaching
 @ComponentScan(basePackages = {"com.wzdxt.texas"})
 public class TexasApplication implements ApplicationRunner {
     private MasterConfigures configuration;

@@ -3,6 +3,7 @@ package com.wzdxt.texas.business.display;
 import com.wzdxt.texas.config.DisplayerConfigure;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 import javax.imageio.ImageIO;
@@ -71,7 +72,8 @@ public class DisplayerImpl implements Displayer {
         return getMousePos();
     }
 
-    void matchAnchor() {
+    @Cacheable("screenParam")
+    public ScreenParam matchAnchor() {
         Point p = getMousePosDelay();
         int x1 = p.x;
         int y1 = p.y;
@@ -91,6 +93,7 @@ public class DisplayerImpl implements Displayer {
         screenParam.setHeight(result.y2 - result.y1);
 
         log.info(String.format("match anchor finished. mistake: %d, %s", result.getMistake(), screenParam));
+        return screenParam;
     }
 
     void save(BufferedImage bi) {
