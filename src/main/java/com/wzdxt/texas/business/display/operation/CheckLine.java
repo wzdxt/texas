@@ -30,13 +30,13 @@ public class CheckLine extends AbsCheck {
 
         BufferedImage bi = screenCapture();
 
-        LineUtil.help(x1, y1, x2, y2, configure.getCheck().getLineStep(), (px, py) -> {
+        LineUtil.walk(x1, y1, x2, y2, configure.getCheck().getLineStep(), (px, py) -> {
             int cx = px - x1;
             if (cx < 0) cx += bi.getWidth();
             int cy = py - y1;
             if (cy < 0) cy += bi.getHeight();
             int checkRgb = bi.getRGB(cx, cy);
-            mistake.add(calcRgbMistake(rgb, checkRgb));
+            return mistake.add(calcRgbMistake(rgb, checkRgb));
         });
 
         return mistake.stream().reduce(0, (s, i) -> s+i) / mistake.size();

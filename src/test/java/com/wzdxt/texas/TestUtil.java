@@ -10,7 +10,8 @@ import java.io.IOException;
  */
 public class TestUtil {
     public static void save(BufferedImage bi, String name) {
-        File f = new File(name+".bmp");
+        String path = "temp/image-save/"+name+".bmp";
+        File f = new File(path);
         try {
             ImageIO.write(bi, "bmp", f);
         } catch (IOException ignored) {

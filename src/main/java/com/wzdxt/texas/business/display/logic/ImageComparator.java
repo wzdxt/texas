@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,11 +29,11 @@ public class ImageComparator {
 
     public int calcLineMistake(BufferedImage screen, BufferedImage anchor, int x1, int y1, int x2, int y2) {
         List<Integer> mistake = new ArrayList<>();
-        LineUtil.help(x1, y1, x2 - 1, y2 - 1, configure.getCheck().getLineStep(), (x, y) -> {
+        LineUtil.walk(x1, y1, x2 - 1, y2 - 1, configure.getCheck().getLineStep(), (x, y) -> {
             try {
                 int rgb = anchor.getRGB(x, y);
                 int checkRgb = screen.getRGB(x, y);
-                mistake.add(RgbUtil.calcRgbMistake(rgb, checkRgb));
+                return mistake.add(RgbUtil.calcRgbMistake(rgb, checkRgb));
             } catch (ArrayIndexOutOfBoundsException e) {
                 throw e;
             }
@@ -46,13 +47,13 @@ public class ImageComparator {
 
     public int calcAreaMistake(BufferedImage screen, BufferedImage anchor, int x1, int y1, int x2, int y2, int step) {
         List<Integer> mistake = new ArrayList<>();
-        LineUtil.help(x1, y1, x2 - 1, y1, step, (x, _1) -> {
-            LineUtil.help(x, y1, x, y2 - 1, step, (_2, y) -> {
-                int rgb = anchor.getRGB(x, y);
-                int checkRgb = screen.getRGB(x, y);
-                mistake.add(RgbUtil.calcRgbMistake(rgb, checkRgb));
-            });
-        });
+        LineUtil.walk(x1, y1, x2 - 1, y1, step, (x, _1) ->
+                LineUtil.walk(x, y1, x, y2 - 1, step, (_2, y) -> {
+                    int rgb = anchor.getRGB(x, y);
+                    int checkRgb = screen.getRGB(x, y);
+                    return mistake.add(RgbUtil.calcRgbMistake(rgb, checkRgb));
+                })
+        );
         return mistake.stream().reduce(0, (s, i) -> s + i) / mistake.size();
     }
 
@@ -65,7 +66,7 @@ public class ImageComparator {
      * @param <T>
      */
     public <T> Tuple<T, Integer> findSimilar(BufferedImage screen, Map<T, BufferedImage> candidateMap) {
-        int mistake = (int)1e10;
+        int mistake = (int) 1e10;
         T choose = null;
         for (Map.Entry<T, BufferedImage> entry : candidateMap.entrySet()) {
             BufferedImage candidate = entry.getValue();
@@ -81,7 +82,7 @@ public class ImageComparator {
     }
 
     public double getPixRate(BufferedImage image) {
-        int backgroundRgb = getBackgroundRgb(image);
+        int backgroundRgb = getBackgroundAndFrontRgb(image).left;
         int front = 0;
         int width = image.getWidth();
         int height = image.getHeight();
@@ -95,7 +96,7 @@ public class ImageComparator {
         return front * 1.0 / width * height;
     }
 
-    public int getBackgroundRgb(BufferedImage image) {
+    public Tuple<Integer, Integer> getBackgroundAndFrontRgb(BufferedImage image) {
         Map<Integer, Integer> rgbMap = new HashMap<>();
         int width = image.getWidth();
         int height = image.getHeight();
@@ -107,7 +108,10 @@ public class ImageComparator {
             rgbMap.computeIfAbsent(image.getRGB(0, j), _1 -> 1);
             rgbMap.computeIfAbsent(image.getRGB(width - 1, j), _1 -> 1);
         }
-        return rgbMap.entrySet().stream().max((e1, e2) -> e1.getValue() - e2.getValue()).get().getKey();
+        List<Map.Entry<Integer, Integer>> entryList = new ArrayList<>(rgbMap.entrySet());
+        entryList.sort(Comparator.comparingInt(Map.Entry::getValue));
+        return Tuple.of(entryList.get(0).getKey(), entryList.get(1).getKey());
     }
+
 }
 

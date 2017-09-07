@@ -32,10 +32,7 @@ public class CheckSame extends AbsCheck {
 
         BufferedImage bi = screenCapture();
         List<Integer> allRgb = new ArrayList<>();
-        LineUtil.help(x1, y1, x2, y2, configure.getCheck().getLineStep(), (x, y) -> {
-            int checkRgb = bi.getRGB(x, y);
-            allRgb.add(checkRgb);
-        });
+        LineUtil.walk(x1, y1, x2, y2, configure.getCheck().getLineStep(), (x, y) -> allRgb.add(bi.getRGB(x, y)));
 
         int aveR = mistake.stream().map(m -> m & 0xff0000 >> 16).reduce(0, (s, i) -> s + i) / mistake.size();
         ret += mistake.stream().map(m -> m & 0xff0000 >> 16).map(r -> Math.abs(r - aveR))

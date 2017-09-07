@@ -31,13 +31,13 @@ public class ImageCutterTest {
 
     @Test
     public void cutEdge() throws Exception {
-        BufferedImage cutEdge= imageCutter.cutEdge(bi);
+        BufferedImage cutEdge = imageCutter.cutEdge(bi);
         TestUtil.save(cutEdge, "cutEdge");
     }
 
     @Test
     public void cutCharactors() throws Exception {
-        BufferedImage bi2 = ImageIO.read(new File("cutEdge.bmp"));
+        BufferedImage bi2 = ImageIO.read(new File(this.getClass().getClassLoader().getResource("image/cutEdge.bmp").getPath()));
         List<BufferedImage> list = imageCutter.cutCharactors(bi2);
         for (int i = 0; i < list.size(); i++) {
             TestUtil.save(list.get(i), String.valueOf(i));

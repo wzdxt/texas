@@ -1,7 +1,9 @@
 package com.wzdxt.texas.business.display.logic;
 
+import com.wzdxt.texas.business.display.util.LineUtil;
 import com.wzdxt.texas.business.display.util.RgbUtil;
 import com.wzdxt.texas.config.DisplayerConfigure;
+import com.wzdxt.texas.util.Tuple;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -20,7 +22,7 @@ public class ImageCutter {
     ImageComparator imageComparator;
 
     public BufferedImage cutEdge(BufferedImage image) {
-        int background = imageComparator.getBackgroundRgb(image);
+        int background = imageComparator.getBackgroundAndFrontRgb(image).left;
         int width = image.getWidth();
         int height = image.getHeight();
         int top, bottom, left, right;
@@ -57,17 +59,22 @@ public class ImageCutter {
 
     public List<BufferedImage> cutCharactors(BufferedImage image) {
         List<BufferedImage> ret = new ArrayList<>();
-        int background = imageComparator.getBackgroundRgb(image);
+        Tuple<Integer, Integer> tuple = imageComparator.getBackgroundAndFrontRgb(image);
+        int background = tuple.left;
+        int front = tuple.right;
         int width = image.getWidth();
         int height = image.getHeight();
         int left = 0;
         boolean inChar = false;
         for (int i = 0; i < width; i++) {
             boolean foundPix = false;
-            for (int j = 0; j < height; j++) {
-                foundPix |= RgbUtil.calcRgbMistake(image.getRGB(i, j), background) > configure.getCheck().getRgbMistake();
-                if (foundPix) break;
-            }
+            foundPix = !LineUtil.walk(i, 0, i, height - 1, 1,
+                    (x, y) -> {
+                        int m1 = (RgbUtil.calcRgbMistake(image.getRGB(x, y), background));
+                        int m2 = (RgbUtil.calcRgbMistake(image.getRGB(x, y), front));
+                        return m1 < m2; // when find font pix, return false
+                    }
+            );
             if (inChar) {
                 if (!foundPix) {
                     ret.add(image.getSubimage(left, 0, i - left, height));
@@ -82,10 +89,6 @@ public class ImageCutter {
         }
         if (inChar) {
             ret.add(image.getSubimage(left, 0, width - left, height));
-        }
-
-        for (int i = 0; i < ret.size(); i++) {
-            ret.set(i, cutEdge(ret.get(i)));
         }
 
         return ret;
