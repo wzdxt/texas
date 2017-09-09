@@ -14,15 +14,17 @@ displayer:   # 线条大坐标不变, 区块大坐标+1
     delay: 3    # 取点倒计时
     fix: 10     # 边界兼容宽度
     methods:    # 定位检查方法
-      - horizon: 0
-      - horizon: 10
-      - horizon: 20
-      - vertical: 0
-      - vertical: 10
-      - vertical: 20
-      - line: 0, 0, 162, 70 # x1, y1, x2, y2
-      - line: 162, 0, 0, 70 # x1, y1, x2, y2
-      - area: 30, 20, 130, 50 # x1, y1, x2, y2
+#      - horizon: 0
+#      - horizon: 10
+#      - horizon: 20
+#      - vertical: 0
+#      - vertical: 10
+#      - vertical: 20
+#      - line: 0, 0, 162, 70 # x1, y1, x2, y2
+#      - line: 162, 0, 0, 70 # x1, y1, x2, y2
+#      - area: 30, 20, 130, 50 # x1, y1, x2, y2
+      - area: 1, 1, 131, 31
+      - area: 512, 152, 574, 267
   charactorRate:
     1: 0.31
     2: 0.41
@@ -50,12 +52,49 @@ displayer:   # 线条大坐标不变, 区块大坐标+1
     rgbMistake: 100  # 允许容错 , 需要测试调整
     lineStep: 1
   phase:    # 程序阶段
-    main_page:
-    waiting:
-    watching:
-    my_turn:
+    - main_page:
+        name: main_page
+        check:
+          - point: 772, 148, 0xfde90b
+          - point: 810, 265, 0xaa8ff7
+          - point: 805, 384, 0x5ab4e7
+        next:
+          - watting
+          - room_page
+        actions:
+          start:
+            preCheck:
+              - point: 772, 148, 0xfde90b
+            operate:
+            postCheck:
+          showRoom:
+    - room_page:
+        name: room_page
+    - waiting:
+        name: waiting
+    - playing:
+        name: playing
   status:   # 游戏状态
+    - watching:
+        name: watching
+        next:
+          - my_turn
+    - my_turn:
+        name: my_turn
+        next:
+          - watching
+          - finish
+    - finish:
+        name: finish
+        next:
+          - my_turn
+          - watching
 
   operation:    # 操作定义配置
-
+    - call_or_check:
+    - fold:
+    - bet_5:
+    - bet_10:
+    - bet_25:
+    - bet_50:
 

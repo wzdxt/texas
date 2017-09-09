@@ -35,12 +35,13 @@ public class DisplayerImpl implements Displayer {
 
     @Override
     public GameStatus getCurrentStatus() {
-        screenCapture();
+        BufferedImage screen = screenCapture();
+
         return null;
     }
 
     BufferedImage screenCapture() {
-        return screenCapture(0, 0, screenWidth, screenHeight);
+        return screenCapture(screenParam.gameX1, screenParam.gameY1, screenParam.width, screenParam.height);
     }
 
     BufferedImage screenCapture(int x1, int y1, int x2, int y2) {
@@ -94,14 +95,6 @@ public class DisplayerImpl implements Displayer {
 
         log.info(String.format("match anchor finished. mistake: %d, %s", result.getMistake(), screenParam));
         return screenParam;
-    }
-
-    void save(BufferedImage bi) {
-        File f = new File("save.bmp");
-        try {
-            ImageIO.write(bi, "bmp", f);
-        } catch (IOException ignored) {
-        }
     }
 
 }
