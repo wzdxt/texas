@@ -1,10 +1,14 @@
 package com.wzdxt.texas.business.display.operation;
 
 import com.wzdxt.texas.business.display.ScreenParam;
+import com.wzdxt.texas.business.display.logic.Window;
 import com.wzdxt.texas.business.display.util.RgbUtil;
+import com.wzdxt.texas.business.display.util.RobotUtil;
 import com.wzdxt.texas.config.DisplayerConfigure;
+import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.*;
 import java.util.List;
@@ -12,23 +16,19 @@ import java.util.List;
 /**
  * Created by wzdxt on 2017/9/5.
  */
+@NoArgsConstructor
 public abstract class AbsCheck implements Operation {
-    DisplayerConfigure configure;
-
-    AbsCheck(DisplayerConfigure configure) {
-        this.configure = configure;
-    }
+    @Autowired
+    protected DisplayerConfigure configure;
+    @Autowired
+    protected Window window;
 
     BufferedImage screenCapture(int x1, int y1, int x2, int y2) {
-        try {
-            return new Robot().createScreenCapture(new Rectangle(x1, y1, x2 - x1 + 1, y2 - y1 + 1));
-        } catch (AWTException ignored) {
-        }
-        return null;
+        return window.capture(x1, y1, x2, y2);
     }
 
     BufferedImage screenCapture(int x, int y) {
-        return screenCapture(x, y, x, y);
+        return screenCapture(x, y, x + 1, y + 1);
     }
 
     void delay(double sec) {
@@ -64,14 +64,34 @@ public abstract class AbsCheck implements Operation {
 
     abstract int check();
 
-    public static List<AbsCheck> fromConfig(DisplayerConfigure configure, ScreenParam screenParam, DisplayerConfigure.CheckGroup checkGroup) {
+    @Override
+    abstract public void set(int[] p);
+
+    public static List<AbsCheck> fromConfig(ApplicationContext cxt, DisplayerConfigure.CheckGroup checkGroup) {
         List<AbsCheck> list = new ArrayList<>();
         for (DisplayerConfigure.CheckOperation operation : checkGroup) {
+            AbsCheck check = null;
             if (operation.point != null) {
-                list.add(new CheckPoint(configure,
-                        screenParam.getGameX1() + operation.point[0],
-                        screenParam.getGameY1() + operation.point[1],
-                        operation.point[2]));
+                check = cxt.getBean(CheckPoint.class);
+                check.set(operation.point);
+            } else if (operation.contain != null) {
+                check = cxt.getBean(CheckContain.class);
+                check.set(operation.contain);
+            } else if (operation.line != null) {
+                check = cxt.getBean(CheckLine.class);
+                check.set(operation.line);
+            } else if (operation.lineRange != null) {
+                check = cxt.getBean(CheckLineRange.class);
+                check.set(operation.lineRange);
+            } else if (operation.pointRange != null) {
+                check = cxt.getBean(CheckPointRange.class);
+                check.set(operation.pointRange);
+            } else if (operation.same != null) {
+                check = cxt.getBean(CheckSame.class);
+                check.set(operation.pointRange);
+            }
+            if (check != null) {
+                list.add(check);
             }
         }
         return list;

@@ -18,6 +18,10 @@ public class DisplayerConfigure {
     Anchor anchor;
     Check check;
     Map<String, Phase> phase;
+//    Object status;
+//    Object operation;
+    OcrArea ocrArea;
+
 
     @Data
     public static class Anchor {
@@ -61,7 +65,12 @@ public class DisplayerConfigure {
 
     @Data
     public static class CheckOperation {
+        public int[] contain;
+        public int[] line;
+        public int[] lineRange;
         public int[] point;
+        public int[] pointRange;
+        public int[] same;
     }
 
     @Data
@@ -70,5 +79,11 @@ public class DisplayerConfigure {
         public int[] click;
     }
 
+    @Data
+    public static class OcrArea {
+        int[] totalCoin;
+    }
+
 
 }
+

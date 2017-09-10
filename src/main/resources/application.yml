@@ -25,7 +25,7 @@ displayer:   # 线条大坐标不变, 区块大坐标+1
 #      - area: 30, 20, 130, 50 # x1, y1, x2, y2
       - area: 1, 1, 131, 31
       - area: 512, 152, 574, 267
-  charactorRate:
+  charactor_rate:
     1: 0.31
     2: 0.41
     3:
@@ -49,8 +49,8 @@ displayer:   # 线条大坐标不变, 区块大坐标+1
     弃:
     牌:
   check:    # 检查像素配置
-    rgbMistake: 100  # 允许容错 , 需要测试调整
-    lineStep: 1
+    rgb_mistake: 100  # 允许容错 , 需要测试调整
+    line_step: 1
   phase:    # 程序阶段
     main_page:
       name: main_page
@@ -104,4 +104,6 @@ displayer:   # 线条大坐标不变, 区块大坐标+1
     bet_10:
     bet_25:
     bet_50:
+  ocr_area:
+    total_coin: 899, 47, 1019, 74
 

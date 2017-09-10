@@ -31,13 +31,32 @@ public class PhaseManagerTest {
     }
 
     @Test
-    public void getCurrentPhase2() throws Exception {
-//        anchorMatcher.match(ImageIO.read(this.getClass().getResource("/static/train/1.PNG")));
+    public void getCurrentPhaseMainPage() throws Exception {
+        System.out.println("switch to anchor");
         displayer.matchAnchor();
         System.out.println("now switch to 1.png");
         Thread.sleep(3000);
         GameStatus.Phase phase = phaseManager.getCurrentPhase();
         assertEquals(GameStatus.Phase.MAIN_PAGE, phase);
+    }
+
+    @Test
+    public void getCurrentPhaseWaiting() throws Exception {
+        System.out.println("switch to anchor");
+        displayer.matchAnchor();
+        System.out.println("now switch to 2.png");
+        Thread.sleep(3000);
+        GameStatus.Phase phase = phaseManager.getCurrentPhase();
+        assertEquals(GameStatus.Phase.WAITING, phase);
+    }
+
+    @Test
+    public void getTotalCoinOcrRes() throws Exception {
+        System.out.println("switch to anchor");
+        displayer.matchAnchor();
+        String s = phaseManager.getTotalCoinOcrRes();
+        System.out.println(s);
+        assertNotNull(s);
     }
 
 }

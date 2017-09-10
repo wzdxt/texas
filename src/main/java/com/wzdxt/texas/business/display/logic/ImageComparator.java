@@ -16,7 +16,7 @@ import java.util.Map;
 
 /**
  * Created by dai_x on 17-9-6.<br/>
- * screen and anchor must have same size
+ * window and anchor must have same size
  */
 @Component
 public class ImageComparator {

@@ -20,6 +20,8 @@ public class GameStatus {
     int currentTurn;
     int pool;
     int thisTurnPool;
+    int myCoin;
+    int myPool;
     // my turn
 
 

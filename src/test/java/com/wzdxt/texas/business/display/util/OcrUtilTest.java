@@ -16,7 +16,7 @@ public class OcrUtilTest {
     @Test
     public void recognize() throws Exception {
         log.info("result");
-        log.info(OcrUtil.recognize(this.getClass().getClassLoader().getResource("image/save.bmp").getPath()));
+        log.info(OcrUtil.recognize(this.getClass().getClassLoader().getResource("image/save.bmp").getPath(), null));
     }
 
 }

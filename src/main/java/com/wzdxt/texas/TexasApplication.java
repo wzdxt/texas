@@ -11,6 +11,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 
 @Slf4j
@@ -23,6 +24,7 @@ public class TexasApplication implements ApplicationRunner {
     private MasterConfigures configuration;
     private DisplayerConfigure  displayerConfigure;
     private Displayer displayer;
+    private ApplicationContext cxt;
 
     public static void main(String[] args) {
         SpringApplication.run(TexasApplication.class, args);
@@ -31,6 +33,7 @@ public class TexasApplication implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws Exception {
         log.warn(String.valueOf(configuration.getFlop().getCheck()));
+
 //        displayer.getCurrentStatus();
     }
 }
