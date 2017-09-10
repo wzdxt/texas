@@ -1,9 +1,7 @@
 package com.wzdxt.texas.business.display.operation;
 
-import com.wzdxt.texas.business.display.ScreenParam;
 import com.wzdxt.texas.business.display.logic.Window;
 import com.wzdxt.texas.business.display.util.RgbUtil;
-import com.wzdxt.texas.business.display.util.RobotUtil;
 import com.wzdxt.texas.config.DisplayerConfigure;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,10 +60,10 @@ public abstract class AbsCheck implements Operation {
         return false;
     }
 
-    abstract int check();
+    public abstract int check();
 
     @Override
-    abstract public void set(int[] p);
+    abstract public AbsCheck set(int[] p);
 
     public static List<AbsCheck> fromConfig(ApplicationContext cxt, DisplayerConfigure.CheckGroup checkGroup) {
         List<AbsCheck> list = new ArrayList<>();

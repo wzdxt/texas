@@ -5,5 +5,5 @@ package com.wzdxt.texas.business.display.operation;
  */
 public interface Operation {
     boolean perform();
-    void set(int[] p);
+    Operation set(int[] p);
 }

@@ -83,6 +83,8 @@ public class DisplayerConfigure {
     public static class OcrArea {
         int[] totalCoin;
         int[][] playerPool;
+        int[][] playerRemain;
+        int playerRemainColor;
     }
 
 

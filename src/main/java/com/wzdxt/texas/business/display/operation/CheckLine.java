@@ -1,7 +1,6 @@
 package com.wzdxt.texas.business.display.operation;
 
 import com.wzdxt.texas.business.display.util.LineUtil;
-import com.wzdxt.texas.config.DisplayerConfigure;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -19,8 +18,9 @@ public class CheckLine extends AbsCheck {
     int rgb;
 
     @Override
-    public void set(int[] p) {
+    public AbsCheck set(int[] p) {
         this.set(p[0], p[1], p[2], p[3], p[4]);
+        return this;
     }
 
     public void set(int x1, int y1, int x2, int y2, int rgb) {

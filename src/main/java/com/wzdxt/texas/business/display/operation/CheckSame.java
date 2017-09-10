@@ -1,7 +1,6 @@
 package com.wzdxt.texas.business.display.operation;
 
 import com.wzdxt.texas.business.display.util.LineUtil;
-import com.wzdxt.texas.config.DisplayerConfigure;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -18,8 +17,9 @@ public class CheckSame extends AbsCheck {
     int x1, y1, x2, y2;
 
     @Override
-    public void set(int[] p) {
+    public AbsCheck set(int[] p) {
         this.set(p[0], p[1], p[2], p[3]);
+        return this;
     }
 
     /**

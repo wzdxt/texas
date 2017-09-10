@@ -94,5 +94,5 @@ displayer:   # 线条大坐标不变, 区块大坐标+1
       - 789, 139
       - 896, 359
       - 835, 466
-    player_remain_color: 0xfefefe
+    player_remain_color: 0xdedede
 

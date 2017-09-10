@@ -18,8 +18,9 @@ public class CheckContain extends AbsCheck {
     int rgb;
 
     @Override
-    public void set(int[] p) {
+    public AbsCheck set(int[] p) {
         this.set(p[0], p[1], p[2], p[3], p[4]);
+        return this;
     }
 
     public void set(int x1, int y1, int x2, int y2, int rgb) {

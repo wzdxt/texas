@@ -14,13 +14,15 @@ public class ActionMove extends AbsAction {
     int x, y;
 
     @Override
-    public void set(int[] p) {
+    public ActionMove set(int[] p) {
         this.set(p[0], p[1]);
+        return this;
     }
 
-    public void set(int x, int y) {
+    public ActionMove set(int x, int y) {
         this.x = x;
         this.y = y;
+        return this;
     }
 
     @Override

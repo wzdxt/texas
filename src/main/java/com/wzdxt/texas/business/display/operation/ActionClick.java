@@ -1,6 +1,5 @@
 package com.wzdxt.texas.business.display.operation;
 
-import com.wzdxt.texas.config.DisplayerConfigure;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -17,13 +16,15 @@ public class ActionClick extends AbsAction {
     int x, y;
 
     @Override
-    public void set(int[] p) {
+    public ActionClick set(int[] p) {
         this.set(p[0], p[1]);
+        return this;
     }
 
-    public void set(int x, int y) {
+    public ActionClick set(int x, int y) {
         this.x = x;
         this.y = y;
+        return this;
     }
 
     @Override

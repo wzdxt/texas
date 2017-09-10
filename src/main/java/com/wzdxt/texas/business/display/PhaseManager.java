@@ -3,6 +3,7 @@ package com.wzdxt.texas.business.display;
 import com.wzdxt.texas.business.display.logic.ImageCutter;
 import com.wzdxt.texas.business.display.logic.Window;
 import com.wzdxt.texas.business.display.operation.AbsCheck;
+import com.wzdxt.texas.business.display.operation.CheckPoint;
 import com.wzdxt.texas.business.display.util.OcrUtil;
 import com.wzdxt.texas.config.DisplayerConfigure;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,6 +60,16 @@ public class PhaseManager {
             bi = imageCutter.cutEdge(bi);
             String s = OcrUtil.recognize(bi);
             ret[i] = str2int(s);
+        }
+        return ret;
+    }
+
+    public boolean[] getPlayerRemain() {
+        boolean[] ret = new boolean[6];
+        int rgb = configure.getOcrArea().getPlayerRemainColor();
+        for (int i = 0; i < 6; i++) {
+            int[] point = configure.getOcrArea().getPlayerRemain()[i];
+            ret[i] = cxt.getBean(CheckPoint.class).set(point[0], point[1], rgb).perform(1);
         }
         return ret;
     }

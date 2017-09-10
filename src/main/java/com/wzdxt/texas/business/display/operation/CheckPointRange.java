@@ -1,10 +1,8 @@
 package com.wzdxt.texas.business.display.operation;
 
-import com.wzdxt.texas.config.DisplayerConfigure;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import java.awt.*;
 import java.awt.image.BufferedImage;
 
 /**
@@ -17,8 +15,9 @@ public class CheckPointRange extends AbsCheck {
     int rgb1, rgb2;
 
     @Override
-    public void set(int[] p) {
+    public AbsCheck set(int[] p) {
         this.set(p[0], p[1], p[2], p[3]);
+        return this;
     }
 
     public void set(int x, int y, int rgb1, int rgb2) {

@@ -1,7 +1,6 @@
 package com.wzdxt.texas.business.display.operation;
 
 import com.wzdxt.texas.business.display.ScreenParam;
-import lombok.Builder;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -22,14 +21,16 @@ public class CheckPoint extends AbsCheck {
     ScreenParam screenParam;
 
     @Override
-    public void set(int[] p) {
+    public CheckPoint set(int[] p) {
         this.set(p[0], p[1], p[2]);
+        return this;
     }
 
-    public void set(int x, int y, int rgb) {
+    public CheckPoint set(int x, int y, int rgb) {
         this.x = x;
         this.y = y;
         this.rgb = rgb;
+        return this;
     }
 
 

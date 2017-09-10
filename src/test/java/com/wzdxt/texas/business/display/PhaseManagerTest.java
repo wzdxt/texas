@@ -75,6 +75,17 @@ public class PhaseManagerTest {
         assertEquals(600, pools[5]);
     }
 
+    @Test
+    public void getPlayerRemain() throws Exception {
+        switchTo("2.png");
+        boolean[] remains = phaseManager.getPlayerRemain();
+        assertEquals(false, remains[1]);
+        assertEquals(true, remains[2]);
+        assertEquals(true, remains[3]);
+        assertEquals(true, remains[4]);
+        assertEquals(true, remains[5]);
+    }
+
     protected void switchTo(String s) throws Exception {
         System.out.println("now switch to " + s);
         Thread.sleep(3000);
