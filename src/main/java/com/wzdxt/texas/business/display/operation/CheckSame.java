@@ -34,11 +34,11 @@ public class CheckSame extends AbsCheck {
         List<Integer> allRgb = new ArrayList<>();
         LineUtil.walk(x1, y1, x2, y2, configure.getCheck().getLineStep(), (x, y) -> allRgb.add(bi.getRGB(x, y)));
 
-        int aveR = mistake.stream().map(m -> m & 0xff0000 >> 16).reduce(0, (s, i) -> s + i) / mistake.size();
-        ret += mistake.stream().map(m -> m & 0xff0000 >> 16).map(r -> Math.abs(r - aveR))
+        int aveR = mistake.stream().map(m -> (m & 0xff0000) >> 16).reduce(0, (s, i) -> s + i) / mistake.size();
+        ret += mistake.stream().map(m -> (m & 0xff0000) >> 16).map(r -> Math.abs(r - aveR))
                 .reduce(0, (s, i) -> s + i) / mistake.size();
-        int aveG = mistake.stream().map(m -> m & 0x00ff00 >> 8).reduce(0, (s, i) -> s + i) / mistake.size();
-        ret += mistake.stream().map(m -> m & 0x00ff00 >> 8).map(g -> Math.abs(g - aveG))
+        int aveG = mistake.stream().map(m -> (m & 0x00ff00) >> 8).reduce(0, (s, i) -> s + i) / mistake.size();
+        ret += mistake.stream().map(m -> (m & 0x00ff00) >> 8).map(g -> Math.abs(g - aveG))
                 .reduce(0, (s, i) -> s + i) / mistake.size();
         int aveB = mistake.stream().map(m -> m & 0x0000ff).reduce(0, (s, i) -> s + i) / mistake.size();
         ret += mistake.stream().map(m -> m & 0x0000ff).map(b -> Math.abs(b - aveB))

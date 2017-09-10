@@ -52,49 +52,56 @@ displayer:   # 线条大坐标不变, 区块大坐标+1
     rgbMistake: 100  # 允许容错 , 需要测试调整
     lineStep: 1
   phase:    # 程序阶段
-    - main_page:
-        name: main_page
-        check:
-          - point: 772, 148, 0xfde90b
-          - point: 810, 265, 0xaa8ff7
-          - point: 805, 384, 0x5ab4e7
-        next:
-          - watting
-          - room_page
-        actions:
-          start:
-            preCheck:
-              - point: 772, 148, 0xfde90b
-            operate:
-            postCheck:
-          showRoom:
-    - room_page:
-        name: room_page
-    - waiting:
-        name: waiting
-    - playing:
-        name: playing
+    main_page:
+      name: main_page
+      check:
+        - point: 772, 148, 0xfde90b
+        - point: 810, 265, 0xaa8ff7
+        - point: 805, 384, 0x5ab4e7
+      next:
+        - watting
+        - room_page
+      actions:
+        start:
+          preCheck:
+            - point: 772, 148, 0xfde90b
+          operate:
+            - move: 111, 111
+            - click: 111, 111
+          postCheck:
+            - point: 772, 148, 0xfde90b
+#        showRoom:
+#    room_page:
+#      name: room_page
+    waiting:
+      name: waiting
+      check:
+        - point: 517, 129, 0xfdccb7
+        - contain: 468, 388, 559, 404, 0x59775f
+        - line: 567, 428, 694, 428, 0x1c7130
+#    playing:
+#      name: playing
   status:   # 游戏状态
-    - watching:
-        name: watching
-        next:
-          - my_turn
-    - my_turn:
-        name: my_turn
-        next:
-          - watching
-          - finish
-    - finish:
-        name: finish
-        next:
-          - my_turn
-          - watching
+    watching:
+      name: watching
+      next:
+        - my_turn
+    my_turn:
+      name: my_turn
+      next:
+        - watching
+        - finish
+    finish:
+      name: finish
+      next:
+        - my_turn
+        - watching
 
   operation:    # 操作定义配置
-    - call_or_check:
-    - fold:
-    - bet_5:
-    - bet_10:
-    - bet_25:
-    - bet_50:
+    call_or_check:
+    fold:
+    bet_5:
+    bet_10:
+    bet_25:
+    bet_50:
 

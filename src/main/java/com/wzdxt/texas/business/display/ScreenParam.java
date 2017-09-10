@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
  * Created by dai_x on 17-9-5.
  */
 @Data
-@Getter(AccessLevel.PACKAGE)
+@Getter
 @Setter(AccessLevel.PACKAGE)
 @Component
 public class ScreenParam {

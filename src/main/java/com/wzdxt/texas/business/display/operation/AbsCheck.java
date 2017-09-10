@@ -1,10 +1,13 @@
 package com.wzdxt.texas.business.display.operation;
 
+import com.wzdxt.texas.business.display.ScreenParam;
 import com.wzdxt.texas.business.display.util.RgbUtil;
 import com.wzdxt.texas.config.DisplayerConfigure;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.*;
+import java.util.List;
 
 /**
  * Created by wzdxt on 2017/9/5.
@@ -45,15 +48,32 @@ public abstract class AbsCheck implements Operation {
 
     @Override
     public boolean perform() {
-        for (int i = 0; i < 5; i++) {
+        return perform(3);
+    }
+
+    public boolean perform(int retry) {
+        for (int i = 0; i < retry; i++) {
             int mistake = check();
             if (mistake < configure.getCheck().getRgbMistake()) {
                 return true;
             }
-            delay(1);
+            if (i < retry - 1) delay(0.2);
         }
         return false;
     }
 
     abstract int check();
+
+    public static List<AbsCheck> fromConfig(DisplayerConfigure configure, ScreenParam screenParam, DisplayerConfigure.CheckGroup checkGroup) {
+        List<AbsCheck> list = new ArrayList<>();
+        for (DisplayerConfigure.CheckOperation operation : checkGroup) {
+            if (operation.point != null) {
+                list.add(new CheckPoint(configure,
+                        screenParam.getGameX1() + operation.point[0],
+                        screenParam.getGameY1() + operation.point[1],
+                        operation.point[2]));
+            }
+        }
+        return list;
+    }
 }

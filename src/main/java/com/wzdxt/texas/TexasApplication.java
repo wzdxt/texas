@@ -5,10 +5,8 @@ import com.wzdxt.texas.config.DisplayerConfigure;
 import com.wzdxt.texas.config.MasterConfigures;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -33,6 +31,7 @@ public class TexasApplication implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws Exception {
         log.warn(String.valueOf(configuration.getFlop().getCheck()));
-        displayer.getCurrentStatus();
+//        displayer.getCurrentStatus();
     }
 }
+

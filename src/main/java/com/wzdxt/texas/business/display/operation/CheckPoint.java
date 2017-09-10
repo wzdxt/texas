@@ -9,22 +9,19 @@ import java.awt.image.BufferedImage;
  * Created by wzdxt on 2017/9/5.
  */
 public class CheckPoint extends AbsCheck {
-    Point point;
+    int x, y;
     int rgb;
-    int r, g, b;
 
-    public CheckPoint(DisplayerConfigure configure, Point p, int rgb) {
+    public CheckPoint(DisplayerConfigure configure, int x, int y, int rgb) {
         super(configure);
-        this.point = p;
+        this.x = x;
+        this.y = y;
         this.rgb = rgb;
-        this.r = rgb & 0xff0000 >> 16;
-        this.g = rgb & 0x00ff00 >> 8;
-        this.b = rgb & 0x0000ff;
     }
 
     @Override
     public int check() {
-        BufferedImage bi = screenCapture(point.x, point.y);
+        BufferedImage bi = screenCapture(x, y);
         int checkRgb = bi.getRGB(0, 0);
         return calcRgbMistake(rgb, checkRgb);
     }

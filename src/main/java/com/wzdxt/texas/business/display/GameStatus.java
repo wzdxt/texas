@@ -10,11 +10,11 @@ import org.springframework.stereotype.Component;
 @Data
 @Builder
 public class GameStatus {
-    Phase phase;
+    Phase phase = Phase.NONE;
     // not in game
     int totalCoin;
     // in game
-    Status status;
+    Status status = Status.NONE;
     int playerNum;
     int remainNum;
     int currentTurn;
@@ -28,13 +28,21 @@ public class GameStatus {
         MAIN_PAGE,
         ROOM_PAGE,
         WAITING,
-        PLAYING,
+        PLAYING;
+
+        public static Phase of(String name) {
+            return Phase.valueOf(name.toUpperCase());
+        }
     }
 
     public enum Status {
         NONE,
         WATCHING,
         MY_TURN,
-        FINISH,
+        FINISH;
+
+        public static Phase of(String name) {
+            return Phase.valueOf(name.toUpperCase());
+        }
     }
 }

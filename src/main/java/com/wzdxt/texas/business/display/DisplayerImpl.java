@@ -1,5 +1,6 @@
 package com.wzdxt.texas.business.display;
 
+import com.wzdxt.texas.business.display.operation.AbsCheck;
 import com.wzdxt.texas.config.DisplayerConfigure;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,8 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by dai_x on 17-9-4.
@@ -24,6 +27,8 @@ public class DisplayerImpl implements Displayer {
     private DisplayerConfigure configure;
     @Autowired
     private ScreenParam screenParam;
+    @Autowired
+    private PhaseManager phaseManager;
 
     private int screenWidth, screenHeight;
 
@@ -35,8 +40,7 @@ public class DisplayerImpl implements Displayer {
 
     @Override
     public GameStatus getCurrentStatus() {
-        BufferedImage screen = screenCapture();
-
+        GameStatus.Phase phase = phaseManager.getCurrentPhase();
         return null;
     }
 

@@ -1,8 +1,6 @@
 package com.wzdxt.texas.config;
 
-import com.wzdxt.texas.business.display.operation.AbsCheck;
 import lombok.Data;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -37,25 +35,39 @@ public class DisplayerConfigure {
     @Data
     public static class Phase {
         String name;
-        List<Map<String, int[]>> check;
+        CheckGroup check;
         List<String> next;
         Map<String, Action> actions;
-
-        private List<AbsCheck> check_ = null;
-        public List<AbsCheck> getCheck() {
-            if (check_ == null) {
-                check_ = new ArrayList<>();
-                for (Map<String, int[]> map : chec)
-            }
-            return check_;
-        }
     }
 
     @Data
     public static class Action {
-        Map<String, int[]> preCheck;
-        Map<String, int[]> operate;
-        Map<String, int[]> postCheck;
+        CheckGroup preCheck;
+        ActionGroup operate;
+        CheckGroup postCheck;
+    }
+
+    /**
+     * produce {@link com.wzdxt.texas.business.display.operation.AbsCheck}
+     */
+    public static class CheckGroup extends ArrayList<CheckOperation> {
+    }
+
+    /**
+     * produce {@link com.wzdxt.texas.business.display.operation.AbsAction}
+     */
+    public static class ActionGroup extends ArrayList<ActionOperation> {
+    }
+
+    @Data
+    public static class CheckOperation {
+        public int[] point;
+    }
+
+    @Data
+    public static class ActionOperation {
+        public int[] move;
+        public int[] click;
     }
 
 
