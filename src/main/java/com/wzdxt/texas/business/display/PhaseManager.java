@@ -39,7 +39,7 @@ public class PhaseManager {
         return GameStatus.Phase.NONE;
     }
 
-    public String getTotalCoinOcrRes() {
+    protected String getTotalCoinOcrRes() {
         int[] area = configure.getOcrArea().getTotalCoin();
         BufferedImage bi = screen.capture(area[0], area[1], area[2], area[3]);
         bi = imageCutter.cutEdge(bi);
@@ -48,9 +48,26 @@ public class PhaseManager {
 
     public int getTotalCoin() {
         String s = getTotalCoinOcrRes();
+        return str2int(s);
+    }
+
+    public int[] getPlayerPool() {
+        int[] ret = new int[6];
+        for (int i = 0; i < 6; i++) {
+            int[] area = configure.getOcrArea().getPlayerPool()[i];
+            BufferedImage bi = screen.capture(area[0], area[1], area[2], area[3]);
+            bi = imageCutter.cutEdge(bi);
+            String s = OcrUtil.recognize(bi);
+            ret[i] = str2int(s);
+        }
+        return ret;
+    }
+
+    protected int str2int(String s) {
         s = s.replaceAll("\\s", "");
         int len = s.length();
         int multi = 1;
+        if (len == 0) return 0;
         switch (s.charAt(len - 1)) {
             case '万':
                 multi = 1_0000;

@@ -82,6 +82,7 @@ public class DisplayerConfigure {
     @Data
     public static class OcrArea {
         int[] totalCoin;
+        int[][] playerPool;
     }
 
 

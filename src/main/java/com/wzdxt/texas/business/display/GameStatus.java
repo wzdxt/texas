@@ -16,9 +16,11 @@ public class GameStatus {
     // in game
     Status status = Status.NONE;
     int playerNum;
+    boolean[] playerRemain;
     int remainNum;
     int currentTurn;
     int pool;
+    int[] playerPools;
     int thisTurnPool;
     int myCoin;
     int myPool;
