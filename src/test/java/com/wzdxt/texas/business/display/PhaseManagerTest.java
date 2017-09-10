@@ -1,5 +1,6 @@
 package com.wzdxt.texas.business.display;
 
+import com.wzdxt.texas.business.display.logic.Window;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,8 @@ public class PhaseManagerTest {
     PhaseManager phaseManager;
     @Autowired
     Displayer displayer;
+    @Autowired
+    Window window;
 
     @Test
     public void getCurrentPhase() throws Exception {
@@ -51,12 +54,14 @@ public class PhaseManagerTest {
     }
 
     @Test
-    public void getTotalCoinOcrRes() throws Exception {
+    public void getTotalCoin() throws Exception {
         System.out.println("switch to anchor");
         displayer.matchAnchor();
+        window.refresh();
         String s = phaseManager.getTotalCoinOcrRes();
-        System.out.println(s);
-        assertNotNull(s);
+        assertEquals("7.02万", s);
+        int coin = phaseManager.getTotalCoin();
+        assertEquals(70200, coin);
     }
 
 }

@@ -11,16 +11,16 @@ public class OcrUtil {
     static EasyOCR ocr = new EasyOCR();
 
     static {
-        ocr.setTesseractOptions(EasyOCR.OPTION_LANG_ENG);
+        ocr.setTesseractOptions(EasyOCR.OPTION_LANG_CHI_SIM);
     }
 
     synchronized
     public static String recognize(String filepath, String options) {
         try {
-            ocr.setTesseractOptions(options == null ? EasyOCR.OPTION_LANG_ENG : options);
+            ocr.setTesseractOptions( "-l chi_sim -psm 7" );  // 6 or 7
             return ocr.discern(filepath);
         } finally {
-            ocr.setTesseractOptions(EasyOCR.OPTION_LANG_ENG);
+            ocr.setTesseractOptions(EasyOCR.OPTION_LANG_CHI_SIM);
         }
     }
 

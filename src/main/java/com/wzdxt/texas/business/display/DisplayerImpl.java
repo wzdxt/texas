@@ -7,13 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Created by dai_x on 17-9-4.
@@ -77,6 +72,10 @@ public class DisplayerImpl implements Displayer {
         return getMousePos();
     }
 
+    /**
+     * Now {@link com.wzdxt.texas.business.display.logic.Window} is not prepared
+     * @return
+     */
     @Cacheable("screenParam")
     public ScreenParam matchAnchor() {
         Point p = getMousePosDelay();

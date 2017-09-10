@@ -1,5 +1,6 @@
 package com.wzdxt.texas.business.display;
 
+import com.wzdxt.texas.business.display.logic.ImageCutter;
 import com.wzdxt.texas.business.display.logic.Window;
 import com.wzdxt.texas.business.display.operation.AbsCheck;
 import com.wzdxt.texas.business.display.util.OcrUtil;
@@ -22,6 +23,8 @@ public class PhaseManager {
     private Window screen;
     @Autowired
     private ApplicationContext cxt;
+    @Autowired
+    private ImageCutter imageCutter;
 
     public GameStatus.Phase getCurrentPhase() {
         for (DisplayerConfigure.Phase phase : configure.getPhase().values()) {
@@ -39,11 +42,27 @@ public class PhaseManager {
     public String getTotalCoinOcrRes() {
         int[] area = configure.getOcrArea().getTotalCoin();
         BufferedImage bi = screen.capture(area[0], area[1], area[2], area[3]);
+        bi = imageCutter.cutEdge(bi);
         return OcrUtil.recognize(bi);
     }
 
     public int getTotalCoin() {
-        return 0;
+        String s = getTotalCoinOcrRes();
+        s = s.replaceAll("\\s", "");
+        int len = s.length();
+        int multi = 1;
+        switch (s.charAt(len - 1)) {
+            case '万':
+                multi = 1_0000;
+                s = s.substring(0, len - 1);
+                break;
+            case '亿':
+                multi = 1_0000_0000;
+                s = s.substring(0, len - 1);
+                break;
+        }
+        double d = Double.valueOf(s);
+        return (int)Math.round(d * multi);
     }
 
 
