@@ -1,7 +1,7 @@
 package com.wzdxt.texas.business.display;
 
 import com.wzdxt.texas.business.display.logic.ImageCutter;
-import com.wzdxt.texas.business.display.logic.Window;
+import com.wzdxt.texas.business.display.logic.GameWindow;
 import com.wzdxt.texas.business.display.operation.AbsCheck;
 import com.wzdxt.texas.business.display.operation.CheckPoint;
 import com.wzdxt.texas.business.display.util.OcrUtil;
@@ -21,7 +21,7 @@ public class PhaseManager {
     @Autowired
     private DisplayerConfigure configure;
     @Autowired
-    private Window screen;
+    private GameWindow screen;
     @Autowired
     private ApplicationContext cxt;
     @Autowired

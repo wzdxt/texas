@@ -1,14 +1,12 @@
 package com.wzdxt.texas.business.display;
 
-import com.wzdxt.texas.business.display.logic.Window;
+import com.wzdxt.texas.business.display.logic.GameWindow;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import javax.imageio.ImageIO;
 
 import static org.junit.Assert.*;
 
@@ -25,7 +23,7 @@ public class PhaseManagerTest {
     @Autowired
     Displayer displayer;
     @Autowired
-    Window window;
+    GameWindow window;
 
     @Before
     public void setUp() throws Exception {

@@ -1,6 +1,5 @@
 package com.wzdxt.texas.business.display;
 
-import com.wzdxt.texas.business.display.operation.AbsCheck;
 import com.wzdxt.texas.config.DisplayerConfigure;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,7 +72,7 @@ public class DisplayerImpl implements Displayer {
     }
 
     /**
-     * Now {@link com.wzdxt.texas.business.display.logic.Window} is not prepared
+     * Now {@link com.wzdxt.texas.business.display.logic.GameWindow} is not prepared
      * @return
      */
     @Cacheable("screenParam")

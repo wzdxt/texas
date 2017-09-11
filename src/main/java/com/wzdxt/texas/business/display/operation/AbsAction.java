@@ -1,6 +1,6 @@
 package com.wzdxt.texas.business.display.operation;
 
-import com.wzdxt.texas.business.display.logic.Window;
+import com.wzdxt.texas.business.display.logic.GameWindow;
 import com.wzdxt.texas.config.DisplayerConfigure;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ public abstract class AbsAction implements Operation {
     @Autowired
     protected DisplayerConfigure configure;
     @Autowired
-    protected Window window;
+    protected GameWindow window;
 
     @Override
     public boolean perform() {
@@ -32,7 +32,7 @@ public abstract class AbsAction implements Operation {
     abstract boolean doPerform() throws AWTException, InterruptedException;
 
     @Override
-    abstract public Operation set(int[] p);
+    abstract public AbsAction set(int[] p);
 
     public static List<AbsAction> fromConfig(ApplicationContext cxt, DisplayerConfigure.ActionGroup actionGroup) {
         List<AbsAction> list = new ArrayList<>();

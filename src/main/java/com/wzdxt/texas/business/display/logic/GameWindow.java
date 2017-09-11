@@ -11,7 +11,7 @@ import java.awt.image.BufferedImage;
  * Created by wzdxt on 2017/9/10.
  */
 @Component
-public class Window {
+public class GameWindow {
     @Autowired
     ScreenParam screenParam;
     private BufferedImage bi;

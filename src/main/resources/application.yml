@@ -52,7 +52,7 @@ displayer:   # 线条大坐标不变, 区块大坐标+1
         - point: 517, 129, 0xfdccb7
         - contain: 468, 388, 559, 404, 0x59775f
         - line: 567, 428, 694, 428, 0x1c7130
-#    playing:
+#    playing: todo
 #      name: playing
   status:   # 游戏状态
     watching:
@@ -71,12 +71,38 @@ displayer:   # 线条大坐标不变, 区块大坐标+1
         - watching
 
   operation:    # 操作定义配置
-    call_or_check:
+    call:
+      preCheck:
+      operate:
+      postCheck:
+    check:
+      preCheck:
+      operate:
+      postCheck:
     fold:
+      preCheck:
+      operate:
+      postCheck:
+    raise:
+      preCheck:
+      operate:
+      postCheck:
     bet_5:
+      preCheck:
+      operate:
+      postCheck:
     bet_10:
+      preCheck:
+      operate:
+      postCheck:
     bet_25:
+      preCheck:
+      operate:
+      postCheck:
     bet_50:
+      preCheck:
+      operate:
+      postCheck:
   ocr_area:
     total_coin: 899, 47, 1019, 74
     player_pool:
@@ -95,4 +121,28 @@ displayer:   # 线条大坐标不变, 区块大坐标+1
       - 896, 359
       - 835, 466
     player_remain_color: 0xdedede
+    call_button: 0, 0, 0, 0 # todo
+    my_card:
+      - 0:
+        - 0, 0, 0, 0 # todo
+        - 0, 0, 0, 0 # todo
+      - 1:
+        - 0, 0, 0, 0 # todo
+        - 0, 0, 0, 0 # todo
+    common_card:
+      - 0:
+        - 0, 0, 0, 0 # todo
+        - 0, 0, 0, 0 # todo
+      - 1:
+        - 0, 0, 0, 0 # todo
+        - 0, 0, 0, 0 # todo
+      - 2:
+        - 0, 0, 0, 0 # todo
+        - 0, 0, 0, 0 # todo
+      - 3:
+        - 0, 0, 0, 0 # todo
+        - 0, 0, 0, 0 # todo
+      - 4:
+        - 0, 0, 0, 0 # todo
+        - 0, 0, 0, 0 # todo
 

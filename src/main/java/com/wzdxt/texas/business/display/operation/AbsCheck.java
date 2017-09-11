@@ -1,6 +1,6 @@
 package com.wzdxt.texas.business.display.operation;
 
-import com.wzdxt.texas.business.display.logic.Window;
+import com.wzdxt.texas.business.display.logic.GameWindow;
 import com.wzdxt.texas.business.display.util.RgbUtil;
 import com.wzdxt.texas.config.DisplayerConfigure;
 import lombok.NoArgsConstructor;
@@ -19,7 +19,7 @@ public abstract class AbsCheck implements Operation {
     @Autowired
     protected DisplayerConfigure configure;
     @Autowired
-    protected Window window;
+    protected GameWindow window;
 
     BufferedImage screenCapture(int x1, int y1, int x2, int y2) {
         return window.capture(x1, y1, x2, y2);
