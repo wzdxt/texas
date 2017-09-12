@@ -4,6 +4,7 @@ import com.wzdxt.texas.config.DisplayerConfigure;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import java.awt.*;
@@ -60,10 +61,10 @@ public class DisplayerImpl implements Displayer {
     Point getMousePosDelay() {
         int sec = configure.getAnchor().getDelay();
         try {
-            System.out.println("starting get mouse position ...");
+            log.info("starting get mouse position ...");
             for (int i = 0; i < sec; i++) {
                 Thread.sleep(1000);
-                System.out.println(sec - i);
+                log.info("{}", sec - i);
             }
             Thread.sleep(1000);
         } catch (InterruptedException ignored) {
@@ -98,5 +99,12 @@ public class DisplayerImpl implements Displayer {
         log.info(String.format("match anchor finished. mistake: %d, %s", result.getMistake(), screenParam));
         return screenParam;
     }
+
+    @Async
+    @Override
+    public void matchAnchorAsync() {
+        matchAnchor();
+    }
+
 
 }

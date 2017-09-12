@@ -5,5 +5,6 @@ package com.wzdxt.texas.business.display;
  */
 public interface Displayer {
     ScreenParam matchAnchor();
+    void matchAnchorAsync();
     GameStatus getCurrentStatus();
 }

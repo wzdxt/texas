@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
   <include resource="org/springframework/boot/logging/logback/base.xml"/>
+  <appender name="uiAppender" class="com.wzdxt.texas.application.UiAppender"/>
+
+
   <logger name="org.springframework" level="INFO"/>
+  <logger name="com.wzdxt.texas" level="INFO">
+    <appender-ref ref="uiAppender"/>
+  </logger>
   <logger name="com.wzdxt.texas" level="DEBUG"/>
+
 </configuration>
