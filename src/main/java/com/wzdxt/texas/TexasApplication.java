@@ -8,13 +8,14 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
+
+import java.awt.*;
 
 @Slf4j
 @SpringBootApplication
@@ -26,17 +27,19 @@ public class TexasApplication implements ApplicationRunner {
     private MasterConfigures configuration;
     private DisplayerConfigure  displayerConfigure;
     private Displayer displayer;
-    private ApplicationContext cxt;
+    private ApplicationContext ctx;
 
     public static void main(String[] args) {
         new SpringApplicationBuilder(TexasApplication.class).headless(false).run(args);
-//        SpringApplication.run(TexasApplication.class, args);
     }
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
 //        log.warn(String.valueOf(configuration.getFlop().getCheck()));
-        cxt.getBean(CalculatorMainFrame.class);
+        EventQueue.invokeLater(() -> {
+            CalculatorMainFrame ex = ctx.getBean(CalculatorMainFrame.class);
+            ex.setVisible(true);
+        });
 //        displayer.getCurrentStatus();
     }
 }
