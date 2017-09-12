@@ -6,12 +6,12 @@ tesseract LAN.texas.exp0.tif LAN.texas.exp0 batch.nochop makebox
 tesseract LAN.texas.exp0.tif LAN.texas.exp0 nobatch box.train
 unicharset_extractor LAN.texas.exp0.box
 set_unicharset_properties -U unicharset -O unicharset --script_dir=./
-shapeclustering –F font_properties  -U unicharset –O LAN.unicharset LAN.texas.exp0.tr
+shapeclustering -F font_properties  -U unicharset -O LAN.unicharset LAN.texas.exp0.tr
 mftraining -F font_properties  -U unicharset LAN.texas.exp0.tr
 cntraining LAN.texas.exp0.tr
-rename unicharset texas.unicharset
-rename inttemp texas.inttemp
-rename normproto texas.normproto
-rename pffmtable texas.pffmtable
-rename shapetable texas.shapetable
+mv unicharset texas.unicharset
+mv inttemp texas.inttemp
+mv normproto texas.normproto
+mv pffmtable texas.pffmtable
+mv shapetable texas.shapetable
 combine_tessdata texas.
