@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.swing.*;
-import javax.swing.text.PlainDocument;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by dai_x on 17-9-12.
@@ -20,9 +20,7 @@ public class MainFrame extends JFrame {
 
     private JButton button1;
     private JPanel panel1;
-    private JList<String> list1;
-
-    private DefaultListModel<String> logListModel = new DefaultListModel<>();
+    private JEditorPane editorPane1;
 
     @Autowired
     private Displayer displayer;
@@ -39,15 +37,20 @@ public class MainFrame extends JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        list1.setModel(logListModel);
     }
 
     private void bindEvent() {
-        button1.addActionListener(e -> displayer.matchAnchorAsync());
+        button1.addActionListener(e -> {
+            try {
+                displayer.matchAnchorAsync().get();
+            } catch (InterruptedException | ExecutionException e1) {
+                e1.printStackTrace();
+            }
+        });
     }
 
     public void addLog(ILoggingEvent e) {
-        logListModel.add(logListModel.size(), e.toString());
+        editorPane1.setText(editorPane1.getText() + e.toString() + "\n");
     }
 
 }

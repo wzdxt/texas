@@ -5,10 +5,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Component;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.concurrent.Future;
 
 /**
  * Created by dai_x on 17-9-4.
@@ -74,6 +76,7 @@ public class DisplayerImpl implements Displayer {
 
     /**
      * Now {@link com.wzdxt.texas.business.display.logic.GameWindow} is not prepared
+     *
      * @return
      */
     @Cacheable("screenParam")
@@ -96,14 +99,16 @@ public class DisplayerImpl implements Displayer {
         screenParam.setWidth(result.x2 - result.x1);
         screenParam.setHeight(result.y2 - result.y1);
 
-        log.info(String.format("match anchor finished. mistake: %d, %s", result.getMistake(), screenParam));
+        log.debug(String.format("match anchor finished. mistake: %d, %s", result.getMistake(), screenParam));
         return screenParam;
     }
 
     @Async
     @Override
-    public void matchAnchorAsync() {
-        matchAnchor();
+    public Future<ScreenParam> matchAnchorAsync() {
+        ScreenParam screenParam = matchAnchor();
+        log.info(String.format("match anchor finished. mistake: %s", screenParam));
+        return new AsyncResult<>(screenParam);
     }
 
 
