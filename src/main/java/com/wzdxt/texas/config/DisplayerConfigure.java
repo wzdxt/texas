@@ -15,10 +15,11 @@ import java.util.Map;
 @Component
 @ConfigurationProperties("displayer")
 public class DisplayerConfigure {
+    int scanInterval;
     Anchor anchor;
     Check check;
     Map<String, Phase> phase;
-//    Object status;
+    //    Object status;
 //    Object operation;
     OcrArea ocrArea;
 
@@ -28,6 +29,7 @@ public class DisplayerConfigure {
         int fix;    // 边界容错
         int delay;  // 取点延时
         List<Map<String, int[]>> methods;   // 对比方法
+        int allowMistake;    // 允许像素误差
     }
 
     @Data
@@ -39,28 +41,34 @@ public class DisplayerConfigure {
     @Data
     public static class Phase {
         String name;
-        CheckGroup check;
+        CheckOperationList check;
         List<String> next;
-        Map<String, Action> actions;
+        Map<String, OperationPlan> actions;
     }
 
     @Data
-    public static class Action {
-        CheckGroup preCheck;
-        ActionGroup operate;
-        CheckGroup postCheck;
+    public static class OperationPlan extends ArrayList<OperationPlanItem> {
+    }
+
+    public static class OperationPlanItem extends ArrayList<OperationGroup> {
+    }
+
+    @Data
+    public static class OperationGroup {
+        CheckOperationList check;
+        ActionOperationList act;
     }
 
     /**
      * produce {@link com.wzdxt.texas.business.display.operation.AbsCheck}
      */
-    public static class CheckGroup extends ArrayList<CheckOperation> {
+    public static class CheckOperationList extends ArrayList<CheckOperation> {
     }
 
     /**
      * produce {@link com.wzdxt.texas.business.display.operation.AbsAction}
      */
-    public static class ActionGroup extends ArrayList<ActionOperation> {
+    public static class ActionOperationList extends ArrayList<ActionOperation> {
     }
 
     @Data
@@ -77,6 +85,7 @@ public class DisplayerConfigure {
     public static class ActionOperation {
         public int[] move;
         public int[] click;
+        public int[] drag;
     }
 
     @Data

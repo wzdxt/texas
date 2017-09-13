@@ -10,12 +10,15 @@ texas:
       check: 40
       threshold: 80,90,95
 displayer:   # 线条大坐标不变, 区块大坐标+1
+  scan_interval: 1000   # millisecond
   anchor:   # 定位窗口配置
     delay: 3    # 取点倒计时
     fix: 10     # 边界兼容宽度
     methods:    # 定位检查方法
       - area: 1, 1, 131, 31
       - area: 512, 152, 574, 267
+      # todo more methods
+    allow_mistake: 100
   charactor_rate:
     spade:    # 黑桃
     heart:    # 红桃
@@ -36,12 +39,12 @@ displayer:   # 线条大坐标不变, 区块大坐标+1
         - room_page
       actions:
         start:
-          preCheck:
+          - check:
             - point: 772, 148, 0xfde90b
-          operate:
+          - act:
             - move: 111, 111
             - click: 111, 111
-          postCheck:
+          - check:
             - point: 772, 148, 0xfde90b
 #        showRoom:
 #    room_page:
@@ -72,37 +75,61 @@ displayer:   # 线条大坐标不变, 区块大坐标+1
 
 #  operation:    # 操作定义配置
 #    call:
-#      preCheck:
-#      operate:
-#      postCheck:
+#      check:
+#      act:
+#      check:
+#      act:
+#      check:
 #    check:
-#      preCheck:
-#      operate:
-#      postCheck:
+#      check:
+#      act:
+#      check:
+#      act:
+#      check:
 #    fold:
-#      preCheck:
-#      operate:
-#      postCheck:
+#      check:
+#      act:
+#      check:
+#      act:
+#      check:
 #    raise:
-#      preCheck:
-#      operate:
-#      postCheck:
+#      check:
+#      act:
+#      check:
+#      act:
+#      check:
 #    bet_5:
-#      preCheck:
-#      operate:
-#      postCheck:
+#      check:
+#      act:
+#      check:
+#      act:
+#      check:
 #    bet_10:
-#      preCheck:
-#      operate:
-#      postCheck:
+#      check:
+#      act:
+#      check:
+#      act:
+#      check:
 #    bet_25:
-#      preCheck:
-#      operate:
-#      postCheck:
+#      check:
+#      act:
+#      check:
+#      act:
+#      check:
 #    bet_50:
-#      preCheck:
-#      operate:
-#      postCheck:
+#      check:
+#      act:
+#      check:
+#      act:
+#      check:
+#    all_in:
+#      check:
+#      act:
+#      check:
+#      act:
+#      check:
+#      act:
+#      check:
   ocr_area:
     total_coin: 899, 47, 1019, 74
     player_pool:

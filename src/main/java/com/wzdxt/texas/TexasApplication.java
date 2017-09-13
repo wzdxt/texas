@@ -22,8 +22,7 @@ import java.awt.*;
 @SpringBootApplication
 @EnableConfigurationProperties
 @AllArgsConstructor
-@EnableCaching
-@EnableAsync
+//@EnableCaching
 @ComponentScan(basePackages = {"com.wzdxt.texas"})
 public class TexasApplication implements ApplicationRunner {
     private MasterConfigures configuration;

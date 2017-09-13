@@ -13,6 +13,10 @@ public class UiAppender extends AppenderBase<ILoggingEvent> {
 
     private static UiAppender instance;
 
+    public UiAppender() {
+        int i = 1;
+    }
+
     @Override
     public void start() {
         super.start();

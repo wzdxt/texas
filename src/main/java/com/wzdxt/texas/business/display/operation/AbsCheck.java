@@ -65,26 +65,26 @@ public abstract class AbsCheck implements Operation {
     @Override
     abstract public AbsCheck set(int[] p);
 
-    public static List<AbsCheck> fromConfig(ApplicationContext cxt, DisplayerConfigure.CheckGroup checkGroup) {
+    public static List<AbsCheck> fromConfig(ApplicationContext cxt, DisplayerConfigure.CheckOperationList checkGroup) {
         List<AbsCheck> list = new ArrayList<>();
         for (DisplayerConfigure.CheckOperation operation : checkGroup) {
             AbsCheck check = null;
-            if (operation.point != null) {
+            if (operation.point.length > 0) {
                 check = cxt.getBean(CheckPoint.class);
                 check.set(operation.point);
-            } else if (operation.contain != null) {
+            } else if (operation.contain.length > 0) {
                 check = cxt.getBean(CheckContain.class);
                 check.set(operation.contain);
-            } else if (operation.line != null) {
+            } else if (operation.line.length > 0) {
                 check = cxt.getBean(CheckLine.class);
                 check.set(operation.line);
-            } else if (operation.lineRange != null) {
+            } else if (operation.lineRange.length > 0) {
                 check = cxt.getBean(CheckLineRange.class);
                 check.set(operation.lineRange);
-            } else if (operation.pointRange != null) {
+            } else if (operation.pointRange.length > 0) {
                 check = cxt.getBean(CheckPointRange.class);
                 check.set(operation.pointRange);
-            } else if (operation.same != null) {
+            } else if (operation.same.length > 0) {
                 check = cxt.getBean(CheckSame.class);
                 check.set(operation.pointRange);
             }
