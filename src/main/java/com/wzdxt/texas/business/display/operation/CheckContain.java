@@ -38,7 +38,7 @@ public class CheckContain extends AbsCheck {
 
         LineUtil.walk(x1, y1, x2 - 1, y1, 1, (x, _1) ->
                 LineUtil.walk(x, y1, x, y2 - 1, 1, (_2, y) -> {
-                    int checkRgb = bi.getRGB(x, y);
+                    int checkRgb = bi.getRGB(x - x1, y - y1);
                     int m = RgbUtil.calcRgbMistake(rgb,checkRgb);
                     res.mistake = Math.min(res.mistake, m);
                     return true;

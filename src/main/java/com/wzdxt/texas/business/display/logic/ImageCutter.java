@@ -54,6 +54,9 @@ public class ImageCutter {
                     break rightfor;
             }
         }
+        if (left > right || top > bottom) {
+            return  null;
+        }
         return image.getSubimage(left, top, right - left + 1, bottom - top + 1);
     }
 

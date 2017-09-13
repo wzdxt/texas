@@ -28,4 +28,7 @@ public class GameWindow {
         return bi;
     }
 
+    public BufferedImage getScreenCapture() {
+        return bi;
+    }
 }

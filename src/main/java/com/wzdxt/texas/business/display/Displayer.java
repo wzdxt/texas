@@ -1,16 +1,14 @@
 package com.wzdxt.texas.business.display;
 
+import com.wzdxt.texas.business.display.logic.GameWindow;
 import com.wzdxt.texas.config.DisplayerConfigure;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Component;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.concurrent.Future;
 
 /**
  * Created by dai_x on 17-9-4.
@@ -26,6 +24,8 @@ public class Displayer {
     private ScreenParam screenParam;
     @Autowired
     private PhaseManager phaseManager;
+    @Autowired
+    private GameWindow window;
 
     private int screenWidth, screenHeight;
 
@@ -35,9 +35,20 @@ public class Displayer {
         screenHeight = size.height;
     }
 
-    public GameStatus getCurrentStatus() {
+    public GameStatus.Phase getCurrentPhase() {
+        window.refresh();
+        return phaseManager.getCurrentPhase();
+    }
+
+    public GameStatus getGameStatus() {
         GameStatus.Phase phase = phaseManager.getCurrentPhase();
-        return null;
+        int[] playerPools = phaseManager.getPlayerPool();
+        boolean[] playerRemain = phaseManager.getPlayerRemain();
+        return GameStatus.builder()
+                .phase(phase)
+                .playerPools(playerPools)
+                .enermyRemain(playerRemain)
+                .build();
     }
 
     BufferedImage screenCapture() {

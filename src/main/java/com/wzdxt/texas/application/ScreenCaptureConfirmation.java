@@ -32,7 +32,6 @@ public class ScreenCaptureConfirmation {
         frame.add(panel);
         frame.setTitle("Minesweeper");
         bindEvent();
-        repaint();
     }
 
     private void repaint() {

@@ -55,8 +55,11 @@ displayer:   # 线条大坐标不变, 区块大坐标+1
         - point: 517, 129, 0xfdccb7
         - contain: 468, 388, 559, 404, 0x59775f
         - line: 567, 428, 694, 428, 0x1c7130
-#    playing: todo
-#      name: playing
+    playing:
+      name: playing
+      check:
+        - line: 570, 418, 619, 418, 0xe6e6e6
+        - line: 632, 418, 682, 418, 0xe6e6e6
   status:   # 游戏状态
     watching:
       name: watching
@@ -141,13 +144,15 @@ displayer:   # 线条大坐标不变, 区块大坐标+1
       - 792, 299, 858, 320
       - 741, 356, 807, 377
     player_remain:
-      - 0, 0 # todo
-      - 0, 0 # todo
+      - 0, 0
+      - 283, 462
       - 129, 364
       - 789, 139
       - 896, 359
       - 835, 466
     player_remain_color: 0xdedede
+    my_coin: 472, 506, 557, 526
+    my_coin_live_color: 0xfcde8f
     call_button: 0, 0, 0, 0 # todo
 #    my_card:
 #      - 0:

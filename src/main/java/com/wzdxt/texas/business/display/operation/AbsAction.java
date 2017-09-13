@@ -38,13 +38,13 @@ public abstract class AbsAction implements Operation {
         List<AbsAction> list = new ArrayList<>();
         for (DisplayerConfigure.ActionOperation operation : actionGroup) {
             AbsAction action = null;
-            if (operation.move.length > 0) {
+            if (operation.move != null && operation.move.length > 0) {
                 action = cxt.getBean(ActionMove.class);
                 action.set(operation.move);
-            } else if (operation.click.length > 0) {
+            } else if (operation.click != null && operation.click.length > 0) {
                 action = cxt.getBean(ActionClick.class);
                 action.set(operation.click);
-            } else if (operation.drag.length > 0) {
+            } else if (operation.drag != null && operation.drag.length > 0) {
                 action = cxt.getBean(ActionDrag.class);
                 action.set(operation.drag);
             }

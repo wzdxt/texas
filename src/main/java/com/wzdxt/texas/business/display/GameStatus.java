@@ -2,7 +2,10 @@ package com.wzdxt.texas.business.display;
 
 import lombok.Builder;
 import lombok.Data;
-import org.springframework.stereotype.Component;
+
+import java.util.Arrays;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 /**
  * Created by dai_x on 17-9-4.
@@ -16,7 +19,7 @@ public class GameStatus {
     // in game
     Status status = Status.NONE;
     int playerNum;
-    boolean[] playerRemain;
+    boolean[] enermyRemain;
     int remainNum;
     int currentTurn;
     int pool;
@@ -25,6 +28,14 @@ public class GameStatus {
     int myCoin;
     int myPool;
     // my turn
+
+    public void setEnermyRemain(boolean[] pr) {
+        this.enermyRemain = pr;
+        this.remainNum = 0;
+        for (boolean b : pr) {
+            if (b) remainNum++;
+        }
+    }
 
 
     public enum Phase {

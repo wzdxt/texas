@@ -5,6 +5,7 @@ import com.wzdxt.texas.business.display.Displayer;
 import com.wzdxt.texas.business.display.GameStatus;
 import com.wzdxt.texas.business.display.PhaseManager;
 import com.wzdxt.texas.business.display.ScreenParam;
+import com.wzdxt.texas.business.display.logic.GameWindow;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,11 +27,12 @@ public class MainFrame extends JFrame {
     private JPanel panel1;
     private JEditorPane editorPane1;
     private JButton currentPhaseButton;
+    private JButton gameStatusButton;
 
     @Autowired
     private Displayer displayer;
     @Autowired
-    private PhaseManager phaseManager;
+    private GameWindow window;
 
     public MainFrame() {
         this.add(panel1);
@@ -62,6 +64,7 @@ public class MainFrame extends JFrame {
                                 log.info(String.format("match anchor finished. %s", sp));
                                 new ScreenCaptureConfirmation(sp);
                                 currentPhaseButton.setEnabled(true);
+                                gameStatusButton.setEnabled(true);
                             }
                         } catch (InterruptedException | ExecutionException e1) {
                             e1.printStackTrace();
@@ -73,14 +76,40 @@ public class MainFrame extends JFrame {
                 new SwingWorker<GameStatus.Phase, Void>() {
                     @Override
                     public GameStatus.Phase doInBackground() {
-                        return phaseManager.getCurrentPhase();
+                        window.refresh();
+                        return displayer.getCurrentPhase();
                     }
 
                     @Override
                     public void done() {
-//                    GameStatus.Phase p = get();
+                        try {
+                            GameStatus.Phase p = get();
+                            log.info(p.toString());
+                        } catch (InterruptedException | ExecutionException e1) {
+                            e1.printStackTrace();
+                        }
                     }
                 }.execute());
+
+        gameStatusButton.addActionListener(e ->
+                new SwingWorker<GameStatus, Void>() {
+                    @Override
+                    public GameStatus doInBackground() {
+                        window.refresh();
+                        return displayer.getGameStatus();
+                    }
+
+                    @Override
+                    public void done() {
+                        try {
+                            GameStatus s = get();
+                            log.info(s.toString());
+                        } catch (InterruptedException | ExecutionException e1) {
+                            e1.printStackTrace();
+                        }
+                    }
+                }.execute());
+
     }
 
     public void addLog(ILoggingEvent e) {

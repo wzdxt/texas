@@ -58,8 +58,12 @@ public class PhaseManager {
             int[] area = configure.getOcrArea().getPlayerPool()[i];
             BufferedImage bi = screen.capture(area[0], area[1], area[2], area[3]);
             bi = imageCutter.cutEdge(bi);
-            String s = OcrUtil.recognize(bi);
-            ret[i] = str2int(s);
+            if (bi == null) {
+                ret[i] = 0;
+            } else {
+                String s = OcrUtil.recognize(bi);
+                ret[i] = str2int(s);
+            }
         }
         return ret;
     }
