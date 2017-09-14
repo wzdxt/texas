@@ -42,9 +42,7 @@ public class PhaseManager {
 
     protected String getTotalCoinOcrRes() {
         int[] area = configure.getOcrArea().getTotalCoin();
-        BufferedImage bi = screen.capture(area[0], area[1], area[2], area[3]);
-        bi = imageCutter.cutEdge(bi);
-        return OcrUtil.recognize(bi);
+        return ocr(area[0], area[1], area[2], area[3]);
     }
 
     public int getTotalCoin() {
@@ -56,14 +54,8 @@ public class PhaseManager {
         int[] ret = new int[6];
         for (int i = 0; i < 6; i++) {
             int[] area = configure.getOcrArea().getPlayerPool()[i];
-            BufferedImage bi = screen.capture(area[0], area[1], area[2], area[3]);
-            bi = imageCutter.cutEdge(bi);
-            if (bi == null) {
-                ret[i] = 0;
-            } else {
-                String s = OcrUtil.recognize(bi);
-                ret[i] = str2int(s);
-            }
+            String s= ocr(area[0], area[1], area[2], area[3]);
+            ret[i] = s == null ? 0 : str2int(s);
         }
         return ret;
     }
@@ -97,5 +89,10 @@ public class PhaseManager {
         return (int)Math.round(d * multi);
     }
 
+    protected String ocr(int x1, int y1, int x2, int y2) {
+        BufferedImage bi = screen.capture(x1, y1, x2, y2);
+        bi = imageCutter.cutEdge(bi);
+        return bi == null ? null : OcrUtil.recognize(bi);
+    }
 
 }

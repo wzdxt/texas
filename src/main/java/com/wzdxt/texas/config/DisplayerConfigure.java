@@ -46,15 +46,14 @@ public class DisplayerConfigure {
         Map<String, OperationPlan> actions;
     }
 
-    @Data
     public static class OperationPlan extends ArrayList<OperationPlanItem> {
     }
 
-    public static class OperationPlanItem extends ArrayList<OperationGroup> {
-    }
+//    public static class OperationPlanItem extends ArrayList<OperationGroup> {
+//    }
 
     @Data
-    public static class OperationGroup {
+    public static class OperationPlanItem {
         CheckOperationList check;
         ActionOperationList act;
     }

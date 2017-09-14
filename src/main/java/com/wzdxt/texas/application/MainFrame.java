@@ -28,6 +28,10 @@ public class MainFrame extends JFrame {
     private JEditorPane editorPane1;
     private JButton currentPhaseButton;
     private JButton gameStatusButton;
+    private JRadioButton yesRadioButton;
+    private JRadioButton noRadioButton;
+    private JButton button1;
+    private JButton button2;
 
     @Autowired
     private Displayer displayer;
