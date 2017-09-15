@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+# tesseract 需要添加 psm 参数
 # 1 merge image to tiff
 # 2 生成box文件
 tesseract LAN.texas.exp0.tif LAN.texas.exp0 batch.nochop makebox
