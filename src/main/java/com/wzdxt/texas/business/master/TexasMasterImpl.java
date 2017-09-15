@@ -7,6 +7,7 @@ import com.wzdxt.texas.service.Calculator;
 import com.wzdxt.texas.service.CalculatorFactory;
 import lombok.Value;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -15,6 +16,7 @@ import java.util.List;
 /**
  * Created by wzdxt on 2017/9/3.
  */
+@Component
 public class TexasMasterImpl implements TexasMaster {
     @Autowired
     MasterConfigures configuration;

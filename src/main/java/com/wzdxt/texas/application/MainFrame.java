@@ -27,10 +27,11 @@ public class MainFrame extends JFrame {
     private JEditorPane logPane;
     private JButton currentPhaseButton;
     private JButton gameStatusButton;
-    private JRadioButton yesRadioButton;
-    private JRadioButton noRadioButton;
+    private JRadioButton autoYesButton;
+    private JRadioButton autoNoButton;
     private JButton button1;
     private JButton button2;
+    private JButton actOnceButton;
 
     @Autowired
     private Displayer displayer;
@@ -112,6 +113,29 @@ public class MainFrame extends JFrame {
                         }
                     }
                 }.execute());
+
+        actOnceButton.addActionListener(e ->
+                new SwingWorker() {
+                    @Override
+                    public Object doInBackground() {
+                        displayer.setActOnce();
+                        return null;
+                    }
+                }
+        );
+
+        autoYesButton.addActionListener(e ->
+                new SwingWorker() {
+                    @Override
+                    public Object doInBackground() {
+                        displayer.setAutoRun(true);
+                        return null;
+                    }
+                }
+        );
+
+        autoNoButton.addActionListener(e -> displayer.setAutoRun(false));
+
 
     }
 

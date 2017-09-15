@@ -2,10 +2,9 @@ package com.wzdxt.texas.business.display;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 
-import java.util.Arrays;
-import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
+import java.util.stream.IntStream;
 
 /**
  * Created by dai_x on 17-9-4.
@@ -19,8 +18,8 @@ public class GameStatus {
     // in game
     Status status = Status.NONE;
     int playerNum;
-    boolean[] enermyRemain;
-    int remainNum;
+    boolean[] enemyRemain;
+    private int remainNum;
     int currentTurn;
     int pool;
     int[] playerPools;
@@ -29,12 +28,8 @@ public class GameStatus {
     int myPool;
     // my turn
 
-    public void setEnermyRemain(boolean[] pr) {
-        this.enermyRemain = pr;
-        this.remainNum = 0;
-        for (boolean b : pr) {
-            if (b) remainNum++;
-        }
+    public int getRemainNum() {
+        return (int) IntStream.range(0, enemyRemain.length).filter(i->enemyRemain[i]).count();
     }
 
 
