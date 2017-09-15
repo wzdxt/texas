@@ -43,6 +43,10 @@ public class PhaseManager {
         return GameStatus.Phase.NONE;
     }
 
+    public GameStatus.Status getCurrentStatus() {
+        return GameStatus.Status.MY_TURN;
+    }
+
     protected String getTotalCoinOcrRes() {
         int[] area = configure.getOcrArea().getTotalCoin();
         return ocr(area[0], area[1], area[2], area[3]);

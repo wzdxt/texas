@@ -26,13 +26,51 @@ public class Displayer {
     private PhaseManager phaseManager;
     @Autowired
     private GameWindow window;
+    @Autowired
+    private TexasPlayer player;
 
     private int screenWidth, screenHeight;
+
+    private transient boolean scan, autoRun, actOnce;
 
     public Displayer() {
         Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
         screenWidth = size.width;
         screenHeight = size.height;
+    }
+
+    public void setScan(boolean b) {
+        this.scan = b;
+        if (b) run();
+    }
+
+    public void setAutoRun(boolean b) {
+        this.autoRun = b;
+        if (b) run();
+    }
+
+    public void setActOnce() {
+        this.actOnce = true;
+        run();
+    }
+
+    private void run() {
+        while (autoRun || actOnce || scan) {
+            GameStatus.Phase phase = getCurrentPhase();
+            if (phase == GameStatus.Phase.PLAYING) {
+                GameStatus status = getGameStatus();
+                if (status.status == GameStatus.Status.MY_TURN) {
+                    if (autoRun || actOnce) {
+                        player.actByStatus(status);
+                        actOnce = false;
+                    }
+                }
+            }
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException ignored) {
+            }
+        }
     }
 
     public GameStatus.Phase getCurrentPhase() {
@@ -41,21 +79,40 @@ public class Displayer {
     }
 
     public GameStatus getGameStatus() {
+        GameStatus.GameStatusBuilder builder = GameStatus.builder();
         GameStatus.Phase phase = phaseManager.getCurrentPhase();
-        int[] playerPools = phaseManager.getPlayerPool();
-        boolean[] playerRemain = phaseManager.getPlayerRemain();
-        playerRemain[0] = phaseManager.amILive();
-        int callNeed = phaseManager.getCallNeed();
-        return GameStatus.builder()
-                .phase(phase)
-                .playerPools(playerPools)
-                .enemyRemain(playerRemain)
-                .callNeed(callNeed)
-                .build();
+        builder.phase(phase);
+        switch (phase) {
+        case MAIN_PAGE:
+            builder.totalCoin(phaseManager.getTotalCoin());
+            return builder.build();
+        case WAITING:
+        case ROOM_PAGE:
+        case NONE:
+            return builder.build();
+        case PLAYING:
+            GameStatus.Status status = phaseManager.getCurrentStatus();
+            if (status == GameStatus.Status.MY_TURN) {
+                return fulfillGameStatus(builder.build());
+            } else {
+                return builder.build();
+            }
+        default:
+            throw new RuntimeException("phase error");
+        }
     }
 
-    BufferedImage screenCapture() {
-        return screenCapture(screenParam.gameX1, screenParam.gameY1, screenParam.width, screenParam.height);
+    public GameStatus fulfillGameStatus(GameStatus status) {
+        int[] playerPools = phaseManager.getPlayerPool();
+        boolean[] enemyRemain = phaseManager.getPlayerRemain();
+        enemyRemain[0] = phaseManager.amILive();
+        int callNeed = phaseManager.getCallNeed();
+
+        status.setPlayerPools(playerPools);
+        status.setEnemyRemain(enemyRemain);
+        status.setCallNeed(callNeed);
+
+        return status;
     }
 
     BufferedImage screenCapture(int x1, int y1, int x2, int y2) {
@@ -119,7 +176,6 @@ public class Displayer {
             return null;
         }
     }
-
 
 
 }

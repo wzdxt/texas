@@ -3,6 +3,8 @@ package com.wzdxt.texas.business.display;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.stream.IntStream;
+
 /**
  * Created by dai_x on 17-9-4.
  */
@@ -16,7 +18,7 @@ public class GameStatus {
     Status status = Status.NONE;
     int playerNum;
     boolean[] enemyRemain;  // ok
-    int remainNum;          // ok
+    private int remainNum;          // ok
     int currentTurn;
     int pool;
     int[] playerPools;
@@ -26,12 +28,8 @@ public class GameStatus {
     int callNeed;
     // my turn
 
-    public void setEnemyRemain(boolean[] pr) {
-        this.enemyRemain = pr;
-        this.remainNum = 0;
-        for (boolean b : pr) {
-            if (b) remainNum++;
-        }
+    public int getRemainNum() {
+        return (int) IntStream.range(0, enemyRemain.length).filter(i->enemyRemain[i]).count();
     }
 
 
