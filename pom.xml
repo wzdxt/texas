@@ -6,7 +6,7 @@
   <groupId>com.wzdxt.texas</groupId>
   <artifactId>calculator</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <packaging>war</packaging>
+  <packaging>jar</packaging>
 
   <name>Texas</name>
   <description>Texas Hold&#39;em win rate calculator</description>

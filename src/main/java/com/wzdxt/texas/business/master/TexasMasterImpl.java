@@ -23,18 +23,18 @@ public class TexasMasterImpl implements TexasMaster {
     private Beginner beginner = new Beginner();
 
     @Override
-    public MasterResult suggest(Collection<Card> my, Collection<Card> common) {
+    public MasterDecision suggest(Collection<Card> my, Collection<Card> common) {
         if (common.isEmpty()) {
             Iterator<Card> iter = my.iterator();
             BeginnerResult result = beginner.evaluate(iter.next(), iter.next());
             switch (result.level) {
                 case RED:
-                    return MasterResult.BET_2_10;
+                    return MasterDecision.BET_2_10;
                 case YELLOW:
-                    return MasterResult.CALL_5;
+                    return MasterDecision.CALL_5;
                 case BLUE:
                 case GREEN:
-                    return MasterResult.CALL_2;
+                    return MasterDecision.CALL_2;
             }
         } else {
             Calculator calc = CalculatorFactory.getCalculator(common);

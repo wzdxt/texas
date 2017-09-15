@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
  * Created by wzdxt on 2017/9/3.
  */
 @AllArgsConstructor
-public enum MasterResult {
+public enum MasterDecision {
     CHECK_OR_CALL(0, 0),
     CALL_2(0, 2),
     CALL_5(0, 5),

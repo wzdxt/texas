@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.net.URI;
+
 import static org.junit.Assert.*;
 
 /**
@@ -15,7 +17,7 @@ import static org.junit.Assert.*;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class PhaseManagerTest {
+public class PhaseManagerTest extends ScreenTestBase {
     @Autowired
     AnchorMatcher anchorMatcher;
     @Autowired
@@ -25,36 +27,30 @@ public class PhaseManagerTest {
     @Autowired
     GameWindow window;
 
-    @Before
-    public void setUp() throws Exception {
-        System.out.println("switch to anchor");
-        displayer.matchAnchor();
-        window.refresh();
-    }
-
     @Test
-    public void getCurrentPhase() throws Exception {
-        anchorMatcher.match(AnchorHolder.getAnchor());
-        window.refresh();
+    public void testAnchor() throws Exception {
+        switchTo("anchor.bmp");
         GameStatus.Phase phase = phaseManager.getCurrentPhase();
         assertEquals(phase, GameStatus.Phase.MAIN_PAGE);
     }
 
     @Test
-    public void getCurrentPhaseMainPage() throws Exception {
+    public void testCurrentPhaseMainPage() throws Exception {
+        switchTo("1.PNG");
         GameStatus.Phase phase = phaseManager.getCurrentPhase();
-        assertEquals(GameStatus.Phase.MAIN_PAGE, phase);
+        assertEquals(phase, GameStatus.Phase.MAIN_PAGE);
     }
 
     @Test
-    public void getCurrentPhaseWaiting() throws Exception {
-        switchTo("2.png");
+    public void testCurrentPhaseWaiting() throws Exception {
+        switchTo("2.PNG");
         GameStatus.Phase phase = phaseManager.getCurrentPhase();
-        assertEquals(GameStatus.Phase.WAITING, phase);
+        assertEquals(phase, GameStatus.Phase.WAITING);
     }
 
     @Test
-    public void getTotalCoin() throws Exception {
+    public void testTotalCoin() throws Exception {
+        switchTo("1.PNG");
         String s = phaseManager.getTotalCoinOcrRes();
         assertEquals("7.02万", s);
         int coin = phaseManager.getTotalCoin();
@@ -62,10 +58,9 @@ public class PhaseManagerTest {
     }
 
     @Test
-    public void getPlayerPool() throws Exception {
+    public void testPlayerPool() throws Exception {
         switchTo("2.png");
         int[] pools = phaseManager.getPlayerPool();
-        assertEquals(75, pools[0]);
         assertEquals(75, pools[1]);
         assertEquals(600, pools[2]);
         assertEquals(600, pools[3]);
@@ -74,7 +69,7 @@ public class PhaseManagerTest {
     }
 
     @Test
-    public void getPlayerRemain() throws Exception {
+    public void testPlayerRemain() throws Exception {
         switchTo("2.png");
         boolean[] remains = phaseManager.getPlayerRemain();
         assertEquals(false, remains[1]);
@@ -85,9 +80,7 @@ public class PhaseManagerTest {
     }
 
     protected void switchTo(String s) throws Exception {
-        System.out.println("now switch to " + s);
-        Thread.sleep(3000);
-        window.refresh();
+        setScreen(this.getClass().getClassLoader().getResource("static/screen/" + s).toURI());
     }
 
 }

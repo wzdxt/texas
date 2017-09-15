@@ -19,6 +19,8 @@ import java.io.IOException;
 public class GameWindow {
     @Autowired
     ScreenParam screenParam;
+    @Autowired
+    RobotUtil robotUtil;
     private BufferedImage bi;
     private static String name = String.valueOf(System.currentTimeMillis());
 
@@ -28,7 +30,7 @@ public class GameWindow {
     }
 
     public BufferedImage refresh() {
-        this.bi = RobotUtil.screenCapture(
+        this.bi = robotUtil.screenCapture(
                 screenParam.getGameX1(), screenParam.getGameY1(),
                 screenParam.getGameX2(), screenParam.getGameY2());
         return bi;

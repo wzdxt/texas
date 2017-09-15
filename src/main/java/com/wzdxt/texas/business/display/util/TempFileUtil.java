@@ -17,7 +17,9 @@ public class TempFileUtil {
     public static Object withTempFile(BufferedImage image, Function<String, Object> function) {
         String path = "temp/temp-file/" + System.currentTimeMillis() + ".bmp";
         try {
-            ImageIO.write(image, "bmp", new File(path));
+            if (!ImageIO.write(image, "bmp", new File(path))) {
+                throw new RuntimeException();
+            }
             return function.apply(path);
         } catch (IOException e) {
             log.warn("fail to delete temp file " + path, e);
