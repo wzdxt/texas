@@ -20,7 +20,7 @@ public class DisplayerConfigure {
     Check check;
     Map<String, Phase> phase;
     //    Object status;
-//    Object operation;
+    Map<String, OperationPlan> operation;
     OcrArea ocrArea;
 
 

@@ -1,6 +1,7 @@
 package com.wzdxt.texas.business.display;
 
 import com.wzdxt.texas.business.display.logic.GameWindow;
+import com.wzdxt.texas.business.display.operation.OperationEngine;
 import com.wzdxt.texas.config.DisplayerConfigure;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +31,8 @@ public class Displayer {
     private TexasPlayer player;
 
     private int screenWidth, screenHeight;
-
     private transient boolean scan, autoRun, actOnce;
+    private static int errorCnt = 0;
 
     public Displayer() {
         Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
@@ -61,7 +62,12 @@ public class Displayer {
                 GameStatus status = getGameStatus();
                 if (status.status == GameStatus.Status.MY_TURN) {
                     if (autoRun || actOnce) {
-                        player.actByStatus(status);
+                        try {
+                            player.actByStatus(status);
+                        } catch (OperationEngine.OperationException e) {
+                            log.error(String.format("[%d] player operation fail. %s", errorCnt++, status), e);
+                            window.save(String.valueOf(errorCnt));
+                        }
                         actOnce = false;
                     }
                 }
@@ -83,22 +89,22 @@ public class Displayer {
         GameStatus.Phase phase = phaseManager.getCurrentPhase();
         builder.phase(phase);
         switch (phase) {
-        case MAIN_PAGE:
-            builder.totalCoin(phaseManager.getTotalCoin());
-            return builder.build();
-        case WAITING:
-        case ROOM_PAGE:
-        case NONE:
-            return builder.build();
-        case PLAYING:
-            GameStatus.Status status = phaseManager.getCurrentStatus();
-            if (status == GameStatus.Status.MY_TURN) {
-                return fulfillGameStatus(builder.build());
-            } else {
+            case MAIN_PAGE:
+                builder.totalCoin(phaseManager.getTotalCoin());
                 return builder.build();
-            }
-        default:
-            throw new RuntimeException("phase error");
+            case WAITING:
+            case ROOM_PAGE:
+            case NONE:
+                return builder.build();
+            case PLAYING:
+                GameStatus.Status status = phaseManager.getCurrentStatus();
+                if (status == GameStatus.Status.MY_TURN) {
+                    return fulfillGameStatus(builder.build());
+                } else {
+                    return builder.build();
+                }
+            default:
+                throw new RuntimeException("phase error");
         }
     }
 

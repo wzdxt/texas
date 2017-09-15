@@ -17,7 +17,7 @@ public class GameStatus {
     // in game
     Status status = Status.NONE;
     int playerNum;
-    boolean[] enemyRemain;  // ok
+    boolean[] enemyRemain;          // ok
     private int remainNum;          // ok
     int currentTurn;
     int pool;

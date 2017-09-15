@@ -20,7 +20,7 @@ import java.util.List;
 public class TexasMasterImpl implements TexasMaster {
     @Autowired
     MasterConfigures configuration;
-    Beginner beginner = new Beginner();
+    private Beginner beginner = new Beginner();
 
     @Override
     public MasterResult suggest(Collection<Card> my, Collection<Card> common) {
@@ -29,19 +29,22 @@ public class TexasMasterImpl implements TexasMaster {
             BeginnerResult result = beginner.evaluate(iter.next(), iter.next());
             switch (result.level) {
                 case RED:
-                    return MasterResult.BET_TWO_FIVE;
+                    return MasterResult.BET_2_10;
                 case YELLOW:
-                    return MasterResult.CALL_TWO;
+                    return MasterResult.CALL_5;
                 case BLUE:
                 case GREEN:
-                    return MasterResult.CALL_ONE;
+                    return MasterResult.CALL_2;
             }
         } else {
             Calculator calc = CalculatorFactory.getCalculator(common);
             List<Double> possibility = calc.calculate(my, common);
             if (common.size() == 3) {
+                // todo
             } else if (common.size() == 4) {
+                // todo
             } else if (common.size() == 5) {
+                // todo
             }
         }
         return null;
