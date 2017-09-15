@@ -15,9 +15,18 @@ import java.util.function.Function;
 @Slf4j
 public class TempFileUtil {
     public static Object withTempFile(BufferedImage image, Function<String, Object> function) {
-        String path = "temp/temp-file/" + System.currentTimeMillis() + ".bmp";
+        String imageType;
+        switch (image.getType()) {
+            case BufferedImage.TYPE_4BYTE_ABGR:
+                imageType = "png";
+                break;
+            default:
+                imageType = "bmp";
+                break;
+        }
+        String path = "temp/temp-file/" + System.currentTimeMillis() + "." + imageType;
         try {
-            if (!ImageIO.write(image, "bmp", new File(path))) {
+            if (!ImageIO.write(image, imageType, new File(path))) {
                 throw new RuntimeException();
             }
             return function.apply(path);
