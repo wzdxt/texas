@@ -44,10 +44,13 @@ public class Displayer {
         GameStatus.Phase phase = phaseManager.getCurrentPhase();
         int[] playerPools = phaseManager.getPlayerPool();
         boolean[] playerRemain = phaseManager.getPlayerRemain();
+        playerRemain[0] = phaseManager.amILive();
+        int callNeed = phaseManager.getCallNeed();
         return GameStatus.builder()
                 .phase(phase)
                 .playerPools(playerPools)
-                .enermyRemain(playerRemain)
+                .enemyRemain(playerRemain)
+                .callNeed(callNeed)
                 .build();
     }
 

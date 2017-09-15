@@ -24,7 +24,7 @@ public class GameWindow {
     public BufferedImage refresh() {
         this.bi = RobotUtil.screenCapture(
                 screenParam.getGameX1(), screenParam.getGameY1(),
-                screenParam.getWidth(), screenParam.getHeight());
+                screenParam.getGameX2(), screenParam.getGameY2());
         return bi;
     }
 

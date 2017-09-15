@@ -55,7 +55,10 @@ public abstract class AbsCheck implements Operation {
             if (mistake < configure.getCheck().getRgbMistake()) {
                 return true;
             }
-            if (i < retry - 1) delay(0.2);
+            if (i < retry - 1) {
+                delay(0.2);
+                window.refresh();
+            }
         }
         return false;
     }

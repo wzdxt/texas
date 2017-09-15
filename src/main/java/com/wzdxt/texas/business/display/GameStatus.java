@@ -3,10 +3,6 @@ package com.wzdxt.texas.business.display;
 import lombok.Builder;
 import lombok.Data;
 
-import java.util.Arrays;
-import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
-
 /**
  * Created by dai_x on 17-9-4.
  */
@@ -19,18 +15,19 @@ public class GameStatus {
     // in game
     Status status = Status.NONE;
     int playerNum;
-    boolean[] enermyRemain;
-    int remainNum;
+    boolean[] enemyRemain;  // ok
+    int remainNum;          // ok
     int currentTurn;
     int pool;
     int[] playerPools;
     int thisTurnPool;
     int myCoin;
     int myPool;
+    int callNeed;
     // my turn
 
-    public void setEnermyRemain(boolean[] pr) {
-        this.enermyRemain = pr;
+    public void setEnemyRemain(boolean[] pr) {
+        this.enemyRemain = pr;
         this.remainNum = 0;
         for (boolean b : pr) {
             if (b) remainNum++;

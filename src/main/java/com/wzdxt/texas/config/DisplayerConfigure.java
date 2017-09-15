@@ -93,9 +93,13 @@ public class DisplayerConfigure {
         int[][] playerPool;
         int[][] playerRemain;
         int playerRemainColor;
+        int[] myCoin;
+        int myCoinLiveColor;
+        int myCoinDeadColor;
         int[] callButton;
-        int[][] myCard;
-        int[][] commonCard;
+        int[][] test;
+        int[][][] myCard;
+        int[][][] commonCard;
     }
 
 

@@ -8,9 +8,17 @@ import java.awt.image.BufferedImage;
  */
 public class RobotUtil {
 
+    /**
+     *
+     * @param x1
+     * @param y1
+     * @param x2 +1
+     * @param y2 +1
+     * @return
+     */
     public static BufferedImage screenCapture(int x1, int y1, int x2, int y2) {
         try {
-            return new Robot().createScreenCapture(new Rectangle(x1, y1, x2 - x1 + 1, y2 - y1 + 1));
+            return new Robot().createScreenCapture(new Rectangle(x1, y1, x2 - x1, y2 - y1));
         } catch (AWTException ignored) {
         }
         return null;

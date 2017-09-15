@@ -137,7 +137,7 @@ displayer:   # 线条大坐标不变, 区块大坐标+1
     total_coin: 899, 47, 1019, 74
     player_pool:
 #      - 0, 0, 66, 21
-      - 217, 357, 283, 378  # todo
+      - 369, 384, 435, 405
       - 217, 357, 283, 378
       - 164, 295, 230, 316
       - 661, 196, 727, 217
@@ -153,13 +153,14 @@ displayer:   # 线条大坐标不变, 区块大坐标+1
     player_remain_color: 0xdedede
     my_coin: 472, 506, 557, 526
     my_coin_live_color: 0xfcde8f
-    call_button: 0, 0, 0, 0 # todo
+    my_coin_dead_color: 0x8a7754
+    call_button: 652, 553, 796, 585
+    test:
+      - - 1
 #    my_card:
-#      - 0:
-#        - 0, 0, 0, 0 # todo
-#        - 0, 0, 0, 0 # todo
-#      - 1:
-#        - 0, 0, 0, 0 # todo
+#      - - 0, 0, 0, 0 # todo rank
+#        - 0, 0, 0, 0 # todo suit
+#      - - 0, 0, 0, 0 # todo
 #        - 0, 0, 0, 0 # todo
 #    common_card:
 #      - 0:

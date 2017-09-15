@@ -3,7 +3,6 @@ package com.wzdxt.texas.application;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import com.wzdxt.texas.business.display.Displayer;
 import com.wzdxt.texas.business.display.GameStatus;
-import com.wzdxt.texas.business.display.PhaseManager;
 import com.wzdxt.texas.business.display.ScreenParam;
 import com.wzdxt.texas.business.display.logic.GameWindow;
 import lombok.AllArgsConstructor;
@@ -46,7 +45,7 @@ public class MainFrame extends JFrame {
 
     private void initUI() {
         setTitle("Quit button");
-        setSize(600, 400);
+        setSize(400, 600);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
