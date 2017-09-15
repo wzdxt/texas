@@ -3,7 +3,6 @@ package com.wzdxt.texas.application;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import com.wzdxt.texas.business.display.Displayer;
 import com.wzdxt.texas.business.display.GameStatus;
-import com.wzdxt.texas.business.display.PhaseManager;
 import com.wzdxt.texas.business.display.ScreenParam;
 import com.wzdxt.texas.business.display.logic.GameWindow;
 import lombok.AllArgsConstructor;
@@ -23,9 +22,9 @@ import java.util.concurrent.ExecutionException;
 @Slf4j
 public class MainFrame extends JFrame {
 
-    private JButton matchAnchorButton;
     private JPanel panel1;
-    private JEditorPane editorPane1;
+    private JButton matchAnchorButton;
+    private JEditorPane logPane;
     private JButton currentPhaseButton;
     private JButton gameStatusButton;
     private JRadioButton yesRadioButton;
@@ -118,7 +117,7 @@ public class MainFrame extends JFrame {
 
     public void addLog(ILoggingEvent e) {
         EventQueue.invokeLater(() ->
-                editorPane1.setText(editorPane1.getText() + e.toString() + "\n"));
+                logPane.setText(logPane.getText() + e.toString() + "\n"));
     }
 
 }
