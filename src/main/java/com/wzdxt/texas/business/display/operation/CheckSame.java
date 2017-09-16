@@ -17,7 +17,7 @@ public class CheckSame extends AbsCheck {
     int x1, y1, x2, y2;
 
     @Override
-    public AbsCheck set(int[] p) {
+    public CheckSame set(int[] p) {
         this.set(p[0], p[1], p[2], p[3]);
         return this;
     }
@@ -25,11 +25,12 @@ public class CheckSame extends AbsCheck {
     /**
      * for line
      */
-    public void set(int x1, int y1, int x2, int y2) {
+    public CheckSame set(int x1, int y1, int x2, int y2) {
         this.x1 = x1;
         this.y1 = y1;
         this.x2 = x2;
         this.y2 = y2;
+        return this;
     }
 
     @Override

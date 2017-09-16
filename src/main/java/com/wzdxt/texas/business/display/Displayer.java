@@ -3,6 +3,7 @@ package com.wzdxt.texas.business.display;
 import com.wzdxt.texas.business.display.logic.GameWindow;
 import com.wzdxt.texas.business.display.operation.OperationEngine;
 import com.wzdxt.texas.config.DisplayerConfigure;
+import com.wzdxt.texas.model.Card;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.List;
 
 /**
  * Created by dai_x on 17-9-4.
@@ -98,6 +100,7 @@ public class Displayer {
                 return builder.build();
             case PLAYING:
                 GameStatus.Status status = phaseManager.getCurrentStatus();
+                builder.status(status);
                 if (status == GameStatus.Status.MY_TURN) {
                     return fulfillGameStatus(builder.build());
                 } else {
@@ -113,10 +116,25 @@ public class Displayer {
         boolean[] enemyRemain = phaseManager.getPlayerRemain();
         enemyRemain[0] = phaseManager.amILive();
         int callNeed = phaseManager.getCallNeed();
+        boolean[] playerExist = phaseManager.getPlayerExist();
+        int myCoin = phaseManager.getMyCoin();
+        List<Card> myCard = phaseManager.getMyCard();
+        List<Card> commonCard = phaseManager.getCommonCard();
+        int currentTurn = phaseManager.getCurrentTurn();
+        int totalPool = phaseManager.getTotalPool();
+        int bigBlind = phaseManager.getBigBlind();
+
 
         status.setPlayerPools(playerPools);
         status.setEnemyRemain(enemyRemain);
         status.setCallNeed(callNeed);
+        status.setPlayerExist(playerExist);
+        status.setMyCoin(myCoin);
+        status.setMyCard(myCard);
+        status.setCommonCard(commonCard);
+        status.setCurrentTurn(currentTurn);
+        status.setTotalPool(totalPool);
+        status.setBigBlind(bigBlind);
 
         return status;
     }

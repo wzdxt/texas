@@ -5,6 +5,7 @@ import com.wzdxt.texas.business.display.logic.GameWindow;
 import com.wzdxt.texas.business.display.operation.AbsCheck;
 import com.wzdxt.texas.business.display.operation.CheckContain;
 import com.wzdxt.texas.business.display.operation.CheckPoint;
+import com.wzdxt.texas.business.display.operation.CheckSame;
 import com.wzdxt.texas.business.display.util.OcrUtil;
 import com.wzdxt.texas.config.DisplayerConfigure;
 import com.wzdxt.texas.model.Card;
@@ -69,10 +70,21 @@ public class PhaseManager {
 
     public boolean[] getPlayerRemain() {
         boolean[] ret = new boolean[6];
-        int rgb = configure.getOcrArea().getPlayerRemainColor();
+        int rgb = configure.getOther().getPlayerRemainColor();
         for (int i = 1; i < 6; i++) {
-            int[] point = configure.getOcrArea().getPlayerRemain()[i];
+            int[] point = configure.getOther().getPlayerRemain()[i];
             ret[i] = ctx.getBean(CheckPoint.class).set(point[0], point[1], rgb).perform(1);
+        }
+        return ret;
+    }
+
+    public boolean[] getPlayerExist() {
+        boolean[] ret = new boolean[6];
+        int[][] player = configure.getOther().getPlayer();
+        int[] playerColor = configure.getOther().getPlayerColor();
+        for (int i = 0; i < player.length; i++) {
+            CheckPoint check = ctx.getBean(CheckPoint.class).set(player[i][0], player[i][1], playerColor[i]);
+            ret[i] = check.perform();
         }
         return ret;
     }
@@ -82,6 +94,16 @@ public class PhaseManager {
         int rgb = configure.getOcrArea().getMyCoinLiveColor();
         CheckContain check = ctx.getBean(CheckContain.class).set(area[0], area[1], area[2], area[3], rgb);
         return check.perform(1);
+    }
+
+    public int getMyCoin() {
+        int[] area = configure.getOcrArea().getMyCoin();
+        String s = ocr(area[0], area[1], area[2], area[3]);
+        if (s != null) {
+            return str2int(s);
+        } else {
+            return 0;
+        }
     }
 
     public int getCallNeed() {
@@ -96,14 +118,61 @@ public class PhaseManager {
 
     public List<Card> getMyCard() {
         List<Card> cardList = new ArrayList<>(2);
-        for (int[][] cardArea : configure.getOcrArea().getMyCard()) {
-            int[] rankArea = cardArea[0];
-            int[] suitArea = cardArea[1];
-            int card;
-            String suit;
-            // todo
+        for (DisplayerConfigure.CardArea cardArea : configure.getOcrArea().getMyCard()) {
+            cardList.add(getCardFromArea(cardArea));
         }
-        return null;
+        return cardList;
+    }
+
+    public List<Card> getCommonCard() {
+        List<Card> cardList = new ArrayList<>(2);
+        for (DisplayerConfigure.CardArea cardArea : configure.getOcrArea().getCommonCard()) {
+            cardList.add(getCardFromArea(cardArea));
+        }
+        return cardList;
+    }
+
+    protected Card getCardFromArea(DisplayerConfigure.CardArea area) {
+        int[] rankArea = area.getRank();
+        int[] suitArea = area.getSuit();
+        String rank = ocr(rankArea[0], rankArea[1], rankArea[2], rankArea[3]);
+        String suit = ocr(suitArea[0], suitArea[1], suitArea[2], suitArea[3]);
+        return Card.of(suit + rank);
+    }
+
+    public int getCurrentTurn() {
+        int[][] turn = configure.getOther().getTurn();
+        for (int i = 0; i < turn.length; i++) {
+            CheckSame check = ctx.getBean(CheckSame.class).set(turn[i]);
+            if (check.perform()) return i;
+        }
+        return -1;
+    }
+
+    public int getTotalPool() {
+        int[] area = configure.getOcrArea().getTotalPool();
+        String s = ocr(area[0], area[1], area[2], area[3]);
+        if (s != null) {
+            s = s.replaceAll("[^\\d\\.万亿]", "");
+            return str2int(s);
+        } else {
+            return 0;
+        }
+    }
+
+    public int getBigBlind() {
+        int[] area = configure.getOcrArea().getBlindInfo();
+        String s = ocr(area[0], area[1], area[2], area[3]);
+        if (s != null) {
+            int p;
+            for (p = s.length(); p > 0; p--) {
+                if (s.charAt(p-1) > '9' || s.charAt(p-1) < '0')
+                    break;
+            }
+            return str2int(s.substring(p));
+        } else {
+            return 150; // default blind
+        }
     }
 
     protected int str2int(String s) {

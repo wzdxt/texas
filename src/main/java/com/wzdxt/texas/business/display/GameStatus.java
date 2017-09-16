@@ -1,9 +1,13 @@
 package com.wzdxt.texas.business.display;
 
+import com.wzdxt.texas.model.Card;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.stream.IntStream;
+import java.util.stream.StreamSupport;
 
 /**
  * Created by dai_x on 17-9-4.
@@ -11,25 +15,36 @@ import java.util.stream.IntStream;
 @Data
 @Builder
 public class GameStatus {
-    Phase phase = Phase.NONE;
+    Phase phase = Phase.NONE;          // ok
     // not in game
-    int totalCoin;
+    int totalCoin;          // ok
     // in game
-    Status status = Status.NONE;
-    int playerNum;
+    Status status = Status.NONE;          // ok
+    boolean[] playerExist;              // ok
+    int bigBlind;            //
     boolean[] enemyRemain;          // ok
     private int remainNum;          // ok
-    int currentTurn;
-    int pool;
-    int[] playerPools;
-    int thisTurnPool;
-    int myCoin;
-    int myPool;
-    int callNeed;
+    int currentTurn;            // ok
+    int totalPool;              // ok
+    int[] playerPools;          // ok
+    int thisTurnPool;       // ok
+    int myCoin;          // ok
+    int myPool;         // ok
     // my turn
+    int callNeed;          // ok
+    List<Card> myCard;          // ok
+    List<Card> commonCard;          // ok
+
+    public int getMyPool() {
+        return playerPools[0];
+    }
+
+    public int getThisTurnPool() {
+        return Arrays.stream(playerPools).sum();
+    }
 
     public int getRemainNum() {
-        return (int) IntStream.range(0, enemyRemain.length).filter(i->enemyRemain[i]).count();
+        return (int)IntStream.range(0, enemyRemain.length).filter(i -> enemyRemain[i]).count();
     }
 
 

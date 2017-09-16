@@ -19,6 +19,7 @@ public class DisplayerConfigureTest {
 
     @Test
     public void test() {
-        System.out.println(configure);
+        assertNotNull(configure.getOcrArea().getMyCard()[1].getRank());
+//        System.out.println(configure);
     }
 }

@@ -17,13 +17,13 @@ import static org.junit.Assert.*;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class DisplayerImplTest {
+public class DisplayerTest extends ScreenTestBase {
     @Autowired
     Displayer displayer;
     @Autowired
     ScreenParam screenParam;
 
-    @Test
+//    @Test
     public void matchAnchor() throws Exception {
         displayer.matchAnchor();
         BufferedImage bi = new Robot().createScreenCapture(
@@ -31,6 +31,17 @@ public class DisplayerImplTest {
                         screenParam.getWidth(), screenParam.getHeight()));
         System.out.println(screenParam);
         TestUtil.save(bi);
+    }
+
+    @Test
+    public void test2PNG() throws Exception {
+        switchTo("2.PNG");
+        GameStatus status = displayer.getGameStatus();
+        assertEquals(GameStatus.Phase.WAITING, status.getPhase());
+    }
+
+    protected void switchTo(String s) throws Exception {
+        setScreen(this.getClass().getClassLoader().getResource("static/screen/" + s).toURI());
     }
 
 }

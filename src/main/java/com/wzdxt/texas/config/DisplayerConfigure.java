@@ -22,6 +22,7 @@ public class DisplayerConfigure {
     //    Object status;
     Map<String, OperationPlan> operation;
     OcrArea ocrArea;
+    Other other;
 
 
     @Data
@@ -91,17 +92,30 @@ public class DisplayerConfigure {
     public static class OcrArea {
         int[] totalCoin;
         int[][] playerPool;
-        int[][] playerRemain;
-        int playerRemainColor;
         int[] myCoin;
         int myCoinLiveColor;
         int myCoinDeadColor;
         int[] callButton;
-        int[][] test;
-        int[][][] myCard;
-        int[][][] commonCard;
+        int[] blindInfo;
+        CardArea[] myCard;
+        CardArea[] commonCard;
+        int[] totalPool;
     }
 
+    @Data
+    public static class CardArea {
+        int[] rank;
+        int[] suit;
+    }
+
+    @Data
+    public static class Other {
+        int[][] playerRemain;
+        int playerRemainColor;
+        int[][] turn;
+        int[][] player;
+        int[] playerColor;
+    }
 
 }
 

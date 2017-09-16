@@ -37,15 +37,15 @@ displayer:   # 线条大坐标不变, 区块大坐标+1
       next:
         - watting
         - room_page
-      actions:
-        start:
-          - check:
-            - point: 772, 148, 0xfde90b
-          - act:
-            - move: 111, 111    # todo
-            - click: 111, 111
-          - check:
-            - point: 772, 148, 0xfde90b
+#      actions:
+#        start:
+#          - check:
+#            - point: 772, 148, 0xfde90b
+#          - act:
+#            - move: 111, 111    # todo
+#            - click: 111, 111
+#          - check:
+#            - point: 772, 148, 0xfde90b
 #        showRoom:
 #    room_page:
 #      name: room_page
@@ -63,6 +63,7 @@ displayer:   # 线条大坐标不变, 区块大坐标+1
   status:   # 游戏状态
     watching:
       name: watching
+      check:
       next:
         - my_turn
     my_turn:
@@ -133,39 +134,50 @@ displayer:   # 线条大坐标不变, 区块大坐标+1
       - 661, 196, 727, 217
       - 792, 299, 858, 320
       - 741, 356, 807, 377
+    total_pool: 0, 0, 0, 0
+    my_coin: 472, 506, 557, 526
+    my_coin_live_color: 0xfcde8f
+    my_coin_dead_color: 0x8a7754
+    call_button: 652, 553, 796, 585
+    blind_info: 0, 0, 0, 0 # todo
+    my_card:
+      - rank: 0, 0, 0, 0 # todo rank
+        suit: 0, 0, 0, 0 # todo suit
+      - rank: 0, 0, 0, 0 # todo
+        suit: 0, 0, 0, 0 # todo
+    common_card:
+      - rank: 0, 0, 0, 0 # todo
+        suit: 0, 0, 0, 0 # todo
+      - rank: 0, 0, 0, 0 # todo
+        suit: 0, 0, 0, 0 # todo
+      - rank: 0, 0, 0, 0 # todo
+        suit: 0, 0, 0, 0 # todo
+      - rank: 0, 0, 0, 0 # todo
+        suit: 0, 0, 0, 0 # todo
+      - rank: 0, 0, 0, 0 # todo
+        suit: 0, 0, 0, 0 # todo
+  other:
+    player:
+      - 0, 0 # myself, always here
+      - 0, 0 # todo
+      - 0, 0 # todo
+      - 0, 0 # todo
+      - 0, 0 # todo
+      - 0, 0 # todo
+    player_color: 0, 0xffffff, 0xffffff, 0xffffff, 0xffffff, 0xffffff
     player_remain:
-      - 0, 0
+      - 0, 0  # myself, using coin area
       - 283, 462
       - 129, 364
       - 789, 139
       - 896, 359
       - 835, 466
     player_remain_color: 0xdedede
-    my_coin: 472, 506, 557, 526
-    my_coin_live_color: 0xfcde8f
-    my_coin_dead_color: 0x8a7754
-    call_button: 652, 553, 796, 585
-#    test:
-#      - - 1
-#    my_card:
-#      - - 0, 0, 0, 0 # todo rank
-#        - 0, 0, 0, 0 # todo suit
-#      - - 0, 0, 0, 0 # todo
-#        - 0, 0, 0, 0 # todo
-#    common_card:
-#      - 0:
-#        - 0, 0, 0, 0 # todo
-#        - 0, 0, 0, 0 # todo
-#      - 1:
-#        - 0, 0, 0, 0 # todo
-#        - 0, 0, 0, 0 # todo
-#      - 2:
-#        - 0, 0, 0, 0 # todo
-#        - 0, 0, 0, 0 # todo
-#      - 3:
-#        - 0, 0, 0, 0 # todo
-#        - 0, 0, 0, 0 # todo
-#      - 4:
-#        - 0, 0, 0, 0 # todo
-#        - 0, 0, 0, 0 # todo
+    turn:
+      - 0, 0, 0, 0 # todo
+      - 0, 0, 0, 0 # todo
+      - 0, 0, 0, 0 # todo
+      - 0, 0, 0, 0 # todo
+      - 0, 0, 0, 0 # todo
+      - 0, 0, 0, 0 # todo
 

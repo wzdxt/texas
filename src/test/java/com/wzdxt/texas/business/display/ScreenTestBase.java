@@ -20,7 +20,7 @@ import java.net.URI;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @ContextConfiguration(classes = TexasApplication.class)
-public class ScreenTestBase {
+abstract public class ScreenTestBase {
 
     protected void setScreen(URI uri) {
         try {
