@@ -63,7 +63,7 @@ public class DisplayerTest extends ScreenTestBase {
         GameStatus status = displayer.getGameStatus();
         assertEquals(GameStatus.Phase.PLAYING, status.getPhase());
         assertEquals(GameStatus.Status.MY_TURN, status.getStatus());
-// todo        assertArrayEquals(new boolean[]{true, true, true, true, true, true}, status.getPlayerExist());
+        assertArrayEquals(new boolean[]{true, true, true, true, true, true}, status.getPlayerExist());
         assertEquals(150, status.getBigBlind());
         assertArrayEquals(new boolean[]{true, true, true, true, true, true}, status.getPlayerRemain());
         assertEquals(6, status.getRemainNum());
