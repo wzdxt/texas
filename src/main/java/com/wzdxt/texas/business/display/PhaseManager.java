@@ -90,8 +90,8 @@ public class PhaseManager {
         ret[0] = true;
         int[][] playerAbsent = configure.getOther().getPlayerAbsent();
         for (int i = 1; i < playerAbsent.length; i++) {
-//            CheckLine check = ctx.getBean(CheckLine.class).set(playerAbsent[i][0], playerAbsent[i][1], playerAbsent[i][2], playerAbsent[i][3], playerAbsent[i][4]);
-//            ret[i] = check.perform();
+            CheckLine check = ctx.getBean(CheckLine.class).set(playerAbsent[i][0], playerAbsent[i][1], playerAbsent[i][2], playerAbsent[i][3], playerAbsent[i][4]);
+            ret[i] = !check.perform();
         }
         return ret;
     }
@@ -173,7 +173,7 @@ public class PhaseManager {
         if (s != null) {
             int p;
             for (p = s.length(); p > 0; p--) {
-                if (s.charAt(p-1) > '9' || s.charAt(p-1) < '0')
+                if (s.charAt(p - 1) > '9' || s.charAt(p - 1) < '0')
                     break;
             }
             return str2int(s.substring(p));
@@ -213,7 +213,8 @@ public class PhaseManager {
         String options = "-l texas-suit -psm 10";
         BufferedImage bi = screen.capture(x1, y1, x2, y2);
         bi = imageCutter.cutEdge(bi);
-        imageCutter.cutSuitCorner(bi);
+        if (bi != null)
+            imageCutter.cutSuitCorner(bi);
         return bi == null ? null : OcrUtil.recognize(bi, options);
     }
 

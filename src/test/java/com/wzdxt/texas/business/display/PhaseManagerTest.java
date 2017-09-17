@@ -65,9 +65,9 @@ public class PhaseManagerTest extends ScreenTestBase {
 //        assertArrayEquals(new int[]{0, 0,0,0,0,5375}, phaseManager.getPlayerPool());
 //        assertEquals(9100, phaseManager.getMyCoin());
 //        assertEquals(5375, phaseManager.getCallNeed());
-// todo        assertArrayEquals(new boolean[]{true, true, true, true, true, true}, status.getPlayerExist());
+        assertArrayEquals(new boolean[]{true, true, true, true, true, true}, phaseManager.getPlayerExist());
 //        assertEquals(Arrays.asList(Card.of("♣9"), Card.of("♦2")), phaseManager.getMyCard());
-        assertEquals(Arrays.asList(Card.of("♥9"), Card.of("♦J"), Card.of("♥Q")), phaseManager.getCommonCard());
+//        assertEquals(Arrays.asList(Card.of("♥9"), Card.of("♦J"), Card.of("♥Q")), phaseManager.getCommonCard());
     }
 
     protected void switchTo(String s) throws Exception {
