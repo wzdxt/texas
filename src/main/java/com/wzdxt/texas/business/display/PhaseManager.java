@@ -16,6 +16,8 @@ import org.springframework.stereotype.Component;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * Created by wzdxt on 2017/9/9.
@@ -137,15 +139,15 @@ public class PhaseManager {
         for (DisplayerConfigure.CardArea cardArea : configure.getOcrArea().getCommonCard()) {
             cardList.add(getCardFromArea(cardArea));
         }
-        return cardList;
+        return cardList.stream().filter(Objects::nonNull).collect(Collectors.toList());
     }
 
     protected Card getCardFromArea(DisplayerConfigure.CardArea area) {
         int[] rankArea = area.getRank();
         int[] suitArea = area.getSuit();
-        String rank = ocr(rankArea[0], rankArea[1], rankArea[2], rankArea[3]);
-        String suit = ocr(suitArea[0], suitArea[1], suitArea[2], suitArea[3]);
-        return Card.of(suit.substring(0, 1) + rank);
+        String rank = ocrRank(rankArea[0], rankArea[1], rankArea[2], rankArea[3]);
+        String suit = ocrSuit(suitArea[0], suitArea[1], suitArea[2], suitArea[3]);
+        return rank == null && suit == null ? null : Card.of(suit.substring(0, 1) + rank);
     }
 
     public int getCurrentTurn() {
@@ -203,9 +205,21 @@ public class PhaseManager {
     }
 
     protected String ocr(int x1, int y1, int x2, int y2) {
+        return ocr(x1, y1, x2, y2, "-l texas -psm 7");
+    }
+
+    protected String ocrRank(int x1, int y1, int x2, int y2) {
+        return ocr(x1, y1, x2, y2, "-l texas-rank -psm 10");
+    }
+
+    protected String ocrSuit(int x1, int y1, int x2, int y2) {
+        return ocr(x1, y1, x2, y2, "-l texas-suit -psm 10").substring(0, 1);
+    }
+
+    protected String ocr(int x1, int y1, int x2, int y2, String options) {
         BufferedImage bi = screen.capture(x1, y1, x2, y2);
         bi = imageCutter.cutEdge(bi);
-        return bi == null ? null : OcrUtil.recognize(bi);
+        return bi == null ? null : OcrUtil.recognize(bi, options);
     }
 
 }

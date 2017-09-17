@@ -1,6 +1,7 @@
 package com.wzdxt.texas.business.display.util;
 
 import cn.easyproject.easyocr.EasyOCR;
+import cn.easyproject.easyocr.ImageType;
 
 import java.awt.image.BufferedImage;
 
@@ -17,7 +18,8 @@ public class OcrUtil {
     synchronized
     public static String recognize(String filepath, String options) {
         try {
-            options = "-l texas -psm 7";  // 6 or 7
+            if (options == null)
+                options = "-l texas -psm 7";  // 6 or 7
             options += " texas";
             ocr.setTesseractOptions(options);
             return ocr.discern(filepath);

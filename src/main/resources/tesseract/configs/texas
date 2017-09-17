@@ -6,4 +6,4 @@ load_number_dawg     0
 load_bigram_dawg     0
 #user_words_suffix    texas-words
 #user_patterns_suffix texas-patterns
-tessedit_char_whitelist 0123456789.万♦♣♠♥
+tessedit_char_whitelist 0123456789JQK.万♦♣♠♥
