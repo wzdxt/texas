@@ -19,7 +19,7 @@ public class DisplayerConfigure {
     Anchor anchor;
     Check check;
     Map<String, Phase> phase;
-    //    Object status;
+    Map<String, Status> status;
     Map<String, OperationPlan> operation;
     OcrArea ocrArea;
     Other other;
@@ -115,6 +115,13 @@ public class DisplayerConfigure {
         int[][] turn;
         int[][] player;
         int[] playerColor;
+    }
+
+    @Data
+    public static class Status {
+        String name;
+        CheckOperationList check;
+        String[] next;
     }
 
 }

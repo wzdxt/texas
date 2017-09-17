@@ -4,6 +4,6 @@ load_unambig_dawg    0
 load_punc_dawg       0
 load_number_dawg     0
 load_bigram_dawg     0
-user_words_suffix    texas-words
-user_patterns_suffix texas-patterns
-tessedit_char_whitelist 0123456789-.py()*>=+万
+#user_words_suffix    texas-words
+#user_patterns_suffix texas-patterns
+tessedit_char_whitelist 0123456789.万♦♣♠♥

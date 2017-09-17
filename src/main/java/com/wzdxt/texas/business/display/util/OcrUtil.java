@@ -17,7 +17,9 @@ public class OcrUtil {
     synchronized
     public static String recognize(String filepath, String options) {
         try {
-            ocr.setTesseractOptions( "-l chi_sim -psm 7" );  // 6 or 7
+            options = "-l texas -psm 7";  // 6 or 7
+            options += " texas";
+            ocr.setTesseractOptions(options);
             return ocr.discern(filepath);
         } finally {
             ocr.setTesseractOptions(EasyOCR.OPTION_LANG_CHI_SIM);

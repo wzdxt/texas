@@ -39,9 +39,8 @@ public class Card implements Comparable<Card> {
     }
 
     public static Card of(String s) {
-        assert s.length() == 2;
         Integer suit = Constants.SUIT_REVERCE_MAP.get(s.substring(0, 1));
-        Integer rank = Constants.RANK_REVERCE_MAP.get(s.substring(1, 2));
+        Integer rank = Constants.RANK_REVERCE_MAP.get(s.substring(1));
         assert suit != null;
         assert rank != null;
         return new Card(suit, rank);

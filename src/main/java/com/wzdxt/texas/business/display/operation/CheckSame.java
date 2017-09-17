@@ -36,21 +36,25 @@ public class CheckSame extends AbsCheck {
     @Override
     public int check() {
         int ret = 0;
-        List<Integer> mistake = new ArrayList<>();
 
         BufferedImage bi = screenCapture();
         List<Integer> allRgb = new ArrayList<>();
-        LineUtil.walk(x1, y1, x2, y2, configure.getCheck().getLineStep(), (x, y) -> allRgb.add(bi.getRGB(x - x1, y - y1)));
+        LineUtil.walk(x1, y1, x2, y2, configure.getCheck().getLineStep(), (x, y) -> {
+            int cx = x >= x1 ? x - x1 : x - x1 + bi.getWidth();
+            int cy = y >= y1 ? y - y1 : y - y1 + bi.getHeight();
+            allRgb.add(bi.getRGB(cx, cy));
+            return true;
+        });
 
-        int aveR = mistake.stream().map(m -> (m & 0xff0000) >> 16).reduce(0, (s, i) -> s + i) / mistake.size();
-        ret += mistake.stream().map(m -> (m & 0xff0000) >> 16).map(r -> Math.abs(r - aveR))
-                .reduce(0, (s, i) -> s + i) / mistake.size();
-        int aveG = mistake.stream().map(m -> (m & 0x00ff00) >> 8).reduce(0, (s, i) -> s + i) / mistake.size();
-        ret += mistake.stream().map(m -> (m & 0x00ff00) >> 8).map(g -> Math.abs(g - aveG))
-                .reduce(0, (s, i) -> s + i) / mistake.size();
-        int aveB = mistake.stream().map(m -> m & 0x0000ff).reduce(0, (s, i) -> s + i) / mistake.size();
-        ret += mistake.stream().map(m -> m & 0x0000ff).map(b -> Math.abs(b - aveB))
-                .reduce(0, (s, i) -> s + i) / mistake.size();
+        int aveR = allRgb.stream().map(m -> (m & 0xff0000) >> 16).reduce(0, (s, i) -> s + i) / allRgb.size();
+        ret += allRgb.stream().map(m -> (m & 0xff0000) >> 16).map(r -> Math.abs(r - aveR))
+                .reduce(0, (s, i) -> s + i) / allRgb.size();
+        int aveG = allRgb.stream().map(m -> (m & 0x00ff00) >> 8).reduce(0, (s, i) -> s + i) / allRgb.size();
+        ret += allRgb.stream().map(m -> (m & 0x00ff00) >> 8).map(g -> Math.abs(g - aveG))
+                .reduce(0, (s, i) -> s + i) / allRgb.size();
+        int aveB = allRgb.stream().map(m -> m & 0x0000ff).reduce(0, (s, i) -> s + i) / allRgb.size();
+        ret += allRgb.stream().map(m -> m & 0x0000ff).map(b -> Math.abs(b - aveB))
+                .reduce(0, (s, i) -> s + i) / allRgb.size();
 
         return ret;
     }

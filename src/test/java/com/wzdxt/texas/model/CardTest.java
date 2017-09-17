@@ -16,4 +16,9 @@ public class CardTest {
         }
     }
 
+    @Test
+    public void ofString() throws Exception {
+        assertEquals("♠10", Card.of("♠10").toString());
+    }
+
 }

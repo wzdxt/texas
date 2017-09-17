@@ -89,7 +89,7 @@ public abstract class AbsCheck implements Operation {
                 check.set(operation.pointRange);
             } else if (operation.same != null && operation.same.length > 0) {
                 check = cxt.getBean(CheckSame.class);
-                check.set(operation.pointRange);
+                check.set(operation.same);
             }
             if (check != null) {
                 list.add(check);

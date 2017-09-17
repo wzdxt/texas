@@ -41,6 +41,10 @@ abstract public class ScreenTestBase {
                 public BufferedImage capture(int x1, int y1, int x2, int y2) {
                     return bi.getSubimage(x1, y1, x2 - x1, y2 - y1);
                 }
+                @Override
+                public BufferedImage refresh() {
+                    return bi;
+                }
             };
         }
     }

@@ -8,11 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * Created by dai_x on 17-9-6.<br/>
@@ -66,7 +64,7 @@ public class ImageComparator {
      * @param <T>
      */
     public <T> Tuple<T, Integer> findSimilar(BufferedImage screen, Map<T, BufferedImage> candidateMap) {
-        int mistake = (int) 1e10;
+        int mistake = (int)1e10;
         T choose = null;
         for (Map.Entry<T, BufferedImage> entry : candidateMap.entrySet()) {
             BufferedImage candidate = entry.getValue();
@@ -82,7 +80,7 @@ public class ImageComparator {
     }
 
     public double getPixRate(BufferedImage image) {
-        int backgroundRgb = getBackgroundAndFrontRgb(image).left;
+        int backgroundRgb = getBackgroundRgb(image);
         int front = 0;
         int width = image.getWidth();
         int height = image.getHeight();
@@ -96,21 +94,46 @@ public class ImageComparator {
         return front * 1.0 / width * height;
     }
 
-    public Tuple<Integer, Integer> getBackgroundAndFrontRgb(BufferedImage image) {
-        Map<Integer, Integer> rgbMap = new HashMap<>();
+    public int getBackgroundRgb(BufferedImage image) {
         int width = image.getWidth();
         int height = image.getHeight();
+        List<Integer> allRgb = new ArrayList<>((width + height) * 2);
         for (int i = 0; i < width; i++) {
-            rgbMap.computeIfAbsent(image.getRGB(i, 0), _1 -> 1);
-            rgbMap.computeIfAbsent(image.getRGB(i, height - 1), _1 -> 1);
+            allRgb.add(image.getRGB(i, 0));
+            allRgb.add(image.getRGB(i, height - 1));
         }
         for (int j = 0; j < height; j++) {
-            rgbMap.computeIfAbsent(image.getRGB(0, j), _1 -> 1);
-            rgbMap.computeIfAbsent(image.getRGB(width - 1, j), _1 -> 1);
+            allRgb.add(image.getRGB(0, j));
+            allRgb.add(image.getRGB(width - 1, j));
         }
-        List<Map.Entry<Integer, Integer>> entryList = new ArrayList<>(rgbMap.entrySet());
-        entryList.sort(Comparator.comparingInt(Map.Entry::getValue));
-        return Tuple.of(entryList.get(0).getKey(), entryList.get(1).getKey());
+        List<Map.Entry<Integer, Long>> entryList =
+                allRgb.stream().collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
+                        .entrySet().stream().sorted(Map.Entry.<Integer, Long>comparingByValue().reversed()).collect(Collectors.toList());
+        return entryList.get(0).getKey();
+    }
+
+    /**
+     * only for tiny image
+     *
+     * @param image
+     * @param background
+     * @return
+     */
+    public int getFrontRgb(BufferedImage image, int background) {
+        int width = image.getWidth();
+        int height = image.getHeight();
+        List<Integer> allRgb = new ArrayList<>(width * height);
+        for (int i = 0; i < width; i += 2) {
+            for (int j = 0; j < height; j += 2) {
+                int rgb = image.getRGB(i, j);
+                if (RgbUtil.calcRgbMistake(rgb, background) < configure.getCheck().getRgbMistake())
+                    allRgb.add(rgb);
+            }
+        }
+        List<Map.Entry<Integer, Long>> entryList =
+                allRgb.stream().collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
+                        .entrySet().stream().sorted(Map.Entry.<Integer, Long>comparingByValue().reversed()).collect(Collectors.toList());
+        return entryList.get(0).getKey();
     }
 
 }

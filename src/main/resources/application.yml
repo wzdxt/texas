@@ -61,21 +61,24 @@ displayer:   # 线条大坐标不变, 区块大坐标+1
         - line: 570, 418, 619, 418, 0xe6e6e6
         - line: 632, 418, 682, 418, 0xe6e6e6
   status:   # 游戏状态
-    watching:
-      name: watching
-      check:
-      next:
-        - my_turn
-    my_turn:
+    my_turn:    # 必须在watching之前
       name: my_turn
+      check:
+        - same: 511, 410, 506, 406
       next:
         - watching
         - finish
-    finish:
-      name: finish
+    watching:   # 游戏中，其他玩家行动
+      name: watching
+      check:
+        - same: 567, 419, 684, 419, 0x1e6e2f
       next:
         - my_turn
-        - watching
+#    finish:
+#      name: finish
+#      next:
+#        - my_turn
+#        - watching
 
 #  operation:    # 操作定义配置
 #    call_or_check:
@@ -134,37 +137,38 @@ displayer:   # 线条大坐标不变, 区块大坐标+1
       - 661, 196, 727, 217
       - 792, 299, 858, 320
       - 741, 356, 807, 377
-    total_pool: 0, 0, 0, 0
+    total_pool: 443, 191, 593, 201
     my_coin: 472, 506, 557, 526
     my_coin_live_color: 0xfcde8f
     my_coin_dead_color: 0x8a7754
     call_button: 652, 553, 796, 585
-    blind_info: 0, 0, 0, 0 # todo
+    blind_info: 413, 357, 620, 375
     my_card:
-      - rank: 0, 0, 0, 0 # todo rank
-        suit: 0, 0, 0, 0 # todo suit
-      - rank: 0, 0, 0, 0 # todo
-        suit: 0, 0, 0, 0 # todo
+      - rank: 568, 420, 585, 444
+        suit: 566, 444, 587, 463
+      - rank: 630, 420, 646, 445
+        suit: 629, 445, 649, 465
     common_card:
-      - rank: 0, 0, 0, 0 # todo
-        suit: 0, 0, 0, 0 # todo
-      - rank: 0, 0, 0, 0 # todo
-        suit: 0, 0, 0, 0 # todo
-      - rank: 0, 0, 0, 0 # todo
-        suit: 0, 0, 0, 0 # todo
-      - rank: 0, 0, 0, 0 # todo
-        suit: 0, 0, 0, 0 # todo
-      - rank: 0, 0, 0, 0 # todo
-        suit: 0, 0, 0, 0 # todo
+                       # 17  28
+      - rank: 320, 257, 337, 285
+                       # 21  23
+        suit: 319, 286, 340, 309
+      - rank: 400, 257, 417, 285
+        suit: 399, 286, 420, 310
+      - rank: 481, 257, 498, 285
+        suit: 480, 286, 502, 309
+      - rank: 562, 257, 580, 285
+        suit: 561, 286, 281, 309
+      - rank: 642, 257, 660, 285
+        suit: 641, 286, 663, 309
   other:
     player:
       - 0, 0 # myself, always here
-      - 0, 0 # todo
-      - 0, 0 # todo
-      - 0, 0 # todo
-      - 0, 0 # todo
-      - 0, 0 # todo
-    player_color: 0, 0xffffff, 0xffffff, 0xffffff, 0xffffff, 0xffffff
+      - 283, 407, 0x0e3e1b
+      - 129, 311, 0x1c1a1d
+      - 699, 169, 0x25242a
+      - 939, 283, 0x15162d
+      - 775, 383, 0x0a2a16
     player_remain:
       - 0, 0  # myself, using coin area
       - 283, 462
@@ -174,10 +178,11 @@ displayer:   # 线条大坐标不变, 区块大坐标+1
       - 835, 466
     player_remain_color: 0xdedede
     turn:
-      - 0, 0, 0, 0 # todo
-      - 0, 0, 0, 0 # todo
-      - 0, 0, 0, 0 # todo
-      - 0, 0, 0, 0 # todo
-      - 0, 0, 0, 0 # todo
-      - 0, 0, 0, 0 # todo
+                #  -5   -4
+      - 511, 410, 506, 406
+      - 233, 410, 228, 406
+      - 79, 311, 74, 307
+      - 740, 77, 732, 73
+      - 940, 311, 935, 307
+      - 786, 410, 781, 406
 

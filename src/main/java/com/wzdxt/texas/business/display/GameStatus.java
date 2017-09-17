@@ -21,7 +21,7 @@ public class GameStatus {
     // in game
     Status status = Status.NONE;          // ok
     boolean[] playerExist;              // ok
-    int bigBlind;            //
+    int bigBlind;            // ok
     boolean[] enemyRemain;          // ok
     private int remainNum;          // ok
     int currentTurn;            // ok
@@ -66,8 +66,8 @@ public class GameStatus {
         MY_TURN,
         FINISH;
 
-        public static Phase of(String name) {
-            return Phase.valueOf(name.toUpperCase());
+        public static Status of(String name) {
+            return Status.valueOf(name.toUpperCase());
         }
     }
 }

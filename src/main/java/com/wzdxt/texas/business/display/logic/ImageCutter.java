@@ -22,7 +22,7 @@ public class ImageCutter {
     ImageComparator imageComparator;
 
     public BufferedImage cutEdge(BufferedImage image) {
-        int background = imageComparator.getBackgroundAndFrontRgb(image).left;
+        int background = imageComparator.getBackgroundRgb(image);
         int width = image.getWidth();
         int height = image.getHeight();
         int top, bottom, left, right;
@@ -62,9 +62,8 @@ public class ImageCutter {
 
     public List<BufferedImage> cutCharactors(BufferedImage image) {
         List<BufferedImage> ret = new ArrayList<>();
-        Tuple<Integer, Integer> tuple = imageComparator.getBackgroundAndFrontRgb(image);
-        int background = tuple.left;
-        int front = tuple.right;
+        int background = imageComparator.getBackgroundRgb(image);
+        int front = imageComparator.getFrontRgb(image, background);
         int width = image.getWidth();
         int height = image.getHeight();
         int left = 0;

@@ -45,7 +45,15 @@ public class PhaseManager {
     }
 
     public GameStatus.Status getCurrentStatus() {
-        return GameStatus.Status.MY_TURN;
+        for (DisplayerConfigure.Status statusConf : configure.getStatus().values()) {
+            List<AbsCheck> checkList = AbsCheck.fromConfig(ctx, statusConf.getCheck());
+            boolean succ = true;
+            for (AbsCheck check : checkList) {
+                succ &= check.perform(1);
+            }
+            if (succ) return GameStatus.Status.of(statusConf.getName());
+        }
+        return GameStatus.Status.FINISH;
     }
 
     protected String getTotalCoinOcrRes() {
@@ -80,10 +88,10 @@ public class PhaseManager {
 
     public boolean[] getPlayerExist() {
         boolean[] ret = new boolean[6];
+        ret[0] = true;
         int[][] player = configure.getOther().getPlayer();
-        int[] playerColor = configure.getOther().getPlayerColor();
-        for (int i = 0; i < player.length; i++) {
-            CheckPoint check = ctx.getBean(CheckPoint.class).set(player[i][0], player[i][1], playerColor[i]);
+        for (int i = 1; i < player.length; i++) {
+            CheckPoint check = ctx.getBean(CheckPoint.class).set(player[i][0], player[i][1], player[i][2]);
             ret[i] = check.perform();
         }
         return ret;
@@ -137,7 +145,7 @@ public class PhaseManager {
         int[] suitArea = area.getSuit();
         String rank = ocr(rankArea[0], rankArea[1], rankArea[2], rankArea[3]);
         String suit = ocr(suitArea[0], suitArea[1], suitArea[2], suitArea[3]);
-        return Card.of(suit + rank);
+        return Card.of(suit.substring(0, 1) + rank);
     }
 
     public int getCurrentTurn() {
