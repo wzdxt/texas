@@ -1,10 +1,13 @@
 package com.wzdxt.texas.business.display;
 
+import com.wzdxt.texas.model.Card;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.Arrays;
 
 import static org.junit.Assert.*;
 
@@ -47,11 +50,24 @@ public class PhaseManagerTest extends ScreenTestBase {
         assertEquals(150, pools[4]);
         assertEquals(600, pools[5]);
         boolean[] remains = phaseManager.getPlayerRemain();
-        assertEquals(false, remains[1]);
+        assertEquals(true, remains[1]);
         assertEquals(true, remains[2]);
         assertEquals(true, remains[3]);
         assertEquals(true, remains[4]);
         assertEquals(true, remains[5]);
+    }
+
+    @Test
+    public void test5PNG() throws Exception {
+        switchTo("5.PNG");
+//        assertEquals(150, phaseManager.getBigBlind());
+//        assertEquals(6275, phaseManager.getTotalPool());
+//        assertArrayEquals(new int[]{0, 0,0,0,0,5375}, phaseManager.getPlayerPool());
+//        assertEquals(9100, phaseManager.getMyCoin());
+//        assertEquals(5375, phaseManager.getCallNeed());
+// todo        assertArrayEquals(new boolean[]{true, true, true, true, true, true}, status.getPlayerExist());
+//        assertEquals(Arrays.asList(Card.of("♣9"), Card.of("♦2")), phaseManager.getMyCard());
+        assertEquals(Arrays.asList(Card.of("♥9"), Card.of("♦J"), Card.of("♥Q")), phaseManager.getCommonCard());
     }
 
     protected void switchTo(String s) throws Exception {

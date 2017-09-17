@@ -113,8 +113,8 @@ public class Displayer {
 
     public GameStatus fulfillGameStatus(GameStatus status) {
         int[] playerPools = phaseManager.getPlayerPool();
-        boolean[] enemyRemain = phaseManager.getPlayerRemain();
-        enemyRemain[0] = phaseManager.amILive();
+        boolean[] playerRemain = phaseManager.getPlayerRemain();
+        playerRemain[0] = phaseManager.amILive();
         int callNeed = phaseManager.getCallNeed();
         boolean[] playerExist = phaseManager.getPlayerExist();
         int myCoin = phaseManager.getMyCoin();
@@ -126,7 +126,7 @@ public class Displayer {
 
 
         status.setPlayerPools(playerPools);
-        status.setEnemyRemain(enemyRemain);
+        status.setPlayerRemain(playerRemain);
         status.setCallNeed(callNeed);
         status.setPlayerExist(playerExist);
         status.setMyCoin(myCoin);

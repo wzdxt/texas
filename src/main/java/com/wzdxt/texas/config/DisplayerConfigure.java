@@ -113,7 +113,7 @@ public class DisplayerConfigure {
         int[][] playerRemain;
         int playerRemainColor;
         int[][] turn;
-        int[][] player;
+        int[][] playerAbsent;
         int[] playerColor;
     }
 

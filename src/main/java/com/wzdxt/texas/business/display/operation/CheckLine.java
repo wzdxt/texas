@@ -18,17 +18,18 @@ public class CheckLine extends AbsCheck {
     int rgb;
 
     @Override
-    public AbsCheck set(int[] p) {
+    public CheckLine set(int[] p) {
         this.set(p[0], p[1], p[2], p[3], p[4]);
         return this;
     }
 
-    public void set(int x1, int y1, int x2, int y2, int rgb) {
+    public CheckLine set(int x1, int y1, int x2, int y2, int rgb) {
         this.x1 = x1;
         this.y1 = y1;
         this.x2 = x2;
         this.y2 = y2;
         this.rgb = rgb;
+        return this;
     }
 
     @Override

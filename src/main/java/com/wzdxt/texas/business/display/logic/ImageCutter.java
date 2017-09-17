@@ -9,7 +9,9 @@ import org.springframework.stereotype.Component;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 /**
  * Created by wzdxt on 2017/9/6.
@@ -94,6 +96,24 @@ public class ImageCutter {
         }
 
         return ret;
+    }
+
+    public void cutSuitCorner(BufferedImage bi) {
+        int background = imageComparator.getBackgroundRgb(bi);
+        int width = bi.getWidth();
+        int height = bi.getHeight();
+        Queue<Tuple<Integer, Integer>> queue = new LinkedList<>();
+        queue.add(Tuple.of(width-1, height-1));
+        while (!queue.isEmpty()) {
+            Tuple<Integer, Integer> curr = queue.poll();
+            int x = curr.getLeft(), y = curr.getRight();
+            int rgb = bi.getRGB(x, y);
+            if (RgbUtil.calcRgbMistake(rgb, background) > configure.getCheck().getRgbMistake()) {
+                bi.setRGB(x, y, background);
+                queue.add(Tuple.of(x-1, y));
+                queue.add(Tuple.of(x, y-1));
+            }
+        }
     }
 
 }

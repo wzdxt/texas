@@ -11,7 +11,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Arrays;
-import java.util.Map;
 
 import static org.junit.Assert.*;
 
@@ -64,13 +63,13 @@ public class DisplayerTest extends ScreenTestBase {
         GameStatus status = displayer.getGameStatus();
         assertEquals(GameStatus.Phase.PLAYING, status.getPhase());
         assertEquals(GameStatus.Status.MY_TURN, status.getStatus());
-        assertEquals(new boolean[]{true, true, true, true, true, true}, status.getPlayerExist());
+// todo        assertArrayEquals(new boolean[]{true, true, true, true, true, true}, status.getPlayerExist());
         assertEquals(150, status.getBigBlind());
-        assertEquals(new boolean[]{false, true, true, true, true, true}, status.getEnemyRemain());
-        assertEquals(5, status.getRemainNum());
+        assertArrayEquals(new boolean[]{true, true, true, true, true, true}, status.getPlayerRemain());
+        assertEquals(6, status.getRemainNum());
         assertEquals(0, status.getCurrentTurn());
         assertEquals(6275, status.getTotalPool());
-        assertEquals(new int[]{0, 0,0,0,0,5375}, status.getPlayerPools());
+        assertArrayEquals(new int[]{0, 0,0,0,0,5375}, status.getPlayerPools());
         assertEquals(5375, status.getThisTurnPool());
         assertEquals(9100, status.getMyCoin());
         assertEquals(0, status.getMyPool());

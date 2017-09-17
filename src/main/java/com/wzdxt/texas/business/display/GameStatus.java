@@ -7,7 +7,6 @@ import lombok.Data;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
-import java.util.stream.StreamSupport;
 
 /**
  * Created by dai_x on 17-9-4.
@@ -22,7 +21,7 @@ public class GameStatus {
     Status status = Status.NONE;          // ok
     boolean[] playerExist;              // ok
     int bigBlind;            // ok
-    boolean[] enemyRemain;          // ok
+    boolean[] playerRemain;          // ok
     private int remainNum;          // ok
     int currentTurn;            // ok
     int totalPool;              // ok
@@ -44,7 +43,7 @@ public class GameStatus {
     }
 
     public int getRemainNum() {
-        return (int)IntStream.range(0, enemyRemain.length).filter(i -> enemyRemain[i]).count();
+        return (int)IntStream.range(0, playerRemain.length).filter(i -> playerRemain[i]).count();
     }
 
 

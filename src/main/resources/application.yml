@@ -137,7 +137,7 @@ displayer:   # 线条大坐标不变, 区块大坐标+1
       - 661, 196, 727, 217
       - 792, 299, 858, 320
       - 741, 356, 807, 377
-    total_pool: 443, 191, 593, 201
+    total_pool: 443, 191, 593, 210
     my_coin: 472, 506, 557, 526
     my_coin_live_color: 0xfcde8f
     my_coin_dead_color: 0x8a7754
@@ -162,21 +162,21 @@ displayer:   # 线条大坐标不变, 区块大坐标+1
       - rank: 642, 257, 660, 285
         suit: 641, 286, 663, 309
   other:
-    player:
+    player_absent:  # check by line
       - 0, 0 # myself, always here
-      - 283, 407, 0x0e3e1b
-      - 129, 311, 0x1c1a1d
-      - 699, 169, 0x25242a
-      - 939, 283, 0x15162d
-      - 775, 383, 0x0a2a16
+      - 727, 434, 766, 434, 0x301e36
+      - 727, 434, 766, 434, 0x301e36 # todo
+      - 699, 169
+      - 939, 283
+      - 775, 383
     player_remain:
       - 0, 0  # myself, using coin area
-      - 283, 462
-      - 129, 364
-      - 789, 139
-      - 896, 359
-      - 835, 466
-    player_remain_color: 0xdedede
+      - 308, 466
+      - 155, 364
+      - 816, 136
+      - 871, 364
+      - 861, 466
+    player_remain_color: 0xfdfdfd
     turn:
                 #  -5   -4
       - 511, 410, 506, 406

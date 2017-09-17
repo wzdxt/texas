@@ -2,10 +2,7 @@ package com.wzdxt.texas.business.display;
 
 import com.wzdxt.texas.business.display.logic.ImageCutter;
 import com.wzdxt.texas.business.display.logic.GameWindow;
-import com.wzdxt.texas.business.display.operation.AbsCheck;
-import com.wzdxt.texas.business.display.operation.CheckContain;
-import com.wzdxt.texas.business.display.operation.CheckPoint;
-import com.wzdxt.texas.business.display.operation.CheckSame;
+import com.wzdxt.texas.business.display.operation.*;
 import com.wzdxt.texas.business.display.util.OcrUtil;
 import com.wzdxt.texas.config.DisplayerConfigure;
 import com.wzdxt.texas.model.Card;
@@ -91,10 +88,10 @@ public class PhaseManager {
     public boolean[] getPlayerExist() {
         boolean[] ret = new boolean[6];
         ret[0] = true;
-        int[][] player = configure.getOther().getPlayer();
-        for (int i = 1; i < player.length; i++) {
-            CheckPoint check = ctx.getBean(CheckPoint.class).set(player[i][0], player[i][1], player[i][2]);
-            ret[i] = check.perform();
+        int[][] playerAbsent = configure.getOther().getPlayerAbsent();
+        for (int i = 1; i < playerAbsent.length; i++) {
+//            CheckLine check = ctx.getBean(CheckLine.class).set(playerAbsent[i][0], playerAbsent[i][1], playerAbsent[i][2], playerAbsent[i][3], playerAbsent[i][4]);
+//            ret[i] = check.perform();
         }
         return ret;
     }
@@ -119,7 +116,7 @@ public class PhaseManager {
     public int getCallNeed() {
         int[] area = configure.getOcrArea().getCallButton();
         String s = ocr(area[0], area[1], area[2], area[3]);
-        if (s != null && s.startsWith("跟")) {
+        if (s != null) {
             return str2int(s.substring(1));
         } else {
             return 0;
@@ -213,7 +210,11 @@ public class PhaseManager {
     }
 
     protected String ocrSuit(int x1, int y1, int x2, int y2) {
-        return ocr(x1, y1, x2, y2, "-l texas-suit -psm 10").substring(0, 1);
+        String options = "-l texas-suit -psm 10";
+        BufferedImage bi = screen.capture(x1, y1, x2, y2);
+        bi = imageCutter.cutEdge(bi);
+        imageCutter.cutSuitCorner(bi);
+        return bi == null ? null : OcrUtil.recognize(bi, options);
     }
 
     protected String ocr(int x1, int y1, int x2, int y2, String options) {
