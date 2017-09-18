@@ -8,6 +8,7 @@ import com.wzdxt.texas.model.Card;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import java.awt.*;
@@ -45,45 +46,46 @@ public class Displayer {
 
     public void setScan(boolean b) {
         this.scan = b;
-        if (b) run();
     }
 
     public void setAutoRun(boolean b) {
         this.autoRun = b;
-        if (b) run();
     }
 
     public void setActOnce() {
         this.actOnce = true;
-        run();
     }
 
-    private void run() {
-        GameStatus lastStatus = null;
-        while (autoRun || actOnce || scan) {
-            GameStatus.Phase phase = getCurrentPhase();
-            if (phase == GameStatus.Phase.PLAYING) {
-                GameStatus status = getGameStatus();
-                if (status.status == GameStatus.Status.MY_TURN) {
-                    if (!status.equals(lastStatus)) {
-                        log.info("游戏状态发生变化: {}", status);
-                        lastStatus = status;
-                    }
-                    log.info("手牌: {}", status.getMyCard());
-                    log.info("台面: {}", status.getCommonCard());
-                    MasterDecision masterDecision = player.askMaster(status);
-                    log.info("AI建议: {}", masterDecision);
-                    TexasPlayer.FinalAction finalAction = player.makeAction(masterDecision, status);
-                    log.info("最终操作: {}", finalAction);
-                    if (autoRun || actOnce) {
-                        try {
-                            player.act(finalAction);
-                            log.info("执行成功！");
-                        } catch (OperationEngine.OperationException e) {
-                            log.error(String.format("[%d] player operation fail. %s", errorCnt++, status), e);
-                            window.save(String.valueOf(errorCnt));
+    @Async
+    public void run() {
+        boolean noticed = false;
+        while (true) {
+            if (autoRun || actOnce || scan) {
+                GameStatus.Phase phase = getCurrentPhase();
+                if (phase == GameStatus.Phase.PLAYING) {
+                    GameStatus status = getGameStatus();
+                    if (status.status == GameStatus.Status.MY_TURN) {
+                        if (!noticed || autoRun || actOnce) {
+                            log.info("手牌: {}", status.getMyCard());
+                            log.info("台面: {}", status.getCommonCard());
+                            MasterDecision masterDecision = player.askMaster(status);
+                            log.info("AI建议: {}", masterDecision);
+                            TexasPlayer.FinalAction finalAction = player.makeAction(masterDecision, status);
+                            log.info("最终操作: {}", finalAction);
+                            noticed = true;
+                            if (autoRun || actOnce) {
+                                try {
+                                    player.act(finalAction);
+                                    log.info("执行成功！");
+                                } catch (OperationEngine.OperationException e) {
+                                    log.error(String.format("[%d] player operation fail. %s", errorCnt++, status), e);
+                                    window.save(String.valueOf(errorCnt));
+                                }
+                                actOnce = false;
+                            }
                         }
-                        actOnce = false;
+                    } else {
+                        noticed = false;
                     }
                 }
             }

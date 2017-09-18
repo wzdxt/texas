@@ -15,7 +15,9 @@ import org.springframework.stereotype.Component;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Arrays;
 import java.util.concurrent.ExecutionException;
+import java.util.List;
 
 /**
  * Created by dai_x on 17-9-12.
@@ -25,16 +27,32 @@ import java.util.concurrent.ExecutionException;
 @Slf4j
 public class MainFrame extends JFrame {
 
+    // root
     private JPanel panel1;
     private JButton matchAnchorButton;
     private JEditorPane logPane;
+    // status
     private JButton currentPhaseButton;
     private JButton gameStatusButton;
+    // auto
     private JRadioButton autoYesButton;
     private JRadioButton autoNoButton;
-    private JButton button1;
-    private JButton button2;
+    private JRadioButton scanYesButton;
+    private JRadioButton scanNoButton;
     private JButton actOnceButton;
+    // action
+    private JButton checkCallButton;
+    private JButton foldButton;
+    private JButton raiseButton;
+    private JButton bet5xButton;
+    private JButton bet10xButton;
+    private JButton bet25xButton;
+    private JButton bet50xButton;
+    private JButton allInButton;
+
+    private List<JComponent> componentList = Arrays.asList(currentPhaseButton, gameStatusButton,
+            autoYesButton, autoNoButton, scanYesButton, scanNoButton, actOnceButton,
+            checkCallButton, foldButton, raiseButton);
 
     @Autowired
     private Displayer displayer;
@@ -72,8 +90,7 @@ public class MainFrame extends JFrame {
                             if (sp != null) {
                                 log.info(String.format("match anchor finished. %s", sp));
                                 ctx.getBean(ScreenCaptureConfirmation.class).showScreenCapture(sp);
-                                currentPhaseButton.setEnabled(true);
-                                gameStatusButton.setEnabled(true);
+                                componentList.forEach(c -> c.setEnabled(true));
                             }
                         } catch (InterruptedException | ExecutionException e1) {
                             e1.printStackTrace();
@@ -141,6 +158,18 @@ public class MainFrame extends JFrame {
 
         autoNoButton.addActionListener(e -> displayer.setAutoRun(false));
 
+        scanYesButton.addActionListener(e ->
+                new SwingWorker() {
+                    @Override
+                    public Object doInBackground() {
+                        displayer.setScan(true);
+                        return null;
+                    }
+                }
+        );
+
+        scanNoButton.addActionListener(e -> displayer.setScan(false));
+
 
     }
 
@@ -203,38 +232,80 @@ public class MainFrame extends JFrame {
         gbc.fill = GridBagConstraints.HORIZONTAL;
         panel2.add(gameStatusButton, gbc);
         final JPanel panel3 = new JPanel();
-        panel3.setLayout(new GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
+        panel3.setLayout(new GridLayoutManager(8, 1, new Insets(0, 0, 0, 0), -1, -1));
         panel1.add(panel3, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         panel3.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Action"));
-        button1 = new JButton();
-        button1.setEnabled(false);
-        button1.setText("Button");
-        panel3.add(button1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        button2 = new JButton();
-        button2.setEnabled(false);
-        button2.setText("Button");
-        panel3.add(button2, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        checkCallButton = new JButton();
+        checkCallButton.setEnabled(false);
+        checkCallButton.setText("Check/Call");
+        panel3.add(checkCallButton, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        foldButton = new JButton();
+        foldButton.setEnabled(false);
+        foldButton.setText("Fold");
+        panel3.add(foldButton, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        raiseButton = new JButton();
+        raiseButton.setEnabled(false);
+        raiseButton.setText("Raise");
+        panel3.add(raiseButton, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        bet5xButton = new JButton();
+        bet5xButton.setEnabled(false);
+        bet5xButton.setText("Bet 5x");
+        panel3.add(bet5xButton, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        bet10xButton = new JButton();
+        bet10xButton.setEnabled(false);
+        bet10xButton.setText("Bet 10x");
+        panel3.add(bet10xButton, new GridConstraints(4, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        bet25xButton = new JButton();
+        bet25xButton.setEnabled(false);
+        bet25xButton.setText("Bet 25x");
+        panel3.add(bet25xButton, new GridConstraints(5, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        bet50xButton = new JButton();
+        bet50xButton.setEnabled(false);
+        bet50xButton.setText("Bet 50x");
+        panel3.add(bet50xButton, new GridConstraints(6, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        allInButton = new JButton();
+        allInButton.setEnabled(false);
+        allInButton.setText("All in");
+        panel3.add(allInButton, new GridConstraints(7, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JPanel panel4 = new JPanel();
-        panel4.setLayout(new GridLayoutManager(2, 2, new Insets(0, 0, 0, 0), -1, -1));
+        panel4.setLayout(new GridLayoutManager(3, 3, new Insets(0, 0, 0, 0), -1, -1));
         panel1.add(panel4, new GridConstraints(4, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         panel4.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Automation"));
         autoYesButton = new JRadioButton();
         autoYesButton.setEnabled(false);
         autoYesButton.setText("Yes");
-        panel4.add(autoYesButton, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 1, false));
+        panel4.add(autoYesButton, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 1, false));
         autoNoButton = new JRadioButton();
         autoNoButton.setEnabled(false);
         autoNoButton.setSelected(true);
         autoNoButton.setText("No");
-        panel4.add(autoNoButton, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel4.add(autoNoButton, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         actOnceButton = new JButton();
         actOnceButton.setEnabled(false);
         actOnceButton.setText("Act Once");
-        panel4.add(actOnceButton, new GridConstraints(1, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel4.add(actOnceButton, new GridConstraints(2, 1, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JLabel label1 = new JLabel();
+        label1.setText("Run");
+        panel4.add(label1, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JLabel label2 = new JLabel();
+        label2.setText("Scan");
+        panel4.add(label2, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        scanYesButton = new JRadioButton();
+        scanYesButton.setEnabled(false);
+        scanYesButton.setText("Yes");
+        panel4.add(scanYesButton, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 1, false));
+        scanNoButton = new JRadioButton();
+        scanNoButton.setEnabled(false);
+        scanNoButton.setSelected(true);
+        scanNoButton.setText("No");
+        panel4.add(scanNoButton, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         ButtonGroup buttonGroup;
         buttonGroup = new ButtonGroup();
         buttonGroup.add(autoYesButton);
         buttonGroup.add(autoNoButton);
+        buttonGroup = new ButtonGroup();
+        buttonGroup.add(scanYesButton);
+        buttonGroup.add(scanNoButton);
     }
 
     /**

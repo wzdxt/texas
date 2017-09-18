@@ -8,7 +8,7 @@ texas:
       threshold: 70, 80, 90
     river:
       check: 40
-      threshold: 80,90,95
+      threshold: 80, 90, 95
 displayer:   # 线条大坐标不变, 区块大坐标+1
   scan_interval: 1000   # millisecond
   anchor:   # 定位窗口配置

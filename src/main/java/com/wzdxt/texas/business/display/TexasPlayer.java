@@ -21,14 +21,10 @@ public class TexasPlayer {
     private OperationEngine operationEngine;
 
     public MasterDecision askMaster(GameStatus status) {
-
+        return master.suggest(status.getMyCard(), status.getCommonCard());
     }
 
     public FinalAction makeAction(MasterDecision masterDecision, GameStatus status) {
-
-    }
-
-    public void actByStatus(GameStatus status) throws OperationEngine.OperationException {
 
     }
 
