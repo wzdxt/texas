@@ -2,6 +2,7 @@ package com.wzdxt.texas.business.display;
 
 import com.wzdxt.texas.business.display.logic.GameWindow;
 import com.wzdxt.texas.business.display.operation.OperationEngine;
+import com.wzdxt.texas.business.master.MasterDecision;
 import com.wzdxt.texas.config.DisplayerConfigure;
 import com.wzdxt.texas.model.Card;
 import lombok.extern.slf4j.Slf4j;
@@ -58,14 +59,26 @@ public class Displayer {
     }
 
     private void run() {
+        GameStatus lastStatus = null;
         while (autoRun || actOnce || scan) {
             GameStatus.Phase phase = getCurrentPhase();
             if (phase == GameStatus.Phase.PLAYING) {
                 GameStatus status = getGameStatus();
                 if (status.status == GameStatus.Status.MY_TURN) {
+                    if (!status.equals(lastStatus)) {
+                        log.info("游戏状态发生变化: {}", status);
+                        lastStatus = status;
+                    }
+                    log.info("手牌: {}", status.getMyCard());
+                    log.info("台面: {}", status.getCommonCard());
+                    MasterDecision masterDecision = player.askMaster(status);
+                    log.info("AI建议: {}", masterDecision);
+                    TexasPlayer.FinalAction finalAction = player.makeAction(masterDecision, status);
+                    log.info("最终操作: {}", finalAction);
                     if (autoRun || actOnce) {
                         try {
-                            player.actByStatus(status);
+                            player.act(finalAction);
+                            log.info("执行成功！");
                         } catch (OperationEngine.OperationException e) {
                             log.error(String.format("[%d] player operation fail. %s", errorCnt++, status), e);
                             window.save(String.valueOf(errorCnt));
@@ -91,23 +104,23 @@ public class Displayer {
         GameStatus.Phase phase = phaseManager.getCurrentPhase();
         builder.phase(phase);
         switch (phase) {
-            case MAIN_PAGE:
-                builder.totalCoin(phaseManager.getTotalCoin());
+        case MAIN_PAGE:
+            builder.totalCoin(phaseManager.getTotalCoin());
+            return builder.build();
+        case WAITING:
+        case ROOM_PAGE:
+        case NONE:
+            return builder.build();
+        case PLAYING:
+            GameStatus.Status status = phaseManager.getCurrentStatus();
+            builder.status(status);
+            if (status == GameStatus.Status.MY_TURN) {
+                return fulfillGameStatus(builder.build());
+            } else {
                 return builder.build();
-            case WAITING:
-            case ROOM_PAGE:
-            case NONE:
-                return builder.build();
-            case PLAYING:
-                GameStatus.Status status = phaseManager.getCurrentStatus();
-                builder.status(status);
-                if (status == GameStatus.Status.MY_TURN) {
-                    return fulfillGameStatus(builder.build());
-                } else {
-                    return builder.build();
-                }
-            default:
-                throw new RuntimeException("phase error");
+            }
+        default:
+            throw new RuntimeException("phase error");
         }
     }
 

@@ -1,6 +1,7 @@
 package com.wzdxt.texas.business.display;
 
 import com.wzdxt.texas.business.display.operation.OperationEngine;
+import com.wzdxt.texas.business.master.MasterDecision;
 import com.wzdxt.texas.business.master.TexasMaster;
 import com.wzdxt.texas.config.DisplayerConfigure;
 import lombok.AllArgsConstructor;
@@ -18,6 +19,14 @@ public class TexasPlayer {
     private DisplayerConfigure configure;
     @Autowired
     private OperationEngine operationEngine;
+
+    public MasterDecision askMaster(GameStatus status) {
+
+    }
+
+    public FinalAction makeAction(MasterDecision masterDecision, GameStatus status) {
+
+    }
 
     public void actByStatus(GameStatus status) throws OperationEngine.OperationException {
 
