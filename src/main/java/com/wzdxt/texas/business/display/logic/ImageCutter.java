@@ -116,5 +116,20 @@ public class ImageCutter {
         }
     }
 
+    public void digSuitInner(BufferedImage bi) {
+        int background = imageComparator.getBackgroundRgb(bi);
+        int foreground = imageComparator.getFrontRgb(bi, background);
+        int width = bi.getWidth();
+        int height = bi.getHeight();
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                int rgb = bi.getRGB(i, j);
+                if (RgbUtil.calcRgbMistake(rgb, foreground) < configure.getCheck().getRgbMistake()/10) {
+                    bi.setRGB(i, j, background);
+                }
+            }
+        }
+    }
+
 }
 

@@ -164,7 +164,7 @@ displayer:   # 线条大坐标不变, 区块大坐标+1
   other:
     player_absent:  # check by line
       - 0, 0 # myself, always here
-      - 278, 420, 291, 420, 0x146129
+      - 278, 420, 291, 420, 0x146129  # todo wrong for 8.png
       - 31, 380, 40, 380, 0x2a1b32
       - 784, 90, 794, 90, 0x0f0915
       - 984, 317, 994, 317, 0x241621

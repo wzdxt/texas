@@ -60,14 +60,23 @@ public class PhaseManagerTest extends ScreenTestBase {
     @Test
     public void test5PNG() throws Exception {
         switchTo("5.PNG");
-//        assertEquals(150, phaseManager.getBigBlind());
-//        assertEquals(6275, phaseManager.getTotalPool());
-//        assertArrayEquals(new int[]{0, 0,0,0,0,5375}, phaseManager.getPlayerPool());
-//        assertEquals(9100, phaseManager.getMyCoin());
-//        assertEquals(5375, phaseManager.getCallNeed());
+        assertEquals(150, phaseManager.getBigBlind());
+        assertEquals(6275, phaseManager.getTotalPool());
+        assertArrayEquals(new int[]{0, 0,0,0,0,5375}, phaseManager.getPlayerPool());
+        assertEquals(9100, phaseManager.getMyCoin());
+        assertEquals(5375, phaseManager.getCallNeed());
         assertArrayEquals(new boolean[]{true, true, true, true, true, true}, phaseManager.getPlayerExist());
-//        assertEquals(Arrays.asList(Card.of("♣9"), Card.of("♦2")), phaseManager.getMyCard());
-//        assertEquals(Arrays.asList(Card.of("♥9"), Card.of("♦J"), Card.of("♥Q")), phaseManager.getCommonCard());
+        assertEquals(Arrays.asList(Card.of("♣9"), Card.of("♦2")), phaseManager.getMyCard());
+        assertEquals(Arrays.asList(Card.of("♥9"), Card.of("♦J"), Card.of("♥Q")), phaseManager.getCommonCard());
+    }
+
+    @Test
+    public void test8PNG() throws Exception {
+        switchTo("8.PNG");
+//        assertArrayEquals(new boolean[]{true, true, true, true, true, true}, status.getPlayerExist());
+//        assertEquals(8275, status.getMyCoin());
+//        assertEquals(Arrays.asList(Card.of("♠3"), Card.of("♠10")), phaseManager.getMyCard());
+        assertEquals(Arrays.asList(Card.of("♠Q"), Card.of("♣4"), Card.of("♥Q")), phaseManager.getCommonCard());
     }
 
     protected void switchTo(String s) throws Exception {
