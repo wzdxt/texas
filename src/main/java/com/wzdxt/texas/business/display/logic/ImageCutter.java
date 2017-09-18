@@ -121,8 +121,8 @@ public class ImageCutter {
         int foreground = imageComparator.getFrontRgb(bi, background);
         int width = bi.getWidth();
         int height = bi.getHeight();
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
+        for (int i = 1; i < width - 1; i++) {
+            for (int j = 1; j < height - 1; j++) {
                 int rgb = bi.getRGB(i, j);
                 if (RgbUtil.calcRgbMistake(rgb, foreground) < configure.getCheck().getRgbMistake()/10) {
                     bi.setRGB(i, j, background);

@@ -126,7 +126,7 @@ public class ImageComparator {
         for (int i = 0; i < width; i += 2) {
             for (int j = 0; j < height; j += 2) {
                 int rgb = image.getRGB(i, j);
-                if (RgbUtil.calcRgbMistake(rgb, background) < configure.getCheck().getRgbMistake())
+                if (RgbUtil.calcRgbMistake(rgb, background) > configure.getCheck().getRgbMistake())
                     allRgb.add(rgb);
             }
         }

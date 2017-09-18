@@ -20,7 +20,6 @@ public class OcrUtil {
         try {
             if (options == null)
                 options = "-l texas -psm 7";  // 6 or 7
-            options += " texas";
             ocr.setTesseractOptions(options);
             return ocr.discern(filepath);
         } finally {

@@ -117,7 +117,8 @@ public class PhaseManager {
         int[] area = configure.getOcrArea().getCallButton();
         String s = ocr(area[0], area[1], area[2], area[3]);
         if (s != null) {
-            return str2int(s.substring(1));
+            s = s.replaceAll("[^\\d]", "");
+            return s.equals("") ? 0 : str2int(s);
         } else {
             return 0;
         }
@@ -227,3 +228,4 @@ public class PhaseManager {
     }
 
 }
+
