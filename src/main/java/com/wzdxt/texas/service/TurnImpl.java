@@ -33,6 +33,8 @@ public class TurnImpl extends AbsCalculator implements Calculator {
                     river.add(Card.of(i));
                     int larger = composer.largerHandsAfterRiver(river, my, myHand).size();
                     ret.add(1 - larger * 1.0 / total);
+                } else {
+                    ret.add(0.0);
                 }
             }
         }

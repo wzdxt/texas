@@ -18,7 +18,7 @@ public class TurnTest extends TexasMasterTestBase {
         test("♠A♥A", "♣K♦K♦3♥Q", MasterDecision.BET_10_50);
         test("♠A♥A", "♣2♦2♦3♥4", MasterDecision.BET_10_50);
         test("♠A♥A", "♣4♦2♦3♥6", MasterDecision.CALL_10);
-        test("♠A♥A", "♣7♦9♦8♥6", MasterDecision.CALL_5);
+        test("♠A♥A", "♣7♦9♦8♥6", MasterDecision.CALL_2);
         test("♠A♥A", "♣3♦8♦J♥9", MasterDecision.BET_10_50);
     }
 
