@@ -22,9 +22,9 @@ texas:
     turn:
       - check: 99
         decides:
-          - rate: 90
+          - rate: 95
             bet: all_in
-          - rate: 80
+          - rate: 90
             bet: bet_25_50
       - check: 90
         decides:
@@ -38,17 +38,19 @@ texas:
             bet: bet_5_25
           - rate: 80
             bet: bet_2_10
+          - rate: 70
+            bet: call_10
       - check: 50
         decides:
           - rate: 80
             bet: call_10
-          - rate: 60
+          - rate: 70
             bet: call_5
       - check: 30
         decides:
           - rate: 80
             bet: call_5
-          - rate: 60
+          - rate: 70
             bet: call_2
     river:
       - check: 99
@@ -79,7 +81,7 @@ texas:
         decides:
           - rate: 80
             bet: call_10
-          - rate: 60
+          - rate: 70
             bet: call_5
 displayer:   # 线条大坐标不变, 区块大坐标+1
   scan_interval: 1000   # millisecond

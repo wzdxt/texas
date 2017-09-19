@@ -40,6 +40,7 @@ public class TexasPlayer {
         CHECK_OR_CALL("check_or_call"),
         RAISE_DOUBLE("raise"),
         ALL_IN("all_in"),
+        DIRECT_ALL_IN("all_in"),
         BET_5("bet_5"),
         BET_10("bet_10"),
         BET_25("bet_25"),
