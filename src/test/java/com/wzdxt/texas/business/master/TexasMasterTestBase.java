@@ -20,7 +20,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 @SpringBootTest
 public class TexasMasterTestBase {
     @Rule
-    protected ErrorCollector collector = new ErrorCollector();
+    public ErrorCollector collector = new ErrorCollector();
     @Autowired
     protected TexasMaster texasMaster;
 

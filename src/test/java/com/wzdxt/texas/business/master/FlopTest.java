@@ -29,12 +29,21 @@ public class FlopTest extends TexasMasterTestBase {
 
     @Test
     public void suggest44() throws Exception {
-//        test("♠4♥4", "", MasterDecision.CALL_2);
+        test("♠4♥4", "", MasterDecision.CALL_2);
         test("♠4♥4", "♣A♦K♦3", MasterDecision.CHECK_OR_FOLD);
         test("♠4♥4", "♣3♦K♦3", MasterDecision.CHECK_OR_FOLD);
         test("♠4♥4", "♣K♦K♦3", MasterDecision.CALL_2);
         test("♠4♥4", "♣K♦K♦10", MasterDecision.CHECK_OR_FOLD);
+    }
 
+    @Test
+    public void suggest1010() throws Exception {
+        test("♠10♥10", "", MasterDecision.CALL_5);
+        test("♠10♥10", "♣A♦K♦3", MasterDecision.CALL_5);
+        test("♠10♥10", "♣3♦K♦3", MasterDecision.BET_2_5);
+        test("♠10♥10", "♣K♦K♦3", MasterDecision.CALL_10);
+        test("♠10♥10", "♣K♦K♦10", MasterDecision.BET_10_50);
+        test("♠10♥10", "♣5♦4♦J", MasterDecision.CALL_5);
     }
 
 }
