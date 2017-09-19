@@ -4,18 +4,14 @@ import com.wzdxt.texas.application.MainFrame;
 import com.wzdxt.texas.application.UiAppender;
 import com.wzdxt.texas.business.display.Displayer;
 import com.wzdxt.texas.config.DisplayerConfigure;
-import com.wzdxt.texas.config.MasterConfigures;
+import com.wzdxt.texas.config.MasterConfigure;
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.cache.annotation.EnableCaching;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.scheduling.annotation.EnableAsync;
 
 import java.awt.*;
 
@@ -25,7 +21,7 @@ import java.awt.*;
 //@EnableCaching
 @ComponentScan(basePackages = {"com.wzdxt.texas"})
 public class TexasApplication implements ApplicationRunner {
-    private MasterConfigures configuration;
+    private MasterConfigure configuration;
     private DisplayerConfigure  displayerConfigure;
     private Displayer displayer;
     private MainFrame mainFrame;

@@ -10,14 +10,20 @@ import org.springframework.stereotype.Component;
 @Data
 @Component
 @ConfigurationProperties("texas.master")
-public class MasterConfigures {
-    CheckConf flop;
-    CheckConf turn;
-    CheckConf river;
+public class MasterConfigure {
+    CheckConf[] flop;
+    CheckConf[] turn;
+    CheckConf[] river;
 
     @Data
     public static class CheckConf {
         int check;
-        int[] threshold;
+        DecideConf[] decides;
+    }
+
+    @Data
+    public static class DecideConf {
+        int rate;
+        String bet;
     }
 }

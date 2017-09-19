@@ -5,6 +5,7 @@ import com.wzdxt.texas.model.Card;
 import com.wzdxt.texas.model.CardSet;
 import com.wzdxt.texas.model.hand.AbsHand;
 import com.wzdxt.texas.model.hand.HighCard;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
 
@@ -13,6 +14,7 @@ import static com.wzdxt.texas.util.C.C;
 /**
  * Created by wzdxt on 2017/9/1.
  */
+@Slf4j
 public class FlopImpl extends AbsCalculator implements Calculator {
     @Override
     public List<Double> calculate(Collection<Card> my, Collection<Card> flop) {
@@ -35,7 +37,9 @@ public class FlopImpl extends AbsCalculator implements Calculator {
                         if (!(myHand instanceof HighCard)) {
                             river.add(Card.of(j));
                             int larger = composer.largerHandsAfterRiver(river, my, myHand).size();
-                            ret.add(1 - larger * 1.0 / total);
+                            double rate = 1 - larger * 1.0 / total;
+//                            log.debug("{}, {}", rate, river);
+                            ret.add(rate);
                             river.remove(Card.of(j));
                         } else {
                             ret.add(0.0);

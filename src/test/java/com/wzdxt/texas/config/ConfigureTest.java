@@ -13,13 +13,15 @@ import static org.junit.Assert.*;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class DisplayerConfigureTest {
+public class ConfigureTest {
     @Autowired
-    private DisplayerConfigure configure;
+    private DisplayerConfigure displayerConfigure;
+    @Autowired
+    private MasterConfigure masterConfigure;
 
     @Test
     public void test() {
-        assertNotNull(configure.getOcrArea().getMyCard()[1].getRank());
-//        System.out.println(configure);
+        assertNotNull(displayerConfigure.getOcrArea().getMyCard()[1].getRank());
+        assertNotNull(masterConfigure.getRiver()[0].decides[0].bet);
     }
 }

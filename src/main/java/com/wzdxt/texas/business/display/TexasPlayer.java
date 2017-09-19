@@ -25,7 +25,7 @@ public class TexasPlayer {
     }
 
     public FinalAction makeAction(MasterDecision masterDecision, GameStatus status) {
-
+        return null;
     }
 
     public void act(FinalAction action) throws OperationEngine.OperationException {
