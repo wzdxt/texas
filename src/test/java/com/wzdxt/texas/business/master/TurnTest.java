@@ -10,7 +10,7 @@ import org.springframework.test.context.junit4.SpringRunner;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class FlopTurnTest extends TexasMasterTestBase {
+public class TurnTest extends TexasMasterTestBase {
 
     @Test
     public void suggestAA() throws Exception {
