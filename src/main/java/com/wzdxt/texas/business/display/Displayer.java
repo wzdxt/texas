@@ -154,6 +154,10 @@ public class Displayer {
         return status;
     }
 
+    public void saveScreen() {
+        window.save("save-" + System.currentTimeMillis());
+    }
+
     BufferedImage screenCapture(int x1, int y1, int x2, int y2) {
         try {
             BufferedImage screenCapture = new Robot().createScreenCapture(

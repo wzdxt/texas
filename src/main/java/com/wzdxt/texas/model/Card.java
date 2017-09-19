@@ -21,8 +21,7 @@ public class Card implements Comparable<Card> {
 
     @Override
     public int compareTo(Card o) {
-        return rank > o.rank ? 1 : (rank < o.rank ? -1 : (suit - o.suit)
-        );
+        return rank > o.rank ? 1 : (rank < o.rank ? -1 : (suit - o.suit));
     }
 
     @Override

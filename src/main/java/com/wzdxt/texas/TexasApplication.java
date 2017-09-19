@@ -12,12 +12,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 import java.awt.*;
 
 @SpringBootApplication
 @EnableConfigurationProperties
 @AllArgsConstructor
+@EnableAsync
 //@EnableCaching
 @ComponentScan(basePackages = {"com.wzdxt.texas"})
 public class TexasApplication implements ApplicationRunner {
@@ -36,6 +38,7 @@ public class TexasApplication implements ApplicationRunner {
         EventQueue.invokeLater(() -> {
             mainFrame.setVisible(true);
             UiAppender.getInstance().setMainFrame(mainFrame);
+            displayer.run();
         });
 //        displayer.getCurrentStatus();
     }

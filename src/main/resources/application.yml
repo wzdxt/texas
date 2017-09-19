@@ -28,9 +28,9 @@ texas:
             bet: bet_25_50
       - check: 90
         decides:
-          - rate: 95
-            bet: bet_25_50
           - rate: 90
+            bet: bet_25_50
+          - rate: 80
             bet: bet_10_50
       - check: 80
         decides:

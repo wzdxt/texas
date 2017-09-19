@@ -49,9 +49,10 @@ public class MainFrame extends JFrame {
     private JButton bet25xButton;
     private JButton bet50xButton;
     private JButton allInButton;
+    private JButton saveButton;
 
     private List<JComponent> componentList = Arrays.asList(currentPhaseButton, gameStatusButton,
-            autoYesButton, autoNoButton, scanYesButton, scanNoButton, actOnceButton,
+            autoYesButton, autoNoButton, scanYesButton, scanNoButton, actOnceButton, saveButton,
             checkCallButton, foldButton, raiseButton);
 
     @Autowired
@@ -170,6 +171,7 @@ public class MainFrame extends JFrame {
 
         scanNoButton.addActionListener(e -> displayer.setScan(false));
 
+        saveButton.addActionListener(e -> displayer.saveScreen());
 
     }
 
@@ -209,7 +211,7 @@ public class MainFrame extends JFrame {
         logPane.setEditable(false);
         scrollPane1.setViewportView(logPane);
         final JPanel panel2 = new JPanel();
-        panel2.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1, true, true));
+        panel2.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
         panel1.add(panel2, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         panel2.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Status"));
         currentPhaseButton = new JButton();
@@ -288,6 +290,10 @@ public class MainFrame extends JFrame {
         scanNoButton.setSelected(true);
         scanNoButton.setText("No");
         panel4.add(scanNoButton, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        saveButton = new JButton();
+        saveButton.setEnabled(false);
+        saveButton.setText("Save");
+        panel4.add(saveButton, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         ButtonGroup buttonGroup;
         buttonGroup = new ButtonGroup();
         buttonGroup.add(autoYesButton);

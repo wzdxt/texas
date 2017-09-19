@@ -81,13 +81,13 @@ public class TexasMasterImpl implements TexasMaster {
 
     private class Beginner {
         BeginnerResult evaluate(Card c1, Card c2) {
-            if (c1.compareTo(c2) > 0) {
+            if (c1.getRank() < c2.getRank()) {
                 Card t = c1;
                 c1 = c2;
                 c2 = t;
             }
             int score = c1.getRank() + c2.getRank();
-            if (c1.compareTo(c2) == 0) {
+            if (c1.getRank() == c2.getRank()) {
                 if (c1.getRank() >= 7) return new BeginnerResult(BeginnerLevel.RED, score);
                 if (c1.getRank() >= 5) return new BeginnerResult(BeginnerLevel.YELLOW, score);
                 return new BeginnerResult(BeginnerLevel.BLUE, score);
