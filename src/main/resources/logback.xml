@@ -1,16 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
   <include resource="org/springframework/boot/logging/logback/base.xml"/>
+
   <appender name="uiAppender" class="com.wzdxt.texas.application.UiAppender">
     <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
       <level>INFO</level>
     </filter>
   </appender>
 
+  <appender name="fileAppender" class="ch.qos.logback.core.FileAppender">
+    <file>./logs/texas.log</file>
+    <encoder><!-- 必须指定，否则不会往文件输出内容 -->
+      <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{5} - %msg%n</pattern>
+    </encoder>
+    <append>true</append>
+    <prudent>false</prudent>
+  </appender>
+
 
   <logger name="org.springframework" level="INFO"/>
   <logger name="com.wzdxt.texas" level="DEBUG">
     <appender-ref ref="uiAppender"/>
+    <appender-ref ref="fileAppender" />
     <!--<appender-ref ref="CONSOLE"/>-->
   </logger>
 
