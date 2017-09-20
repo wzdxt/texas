@@ -4,7 +4,7 @@
 
   <appender name="uiAppender" class="com.wzdxt.texas.application.UiAppender">
     <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-      <level>INFO</level>
+      <level>DEBUG</level>
     </filter>
   </appender>
 

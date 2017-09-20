@@ -116,8 +116,14 @@ public class ImageCutter {
         }
     }
 
-    public void digSuitInner(BufferedImage bi) {
-        int background = imageComparator.getBackgroundRgb(bi);
+    public void digCharacterInner(BufferedImage bi) {
+        digCharacterInner(bi, null);
+    }
+
+    public void digCharacterInner(BufferedImage bi, Integer background) {
+        if (background == null) {
+            background =  imageComparator.getBackgroundRgb(bi);
+        }
         int foreground = imageComparator.getFrontRgb(bi, background);
         int width = bi.getWidth();
         int height = bi.getHeight();

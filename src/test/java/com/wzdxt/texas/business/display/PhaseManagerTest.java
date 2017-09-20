@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertArrayEquals;
@@ -28,7 +29,7 @@ public class PhaseManagerTest extends ScreenTestBase {
 
     @Test
     public void testAnchor() throws Exception {
-        setScreen(this.getClass().getClassLoader().getResource("static/anchor.bmp").toURI());
+        setScreen(this.getClass().getResourceAsStream("static/anchor.bmp"));
         GameStatus.Phase phase = phaseManager.getCurrentPhase();
         assertEquals(phase, GameStatus.Phase.MAIN_PAGE);
     }
@@ -56,7 +57,7 @@ public class PhaseManagerTest extends ScreenTestBase {
         switchTo("5.PNG");
         assertEquals(150, phaseManager.getBigBlind());
         assertEquals(6275, phaseManager.getTotalPool());
-        assertArrayEquals(new int[]{0, 0,0,0,0,5375}, phaseManager.getPlayerPool());
+        assertArrayEquals(new int[]{0, 0, 0, 0, 0, 5375}, phaseManager.getPlayerPool());
         assertEquals(9100, phaseManager.getMyCoin());
         assertEquals(5375, phaseManager.getCallNeed());
         assertArrayEquals(new boolean[]{true, true, true, true, true, true}, phaseManager.getPlayerExist());
@@ -93,8 +94,85 @@ public class PhaseManagerTest extends ScreenTestBase {
         assertEquals(Arrays.asList(Card.of("♠K"), Card.of("♠7")), phaseManager.getMyCard());
     }
 
+    @Test
+    public void testR1() throws Exception {
+        switchTo("r-1.bmp");
+//        assertEquals(GameStatus.Phase.WAITING, phaseManager.getCurrentPhase());
+//        assertArrayEquals(new boolean[]{true, true, true, true, true, true}, phaseManager.getPlayerExist());
+//        assertEquals(150, phaseManager.getBigBlind());
+//        assertArrayEquals(new boolean[]{false, true, true, true, true, true}, phaseManager.getPlayerRemain());
+//        assertEquals(3075, phaseManager.getTotalPool());
+//        assertArrayEquals(new int[]{0, 0, 0, 0, 0, 0}, phaseManager.getPlayerPool());
+//        assertEquals(0, phaseManager.getMyCoin());
+        assertEquals(Arrays.asList(Card.of("♦10"), Card.of("♥2"), Card.of("♣5")), phaseManager.getCommonCard());
+    }
+
+    @Test
+    public void testR2() throws Exception {
+        switchTo("r-2.bmp");
+        assertEquals(Arrays.asList(Card.of("♥8"), Card.of("♠A"), Card.of("♦A"), Card.of("♦3")), phaseManager.getCommonCard());
+    }
+
+    @Test
+    public void testR3() throws Exception {
+        switchTo("r-3.bmp");
+        assertEquals(Arrays.asList(Card.of("♠A"), Card.of("♣K"), Card.of("♠K")), phaseManager.getCommonCard());
+    }
+
+    @Test
+    public void testR4() throws Exception {
+        switchTo("r-4.bmp");
+        assertEquals(Arrays.asList(Card.of("♣2"), Card.of("♦Q"), Card.of("♦5"), Card.of("♦2")), phaseManager.getCommonCard());
+    }
+
+    @Test
+    public void testR6() throws Exception {
+        switchTo("r-6.bmp");
+        assertEquals(Arrays.asList(Card.of("♥7"), Card.of("♠Q"), Card.of("♠J"), Card.of("♦3"), Card.of("♦7")), phaseManager.getCommonCard());
+    }
+
+    @Test
+    public void testR8() throws Exception {
+        switchTo("r-8.bmp");
+        assertEquals(Arrays.asList(Card.of("♦4"), Card.of("♦6"), Card.of("♦9"), Card.of("♦2"), Card.of("♦7")), phaseManager.getCommonCard());
+    }
+
+    @Test
+    public void testR9() throws Exception {
+        switchTo("r-9.bmp");
+        assertEquals(Arrays.asList(Card.of("♥9"), Card.of("♠8"), Card.of("♠4")), phaseManager.getCommonCard());
+        assertEquals(Arrays.asList(Card.of("♦8"), Card.of("♦5")), phaseManager.getMyCard());
+    }
+
+    @Test
+    public void testR10() throws Exception {
+        switchTo("r-10.bmp");
+        assertEquals(Arrays.asList(Card.of("♣5"), Card.of("♠4")), phaseManager.getMyCard());
+    }
+
+    @Test
+    public void testR11() throws Exception {
+        switchTo("r-11.bmp");
+        assertEquals(Arrays.asList(Card.of("♣9"), Card.of("♣J"), Card.of("♣A"), Card.of("♦A"), Card.of("♣4")), phaseManager.getCommonCard());
+        assertEquals(Arrays.asList(Card.of("♥10"), Card.of("♠K")), phaseManager.getMyCard());
+    }
+
+    @Test
+    public void testR13() throws Exception {
+        switchTo("r-13.bmp");
+        assertEquals(Arrays.asList(Card.of("♦5"), Card.of("♦8"), Card.of("♣A"), Card.of("♦A"), Card.of("♦Q")), phaseManager.getCommonCard());
+        assertEquals(Arrays.asList(Card.of("♥3"), Card.of("♣Q")), phaseManager.getMyCard());
+    }
+
+    @Test
+    public void testR14() throws Exception {
+        switchTo("r-14.bmp");
+        assertEquals(Arrays.asList(Card.of("♥6"), Card.of("♣K"), Card.of("♣2"), Card.of("♦3"), Card.of("♣7")), phaseManager.getCommonCard());
+        assertEquals(Arrays.asList(Card.of("♠10"), Card.of("♦9")), phaseManager.getMyCard());
+    }
+
     protected void switchTo(String s) throws Exception {
-        setScreen(this.getClass().getClassLoader().getResource("static/screen/" + s).toURI());
+        setScreen(this.getClass().getResourceAsStream("/static/screen/" + s));
     }
 
 }

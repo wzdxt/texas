@@ -1,5 +1,6 @@
 package com.wzdxt.texas.business.display;
 
+import com.wzdxt.texas.business.display.logic.ImageComparator;
 import com.wzdxt.texas.business.display.logic.ImageCutter;
 import com.wzdxt.texas.business.display.logic.GameWindow;
 import com.wzdxt.texas.business.display.operation.*;
@@ -29,6 +30,8 @@ public class PhaseManager {
     private ApplicationContext ctx;
     @Autowired
     private ImageCutter imageCutter;
+    @Autowired
+    private ImageComparator imageComparator;
 
     public GameStatus.Phase getCurrentPhase() {
         for (DisplayerConfigure.Phase phase : configure.getPhase().values()) {
@@ -216,14 +219,17 @@ public class PhaseManager {
         bi = imageCutter.cutEdge(bi);
         if (bi != null) {
             imageCutter.cutSuitCorner(bi);
-            imageCutter.digSuitInner(bi);
+            imageCutter.digCharacterInner(bi);
         }
         return bi == null ? null : OcrUtil.recognize(bi, options);
     }
 
     protected String ocr(int x1, int y1, int x2, int y2, String options) {
         BufferedImage bi = screen.capture(x1, y1, x2, y2);
+        int background = imageComparator.getBackgroundRgb(bi);
         bi = imageCutter.cutEdge(bi);
+        if (bi != null)
+            imageCutter.digCharacterInner(bi, background);
         return bi == null ? null : OcrUtil.recognize(bi, options);
     }
 

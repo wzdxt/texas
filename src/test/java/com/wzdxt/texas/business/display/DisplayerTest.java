@@ -139,7 +139,7 @@ public class DisplayerTest extends ScreenTestBase {
     }
 
     protected void switchTo(String s) throws Exception {
-        setScreen(this.getClass().getClassLoader().getResource("static/screen/" + s).toURI());
+        setScreen(this.getClass().getResourceAsStream("/static/screen/" + s));
     }
 
 }

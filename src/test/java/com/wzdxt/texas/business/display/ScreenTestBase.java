@@ -12,6 +12,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 
 /**
@@ -22,9 +23,9 @@ import java.net.URI;
 @ContextConfiguration(classes = TexasApplication.class)
 abstract public class ScreenTestBase {
 
-    protected void setScreen(URI uri) {
+    protected void setScreen(InputStream is) {
         try {
-            Config.bi = ImageIO.read(new File(uri));
+            Config.bi = ImageIO.read(is);
         } catch (IOException e) {
             throw new RuntimeException();
         }

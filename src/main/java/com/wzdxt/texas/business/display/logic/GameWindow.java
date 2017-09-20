@@ -33,6 +33,7 @@ public class GameWindow {
         this.bi = robotUtil.screenCapture(
                 screenParam.getGameX1(), screenParam.getGameY1(),
                 screenParam.getGameX2(), screenParam.getGameY2());
+        log.debug(bi.getColorModel().toString());
         return bi;
     }
 
