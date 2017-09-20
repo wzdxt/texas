@@ -50,10 +50,10 @@ public class MainFrame extends JFrame {
     private JButton bet50xButton;
     private JButton allInButton;
     private JButton saveButton;
+    //
+    private JButton clearLogButton;
 
-    private List<JComponent> componentList = Arrays.asList(currentPhaseButton, gameStatusButton,
-            autoYesButton, autoNoButton, scanYesButton, scanNoButton, actOnceButton, saveButton,
-            checkCallButton, foldButton, raiseButton);
+    private final List<JComponent> componentList;
 
     @Autowired
     private Displayer displayer;
@@ -66,11 +66,15 @@ public class MainFrame extends JFrame {
         this.add(panel1);
         initUI();
         bindEvent();
+
+        componentList = Arrays.asList(currentPhaseButton, gameStatusButton,
+                autoYesButton, autoNoButton, scanYesButton, scanNoButton, actOnceButton, saveButton,
+                checkCallButton, foldButton, raiseButton);
     }
 
     private void initUI() {
         setTitle("Quit button");
-        setSize(400, 600);
+        setSize(350, 800);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
@@ -137,41 +141,19 @@ public class MainFrame extends JFrame {
                     }
                 }.execute());
 
-        actOnceButton.addActionListener(e ->
-                new SwingWorker() {
-                    @Override
-                    public Object doInBackground() {
-                        displayer.setActOnce();
-                        return null;
-                    }
-                }
-        );
+        actOnceButton.addActionListener(e -> displayer.setActOnce());
 
-        autoYesButton.addActionListener(e ->
-                new SwingWorker() {
-                    @Override
-                    public Object doInBackground() {
-                        displayer.setAutoRun(true);
-                        return null;
-                    }
-                }
-        );
+        autoYesButton.addActionListener(e -> displayer.setAutoRun(true));
 
         autoNoButton.addActionListener(e -> displayer.setAutoRun(false));
 
-        scanYesButton.addActionListener(e ->
-                new SwingWorker() {
-                    @Override
-                    public Object doInBackground() {
-                        displayer.setScan(true);
-                        return null;
-                    }
-                }
-        );
+        scanYesButton.addActionListener(e -> displayer.setScan(true));
 
         scanNoButton.addActionListener(e -> displayer.setScan(false));
 
         saveButton.addActionListener(e -> displayer.saveScreen());
+
+        clearLogButton.addActionListener(e -> EventQueue.invokeLater(() -> logPane.setText("")));
 
     }
 
@@ -196,7 +178,7 @@ public class MainFrame extends JFrame {
      */
     private void $$$setupUI$$$() {
         panel1 = new JPanel();
-        panel1.setLayout(new GridLayoutManager(6, 1, new Insets(0, 0, 0, 0), -1, -1));
+        panel1.setLayout(new GridLayoutManager(7, 1, new Insets(0, 0, 0, 0), -1, -1));
         panel1.setFocusable(false);
         panel1.putClientProperty("html.disable", Boolean.FALSE);
         matchAnchorButton = new JButton();
@@ -204,15 +186,15 @@ public class MainFrame extends JFrame {
         matchAnchorButton.setFocusCycleRoot(true);
         matchAnchorButton.setSelected(false);
         matchAnchorButton.setText("Match Anchor");
-        panel1.add(matchAnchorButton, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, 1, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel1.add(matchAnchorButton, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, 1, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JScrollPane scrollPane1 = new JScrollPane();
-        panel1.add(scrollPane1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        panel1.add(scrollPane1, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         logPane = new JEditorPane();
         logPane.setEditable(false);
         scrollPane1.setViewportView(logPane);
         final JPanel panel2 = new JPanel();
         panel2.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
-        panel1.add(panel2, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel1.add(panel2, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         panel2.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Status"));
         currentPhaseButton = new JButton();
         currentPhaseButton.setEnabled(false);
@@ -224,7 +206,7 @@ public class MainFrame extends JFrame {
         panel2.add(gameStatusButton, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, 1, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JPanel panel3 = new JPanel();
         panel3.setLayout(new GridLayoutManager(4, 2, new Insets(0, 0, 0, 0), -1, -1, true, true));
-        panel1.add(panel3, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel1.add(panel3, new GridConstraints(4, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         panel3.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Action"));
         checkCallButton = new JButton();
         checkCallButton.setEnabled(false);
@@ -260,7 +242,7 @@ public class MainFrame extends JFrame {
         panel3.add(allInButton, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(126, 34), null, 0, false));
         final JPanel panel4 = new JPanel();
         panel4.setLayout(new GridLayoutManager(3, 3, new Insets(0, 0, 0, 0), -1, -1));
-        panel1.add(panel4, new GridConstraints(4, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel1.add(panel4, new GridConstraints(5, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         panel4.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Automation"));
         autoYesButton = new JRadioButton();
         autoYesButton.setEnabled(false);
@@ -294,6 +276,9 @@ public class MainFrame extends JFrame {
         saveButton.setEnabled(false);
         saveButton.setText("Save");
         panel4.add(saveButton, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        clearLogButton = new JButton();
+        clearLogButton.setText("Clear Log");
+        panel1.add(clearLogButton, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         ButtonGroup buttonGroup;
         buttonGroup = new ButtonGroup();
         buttonGroup.add(autoYesButton);

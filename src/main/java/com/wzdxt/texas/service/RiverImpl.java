@@ -1,6 +1,7 @@
 package com.wzdxt.texas.service;
 
 import com.wzdxt.texas.model.Card;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -11,6 +12,7 @@ import static com.wzdxt.texas.util.C.C;
 /**
  * Created by wzdxt on 2017/9/1.
  */
+@Component
 public class RiverImpl extends AbsCalculator implements Calculator {
     @Override
     public List<Double> calculate(Collection<Card> my, Collection<Card> river) {

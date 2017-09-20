@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
 /**
  * Created by wzdxt on 2017/9/3.
  */
-public class ComebackImplTest {
+public class FlopTest {
     @Test
     public void calculate() throws Exception {
         Calculator calc  = new FlopImpl();

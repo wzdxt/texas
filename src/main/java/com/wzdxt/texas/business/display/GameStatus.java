@@ -35,15 +35,18 @@ public class GameStatus {
     List<Card> commonCard;          // ok
 
     public int getMyPool() {
-        return playerPools[0];
+        return playerPools == null ? 0
+                : playerPools[0];
     }
 
     public int getThisTurnPool() {
-        return Arrays.stream(playerPools).sum();
+        return playerPools == null ? 0
+                : Arrays.stream(playerPools).sum();
     }
 
     public int getRemainNum() {
-        return (int)IntStream.range(0, playerRemain.length).filter(i -> playerRemain[i]).count();
+        return playerRemain == null ? 0
+                : (int)IntStream.range(0, playerRemain.length).filter(i -> playerRemain[i]).count();
     }
 
 

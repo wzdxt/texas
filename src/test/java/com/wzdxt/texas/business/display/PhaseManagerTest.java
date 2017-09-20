@@ -1,7 +1,9 @@
 package com.wzdxt.texas.business.display;
 
 import com.wzdxt.texas.model.Card;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ErrorCollector;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -9,7 +11,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Arrays;
 
-import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by wzdxt on 2017/9/9.
@@ -17,6 +21,8 @@ import static org.junit.Assert.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class PhaseManagerTest extends ScreenTestBase {
+    @Rule
+    public ErrorCollector collector = new ErrorCollector();
     @Autowired
     PhaseManager phaseManager;
 
@@ -67,17 +73,18 @@ public class PhaseManagerTest extends ScreenTestBase {
     @Test
     public void test8PNG() throws Exception {
         switchTo("8.PNG");
-//        assertArrayEquals(new boolean[]{true, true, true, true, true, true}, status.getPlayerExist());
-//        assertEquals(8275, status.getMyCoin());
+        collector.checkThat(phaseManager.getPlayerExist(), equalTo(new boolean[]{true, true, true, true, true, true}));
+//        assertEquals(8275, phaseManager.getMyCoin());
 //        assertEquals(Arrays.asList(Card.of("♠3"), Card.of("♠10")), phaseManager.getMyCard());
-        assertEquals(Arrays.asList(Card.of("♠Q"), Card.of("♣4"), Card.of("♥Q")), phaseManager.getCommonCard());
+//        assertEquals(Arrays.asList(Card.of("♠Q"), Card.of("♣4"), Card.of("♥Q")), phaseManager.getCommonCard());
     }
 
     @Test
     public void test9PNG() throws Exception {
         switchTo("9.PNG");
 //        assertArrayEquals(new boolean[]{true, true, true, true, true, false}, status.getPlayerExist());
-        assertEquals(0, phaseManager.getCallNeed());
+        assertEquals(Arrays.asList(Card.of("♣Q"), Card.of("♠3")), phaseManager.getMyCard());
+//        assertEquals(0, phaseManager.getCallNeed());
     }
 
     @Test

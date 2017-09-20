@@ -55,13 +55,12 @@ public class TurnTest extends TexasMasterTestBase {
 
     @Test
     public void suggest49() throws Exception {
-//        test("♠4♥9", "", MasterDecision.CALL_2);
-//        test("♠4♥9", "♣A♦K♦3", MasterDecision.CHECK_OR_FOLD);
-//        test("♠4♥9", "♣3♦K♦3", MasterDecision.CHECK_OR_FOLD);
-//        test("♠4♥9", "♣K♦K♦3", MasterDecision.CHECK_OR_FOLD);
-//        test("♠4♥9", "♣K♦K♦10", MasterDecision.CHECK_OR_FOLD);
-//        test("♠4♥9", "♣5♦4♦J", MasterDecision.CALL_2);
-//        test("♠4♥9", "♣8♦6♦K", MasterDecision.CHECK_OR_FOLD);
+        test("♠4♥9", "♣A♦K♦3♣K", MasterDecision.CHECK_OR_FOLD);
+        test("♠4♥9", "♣3♦K♦3♣7", MasterDecision.CHECK_OR_FOLD);
+        test("♠4♥9", "♣K♦K♦3♣J", MasterDecision.CHECK_OR_FOLD);
+        test("♠4♥9", "♣K♦K♦10♣J", MasterDecision.CHECK_OR_FOLD);
+        test("♠4♥9", "♣5♦4♦J♣A", MasterDecision.CALL_2);
+        test("♠4♥9", "♣8♦6♦K♣9", MasterDecision.CALL_5);
     }
 
 }

@@ -53,36 +53,22 @@ texas:
           - rate: 70
             bet: call_2
     river:
-      - check: 99
+      - check: 10
         decides:
-          - rate: 95
+          - rate: 98
             bet: all_in
-          - rate: 90
-            bet: bet_25_50
-      - check: 90
-        decides:
           - rate: 95
             bet: bet_25_50
           - rate: 90
             bet: bet_10_50
-      - check: 80
-        decides:
-          - rate: 90
+          - rate: 85
             bet: bet_5_25
           - rate: 80
             bet: bet_2_10
-      - check: 50
-        decides:
-          - rate: 80
-            bet: bet_2_10
-          - rate: 60
-            bet: call_10
-      - check: 30
-        decides:
-          - rate: 80
-            bet: call_10
-          - rate: 70
+          - rate: 75
             bet: call_5
+          - rate: 70
+            bet: call_2
 displayer:   # 线条大坐标不变, 区块大坐标+1
   scan_interval: 1000   # millisecond
   anchor:   # 定位窗口配置
@@ -238,11 +224,11 @@ displayer:   # 线条大坐标不变, 区块大坐标+1
   other:
     player_absent:  # check by line
       - 0, 0 # myself, always here
-      - 278, 420, 291, 420, 0x146129  # todo wrong for 8.png
-      - 31, 380, 40, 380, 0x2a1b32
-      - 784, 90, 794, 90, 0x0f0915
-      - 984, 317, 994, 317, 0x241621
-      - 727, 434, 766, 434, 0x301e36
+      - 275, 420, 285, 420, 0x146129  # todo wrong for 8.png
+      - 35, 380, 44, 380, 0x2a1b32
+      - 778, 90, 788, 90, 0x0f0915
+      - 981, 317, 991, 317, 0x241621
+      - 740, 434, 750, 434, 0x301e36
     player_remain:
       - 0, 0  # myself, using coin area
       - 308, 466

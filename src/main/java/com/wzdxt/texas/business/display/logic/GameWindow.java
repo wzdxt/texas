@@ -44,7 +44,9 @@ public class GameWindow {
     public void save(String s) {
         File f = new File(String.format("temp/image-save/%s/%s.bmp", name, s));
         try {
+            new File(f.getParent()).mkdirs();
             ImageIO.write(bi, "bmp", f);
+            log.info("save success to {}", f.toString());
         } catch (IOException e) {
             log.error("save image fail. " + f.toString(), e);
         }

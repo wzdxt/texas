@@ -58,40 +58,44 @@ public class Displayer {
 
     @Async
     public void run() {
-        boolean noticed = false;
+//        boolean noticed = false;
+        GameStatus lastStatus = null;
         while (true) {
-            if (autoRun || actOnce || scan) {
-                GameStatus.Phase phase = getCurrentPhase();
-                if (phase == GameStatus.Phase.PLAYING) {
-                    GameStatus status = getGameStatus();
-                    if (status.status == GameStatus.Status.MY_TURN) {
-                        if (!noticed || autoRun || actOnce) {
-                            log.info("手牌: {}", status.getMyCard());
-                            log.info("台面: {}", status.getCommonCard());
-                            MasterDecision masterDecision = player.askMaster(status);
-                            log.info("AI建议: {}", masterDecision);
-                            TexasPlayer.FinalAction finalAction = player.makeAction(masterDecision, status);
-                            log.info("最终操作: {}", finalAction);
-                            noticed = true;
-                            if (autoRun || actOnce) {
-                                try {
-                                    player.act(finalAction);
-                                    log.info("执行成功！");
-                                } catch (OperationEngine.OperationException e) {
-                                    log.error(String.format("[%d] player operation fail. %s", errorCnt++, status), e);
-                                    window.save(String.valueOf(errorCnt));
+            try {
+                if (autoRun || actOnce || scan) {
+                    GameStatus.Phase phase = getCurrentPhase();
+                    if (phase == GameStatus.Phase.PLAYING) {
+                        GameStatus status = getGameStatus();
+                        if (status.status == GameStatus.Status.MY_TURN) {
+                            if (!status.equals(lastStatus) || autoRun || actOnce) {
+                                log.info("手牌: {}", status.getMyCard());
+                                log.info("台面: {}", status.getCommonCard());
+                                MasterDecision masterDecision = player.askMaster(status);
+                                log.info("AI建议: {}", masterDecision);
+                                TexasPlayer.FinalAction finalAction = player.makeAction(masterDecision, status);
+                                log.info("最终操作: {}", finalAction);
+//                                noticed = true;
+                                if (autoRun || actOnce) {
+                                    try {
+                                        player.act(finalAction);
+                                        log.info("执行成功！");
+                                    } catch (OperationEngine.OperationException e) {
+                                        log.error(String.format("[%d] player operation fail. %s", errorCnt++, status), e);
+                                        window.save(String.valueOf(errorCnt));
+                                    }
+                                    actOnce = false;
                                 }
-                                actOnce = false;
+                                lastStatus = status;
                             }
+                        } else {
+//                            noticed = false;
                         }
-                    } else {
-                        noticed = false;
                     }
                 }
-            }
-            try {
                 Thread.sleep(1000);
             } catch (InterruptedException ignored) {
+            } catch (Exception e) {
+                log.error("", e);
             }
         }
     }

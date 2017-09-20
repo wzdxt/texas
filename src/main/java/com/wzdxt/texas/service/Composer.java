@@ -13,6 +13,8 @@ import java.util.*;
  */
 @Component
 public class Composer {
+    protected Random rand = new Random();
+
     List<CardSet> largerHandsAfterRiver(final Collection<Card> river, final Collection<Card> mine) {
         final CardSet myAll = new CardSet(river);
         myAll.addAll(mine);
@@ -39,6 +41,10 @@ public class Composer {
                         AbsHand hand = composeHand(set);
                         if (hand.compareTo(myHand) > 0) {
                             ret.add(set);
+                        } else if (hand.compareTo(myHand) == 0) {
+                            if (rand.nextInt(2) == 0) {
+//                                ret.add(set);
+                            }
                         }
                     }
                 }
