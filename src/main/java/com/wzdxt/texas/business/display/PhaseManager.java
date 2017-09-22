@@ -3,6 +3,8 @@ package com.wzdxt.texas.business.display;
 import com.wzdxt.texas.business.display.logic.ImageComparator;
 import com.wzdxt.texas.business.display.logic.ImageCutter;
 import com.wzdxt.texas.business.display.logic.GameWindow;
+import com.wzdxt.texas.business.display.logic.RankPixOcr;
+import com.wzdxt.texas.business.display.logic.RankTessOcr;
 import com.wzdxt.texas.business.display.operation.*;
 import com.wzdxt.texas.business.display.util.OcrUtil;
 import com.wzdxt.texas.config.DisplayerConfigure;
@@ -32,6 +34,9 @@ public class PhaseManager {
     private ImageCutter imageCutter;
     @Autowired
     private ImageComparator imageComparator;
+    @Autowired
+//    private RankTessOcr rankOcr;
+    private RankPixOcr rankOcr;
 
     public GameStatus.Phase getCurrentPhase() {
         for (DisplayerConfigure.Phase phase : configure.getPhase().values()) {
@@ -210,7 +215,9 @@ public class PhaseManager {
     }
 
     protected String ocrRank(int x1, int y1, int x2, int y2) {
-        return ocr(x1, y1, x2, y2, "-l texas-rank -psm 10");
+        BufferedImage bi = screen.capture(x1, y1, x2, y2);
+        return rankOcr.ocr(bi);
+//        return ocr(x1, y1, x2, y2, "-l texas-rank -psm 10");
     }
 
     protected String ocrSuit(int x1, int y1, int x2, int y2) {

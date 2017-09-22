@@ -22,6 +22,7 @@ public class ConfigureTest {
     @Test
     public void test() {
         assertNotNull(displayerConfigure.getOcrArea().getMyCard()[1].getRank());
+        assertNotNull(displayerConfigure.getOcrPix().get("2")[1]);
         assertNotNull(masterConfigure.getRiver()[0].decides[0].bet);
     }
 }

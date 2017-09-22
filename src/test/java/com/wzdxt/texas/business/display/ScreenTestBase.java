@@ -49,4 +49,9 @@ abstract public class ScreenTestBase {
             };
         }
     }
+
+    protected void switchTo(String s) throws Exception {
+        setScreen(this.getClass().getResourceAsStream("/static/screen/" + s));
+    }
+
 }

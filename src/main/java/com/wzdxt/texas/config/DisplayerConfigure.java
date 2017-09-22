@@ -22,6 +22,7 @@ public class DisplayerConfigure {
     Map<String, Status> status;
     Map<String, OperationPlan> operation;
     OcrArea ocrArea;
+    Map<String, double[]> ocrPix;
     Other other;
 
 

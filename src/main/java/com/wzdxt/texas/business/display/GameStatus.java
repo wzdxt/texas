@@ -33,6 +33,7 @@ public class GameStatus {
     int callNeed;          // ok
     List<Card> myCard;          // ok
     List<Card> commonCard;          // ok
+    // (call*2+pool)/bb*bb-pool
 
     public int getMyPool() {
         return playerPools == null ? 0
