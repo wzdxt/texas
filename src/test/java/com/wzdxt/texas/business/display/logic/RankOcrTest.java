@@ -98,7 +98,7 @@ public class RankOcrTest extends ScreenTestBase {
     @Test
     public void testR18() throws Exception {
         // ♠ ♣ ♥ ♦
-        test("r-18.bmp", new String[]{"♥4", "♣3", "♦J", "♥Q"}, new String[]{"♣K", "♥8"});
+        test("r-18.bmp", new String[]{"♥4", "♣3", "♦J", "♥A"}, new String[]{"♣K", "♥8"});
     }
 
     @Test
@@ -128,5 +128,5 @@ public class RankOcrTest extends ScreenTestBase {
 /**
  * total: 83
  * tess errors:8
- * calc errors:
+ * calc errors:0!!!!!
  */
