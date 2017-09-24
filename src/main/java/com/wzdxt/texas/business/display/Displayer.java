@@ -67,7 +67,7 @@ public class Displayer {
                     if (phase == GameStatus.Phase.PLAYING) {
                         GameStatus status = getGameStatus();
                         if (status.status == GameStatus.Status.MY_TURN) {
-                            if (!(status.getCommonCard().equals(lastStatus.getCommonCard()))
+                            if (!(lastStatus != null && status.getCommonCard().equals(lastStatus.getCommonCard()))
                                     || autoRun || actOnce) {
                                 log.info("手牌: {}", status.getMyCard());
                                 log.info("台面: {}", status.getCommonCard());
@@ -81,7 +81,7 @@ public class Displayer {
                                         player.act(finalAction);
                                         log.info("执行成功！");
                                     } catch (OperationEngine.OperationException e) {
-                                        log.error(String.format("[%d] player operation fail. %s", errorCnt++, status), e);
+                                        log.error(String.format("[%d] player operation fail. %s", ++errorCnt, status), e);
                                         window.save(String.valueOf(errorCnt));
                                     }
                                     actOnce = false;
@@ -96,7 +96,7 @@ public class Displayer {
                 }
             } catch (InterruptedException ignored) {
             } catch (Exception e) {
-                log.error("[{}]Error in Displayer run {} {}", errorCnt++, e.toString(), e.getStackTrace());
+                log.error("[{}]Error in Displayer run {} {}", ++errorCnt, e.toString(), e.getStackTrace());
                 window.save(String.valueOf(errorCnt));
                 try {
                     Thread.sleep(1000);
