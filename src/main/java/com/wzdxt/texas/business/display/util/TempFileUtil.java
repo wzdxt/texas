@@ -24,6 +24,7 @@ public class TempFileUtil {
                 imageType = "bmp";
                 break;
         }
+        new File("temp/temp-file/").mkdirs();
         String path = "temp/temp-file/" + System.currentTimeMillis() + "." + imageType;
         try {
             if (!ImageIO.write(image, imageType, new File(path))) {

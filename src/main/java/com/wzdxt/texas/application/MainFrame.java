@@ -126,8 +126,13 @@ public class MainFrame extends JFrame {
                 new SwingWorker<GameStatus, Void>() {
                     @Override
                     public GameStatus doInBackground() {
-                        window.refresh();
-                        return displayer.getGameStatus();
+                        try {
+                            window.refresh();
+                            return displayer.getGameStatus();
+                        } catch (Exception e) {
+                            log.error("Error in game status button {}", e.toString(), e);
+                            throw e;
+                        }
                     }
 
                     @Override

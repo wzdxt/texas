@@ -9,6 +9,7 @@ import com.wzdxt.texas.business.display.operation.*;
 import com.wzdxt.texas.business.display.util.OcrUtil;
 import com.wzdxt.texas.config.DisplayerConfigure;
 import com.wzdxt.texas.model.Card;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
@@ -22,6 +23,7 @@ import java.util.stream.Collectors;
 /**
  * Created by wzdxt on 2017/9/9.
  */
+@Slf4j
 @Component
 public class PhaseManager {
     @Autowired

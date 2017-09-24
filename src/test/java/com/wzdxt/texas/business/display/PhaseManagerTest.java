@@ -430,6 +430,23 @@ public class PhaseManagerTest extends ScreenTestBase {
 //        assertEquals(1500, phaseManager.getCallNeed());
     }
 
+    @Test
+    public void testT1() throws Exception {
+        switchTo("t-1.bmp");
+        assertEquals(GameStatus.Phase.PLAYING, phaseManager.getCurrentPhase());
+//        assertEquals(70200, phaseManager.getTotalCoin());
+//        assertEquals(GameStatus.Status.FINISH, phaseManager.getCurrentStatus());
+//        assertArrayEquals(new boolean[]{true, true, true, true, true, true}, phaseManager.getPlayerExist());
+//        assertEquals(150, phaseManager.getBigBlind());
+//        assertArrayEquals(new boolean[]{false, false, true, true, false, true}, phaseManager.getPlayerRemain());
+//        assertEquals(false, phaseManager.amILive());
+//        assertEquals(2, phaseManager.getCurrentTurn());
+//        assertEquals(1650, phaseManager.getTotalPool());
+//        assertArrayEquals(new int[]{0, 0, 0, 0, 0, 1050}, phaseManager.getPlayerPool());
+//        assertEquals(7450, phaseManager.getMyCoin());
+//        assertEquals(1500, phaseManager.getCallNeed());
+    }
+
     protected void switchTo(String s) throws Exception {
         setScreen(this.getClass().getResourceAsStream("/static/screen/" + s));
     }

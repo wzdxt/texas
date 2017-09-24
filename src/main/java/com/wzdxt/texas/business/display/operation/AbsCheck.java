@@ -4,6 +4,7 @@ import com.wzdxt.texas.business.display.logic.GameWindow;
 import com.wzdxt.texas.business.display.util.RgbUtil;
 import com.wzdxt.texas.config.DisplayerConfigure;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 
@@ -14,6 +15,7 @@ import java.util.List;
 /**
  * Created by wzdxt on 2017/9/5.
  */
+@Slf4j
 @NoArgsConstructor
 public abstract class AbsCheck implements Operation {
     @Autowired
@@ -54,6 +56,8 @@ public abstract class AbsCheck implements Operation {
             int mistake = check();
             if (mistake < configure.getCheck().getRgbMistake()) {
                 return true;
+            } else {
+                log.debug("{} fail. mistake: {}", this.getClass().getSimpleName(), mistake);
             }
             if (i < retry - 1) {
                 delay(0.2);
