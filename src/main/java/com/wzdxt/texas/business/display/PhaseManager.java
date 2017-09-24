@@ -156,6 +156,7 @@ public class PhaseManager {
         return rank == null && suit == null ? null : Card.of(suit.substring(0, 1) + rank);
     }
 
+    @Deprecated
     public int getCurrentTurn() {
         int[][] turn = configure.getOther().getTurn();
         for (int i = 0; i < turn.length; i++) {

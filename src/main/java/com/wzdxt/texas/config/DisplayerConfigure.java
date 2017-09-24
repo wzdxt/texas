@@ -113,6 +113,7 @@ public class DisplayerConfigure {
     public static class Other {
         int[][] playerRemain;
         int playerRemainColor;
+        @Deprecated
         int[][] turn;
         int[][] playerAbsent;
         int[] playerColor;
