@@ -15,9 +15,9 @@ significant   elliptical     1
 	  0.000400  0.000400  0.000400  0.000400
 
 0 1
-significant   elliptical     4
-	  0.365234  0.336914  0.221680  0.158203
-	  0.000666  0.000484  0.000400  0.000400
+significant   elliptical     6
+	  0.371094  0.339323  0.223307  0.160156
+	  0.000482  0.000400  0.000400  0.000400
 
 2 1
 significant   elliptical     3
@@ -40,9 +40,9 @@ significant   elliptical     6
 	  0.000400  0.001602  0.000400  0.000400
 
 9 1
-significant   elliptical     1
-	  0.375000  0.410547  0.230469  0.144531
-	  0.000400  0.000400  0.000400  0.000400
+significant   elliptical     2
+	  0.378906  0.392383  0.226562  0.148438
+	  0.000400  0.000660  0.000400  0.000400
 
 1 1
 significant   elliptical     2
@@ -127,4 +127,9 @@ significant   elliptical     1
 / 1
 significant   elliptical     1
 	  0.324219  0.153516  0.210938  0.074219
+	  0.000400  0.000400  0.000400  0.000400
+
+4 1
+significant   elliptical     1
+	  0.375000  0.257812  0.183594  0.140625
 	  0.000400  0.000400  0.000400  0.000400
