@@ -95,7 +95,7 @@ public class Displayer {
                 Thread.sleep(1000);
             } catch (InterruptedException ignored) {
             } catch (Exception e) {
-                log.error("Error in Displayer run {}", e.toString(), e);
+                log.error("Error in Displayer run {} {}", e.toString(), e.getStackTrace());
             }
         }
     }

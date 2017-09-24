@@ -1,5 +1,7 @@
 package cn.easyproject.easyocr;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -24,6 +26,7 @@ import java.util.UUID;
  * @version 3.0.3
  * 
  */
+@Slf4j
 public class EasyOCR {
 
 	/**
@@ -1781,6 +1784,9 @@ public class EasyOCR {
 			if (tesseractPath == null || tesseractPath.trim().equals("")) {
 				tesseractPath = "tesseract";
 			}
+//			cmd.add("chcp.com");
+//			cmd.add("65001");
+//			cmd.add(";");
 			cmd.add(tesseractPath);
 			cmd.add("");
 			cmd.add(toFile); // 输出文件位置
@@ -1801,7 +1807,7 @@ public class EasyOCR {
 			if (w == 0)// 0代表正常退出
 			{
 				File file = new File(toFile + ".txt");
-				BufferedReader br = new BufferedReader(new FileReader(file));
+				BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
 				String s = null;
 				while ((s = br.readLine()) != null) {
 					res.append(s).append("\n");
