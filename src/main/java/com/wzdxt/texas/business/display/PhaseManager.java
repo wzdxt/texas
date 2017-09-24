@@ -227,11 +227,13 @@ public class PhaseManager {
         String options = "-l texas-suit -psm 10";
         BufferedImage bi = screen.capture(x1, y1, x2, y2);
         bi = imageCutter.cutEdge(bi);
-        if (bi != null) {
+        if (bi != null && bi.getHeight() > 5) {
             imageCutter.cutSuitCorner(bi);
             imageCutter.digCharacterInner(bi);
+        } else {
+            return null;
         }
-        return bi == null ? null : OcrUtil.recognize(bi, options);
+        return OcrUtil.recognize(bi, options);
     }
 
     protected String ocr(int x1, int y1, int x2, int y2, String options) {

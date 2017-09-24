@@ -28,7 +28,7 @@ public class RankPixOcr {
     public String ocr(BufferedImage bi) {
         int background = imageComparator.getBackgroundRgb(bi);
         bi = imageCutter.cutEdge(bi);
-        if (bi == null) return null;
+        if (bi == null || bi.getHeight() < 5) return null;
         int width = bi.getWidth();
         int height = bi.getHeight();
         int total = width * height;

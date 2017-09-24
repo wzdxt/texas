@@ -40,8 +40,8 @@ public class CheckSame extends AbsCheck {
         BufferedImage bi = screenCapture();
         List<Integer> allRgb = new ArrayList<>();
         LineUtil.walk(x1, y1, x2, y2, configure.getCheck().getLineStep(), (x, y) -> {
-            int cx = x >= x1 ? x - x1 : x - x1 + bi.getWidth();
-            int cy = y >= y1 ? y - y1 : y - y1 + bi.getHeight();
+            int cx = x2 >= x1 ? x - x1 : x - x2;
+            int cy = y2 >= y1 ? y - y1 : y - y2;
             allRgb.add(bi.getRGB(cx, cy));
             return true;
         });

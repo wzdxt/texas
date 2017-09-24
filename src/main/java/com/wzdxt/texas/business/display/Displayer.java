@@ -67,7 +67,8 @@ public class Displayer {
                     if (phase == GameStatus.Phase.PLAYING) {
                         GameStatus status = getGameStatus();
                         if (status.status == GameStatus.Status.MY_TURN) {
-                            if (!status.equals(lastStatus) || autoRun || actOnce) {
+                            if (!(status.getCommonCard().equals(lastStatus.getCommonCard()))
+                                    || autoRun || actOnce) {
                                 log.info("手牌: {}", status.getMyCard());
                                 log.info("台面: {}", status.getCommonCard());
                                 MasterDecision masterDecision = player.askMaster(status);
@@ -86,16 +87,25 @@ public class Displayer {
                                     actOnce = false;
                                 }
                                 lastStatus = status;
+                                Thread.sleep(2000);
                             }
                         } else {
 //                            noticed = false;
                         }
                     }
                 }
-                Thread.sleep(1000);
             } catch (InterruptedException ignored) {
             } catch (Exception e) {
-                log.error("Error in Displayer run {} {}", e.toString(), e.getStackTrace());
+                log.error("[{}]Error in Displayer run {} {}", errorCnt++, e.toString(), e.getStackTrace());
+                window.save(String.valueOf(errorCnt));
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException ignored) {
+                }
+            }
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException ignored) {
             }
         }
     }

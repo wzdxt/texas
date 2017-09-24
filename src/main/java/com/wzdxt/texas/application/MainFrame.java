@@ -130,7 +130,7 @@ public class MainFrame extends JFrame {
                             window.refresh();
                             return displayer.getGameStatus();
                         } catch (Exception e) {
-                            log.error("Error in game status button {}", e.toString(), e);
+                            log.error("Error in game status button {} {}", e.toString(), e.getStackTrace());
                             throw e;
                         }
                     }

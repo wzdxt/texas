@@ -124,7 +124,7 @@ displayer:   # 线条大坐标不变, 区块大坐标+1
     my_turn:    # 必须在watching之前
       name: my_turn
       check:
-        - same: 511, 410, 506, 406
+        - same: 511, 410, 506, 407
       next:
         - watching
         - finish
@@ -253,7 +253,7 @@ displayer:   # 线条大坐标不变, 区块大坐标+1
     player_remain_color: 0xfdfdfd
     turn:
                 #  -5   -4
-      - 511, 410, 506, 406
+      - 511, 410, 506, 407
       - 233, 410, 228, 406
       - 79, 311, 74, 307
       - 740, 77, 732, 73
