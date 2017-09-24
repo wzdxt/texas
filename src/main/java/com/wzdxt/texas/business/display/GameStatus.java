@@ -23,6 +23,7 @@ public class GameStatus {
     int bigBlind;            // ok
     boolean[] playerRemain;          // ok
     private int remainNum;          // ok
+    @Deprecated
     int currentTurn;            // ok
     int totalPool;              // ok
     int[] playerPools;          // ok

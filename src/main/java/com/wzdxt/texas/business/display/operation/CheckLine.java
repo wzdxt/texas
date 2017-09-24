@@ -44,7 +44,8 @@ public class CheckLine extends AbsCheck {
             int cy = py - y1;
             if (cy < 0) cy += bi.getHeight();
             int checkRgb = bi.getRGB(cx, cy);
-            return mistake.add(calcRgbMistake(rgb, checkRgb));
+            int m=calcRgbMistake(rgb, checkRgb);
+            return mistake.add(m*m);
         });
 
         return mistake.stream().reduce(0, (s, i) -> s + i) / mistake.size();

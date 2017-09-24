@@ -47,13 +47,13 @@ public class CheckSame extends AbsCheck {
         });
 
         int aveR = allRgb.stream().map(m -> (m & 0xff0000) >> 16).reduce(0, (s, i) -> s + i) / allRgb.size();
-        ret += allRgb.stream().map(m -> (m & 0xff0000) >> 16).map(r -> Math.abs(r - aveR))
+        ret += allRgb.stream().map(m -> (m & 0xff0000) >> 16).map(r -> Math.abs(r - aveR)).map(r -> r * r)
                 .reduce(0, (s, i) -> s + i) / allRgb.size();
         int aveG = allRgb.stream().map(m -> (m & 0x00ff00) >> 8).reduce(0, (s, i) -> s + i) / allRgb.size();
-        ret += allRgb.stream().map(m -> (m & 0x00ff00) >> 8).map(g -> Math.abs(g - aveG))
+        ret += allRgb.stream().map(m -> (m & 0x00ff00) >> 8).map(g -> Math.abs(g - aveG)).map(r -> r * r)
                 .reduce(0, (s, i) -> s + i) / allRgb.size();
         int aveB = allRgb.stream().map(m -> m & 0x0000ff).reduce(0, (s, i) -> s + i) / allRgb.size();
-        ret += allRgb.stream().map(m -> m & 0x0000ff).map(b -> Math.abs(b - aveB))
+        ret += allRgb.stream().map(m -> m & 0x0000ff).map(b -> Math.abs(b - aveB)).map(r -> r * r)
                 .reduce(0, (s, i) -> s + i) / allRgb.size();
 
         return ret;

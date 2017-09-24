@@ -88,7 +88,7 @@ displayer:   # 线条大坐标不变, 区块大坐标+1
     rgb_mistake: 100  # 允许容错 , 需要测试调整
     line_step: 1
   phase:    # 程序阶段
-    main_page:
+    main_page:  # 进入游戏画面
       name: main_page
       check:
         - point: 772, 148, 0xfde90b
@@ -109,13 +109,13 @@ displayer:   # 线条大坐标不变, 区块大坐标+1
 #        showRoom:
 #    room_page:
 #      name: room_page
-    waiting:
+    waiting:  # 没有手牌
       name: waiting
       check:
         - point: 517, 129, 0xfdccb7
         - contain: 468, 388, 559, 404, 0x59775f
-        - line: 567, 428, 694, 428, 0x1c7130
-    playing:
+        - line: 567, 428, 694, 428, 0x1c6c2d
+    playing:  # 有白色手牌
       name: playing
       check:
         - line: 570, 418, 619, 418, 0xe6e6e6
@@ -128,7 +128,7 @@ displayer:   # 线条大坐标不变, 区块大坐标+1
       next:
         - watching
         - finish
-    watching:   # 游戏中，其他玩家行动
+    watching:   # 游戏中，其他玩家行动, (没有手牌!!!!
       name: watching
       check:
         - same: 567, 419, 684, 419, 0x1e6e2f
@@ -241,7 +241,7 @@ displayer:   # 线条大坐标不变, 区块大坐标+1
       - 275, 420, 285, 420, 0x146129  # todo wrong for 8.png
       - 35, 380, 44, 380, 0x2a1b32
       - 778, 90, 788, 90, 0x0f0915
-      - 981, 317, 991, 317, 0x241621
+      - 981, 317, 991, 317, 0x271930
       - 740, 434, 750, 434, 0x301e36
     player_remain:
       - 0, 0  # myself, using coin area

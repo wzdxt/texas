@@ -235,8 +235,8 @@ public class PhaseManager {
         BufferedImage bi = screen.capture(x1, y1, x2, y2);
         int background = imageComparator.getBackgroundRgb(bi);
         bi = imageCutter.cutEdge(bi);
-        if (bi != null)
-            imageCutter.digCharacterInner(bi, background);
+//        if (bi != null)
+//            imageCutter.digCharacterInner(bi, background);
         return bi == null ? null : OcrUtil.recognize(bi, options);
     }
 
