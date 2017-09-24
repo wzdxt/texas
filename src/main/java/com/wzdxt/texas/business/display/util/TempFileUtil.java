@@ -34,8 +34,8 @@ public class TempFileUtil {
         } catch (IOException e) {
             log.warn("fail to delete temp file " + path, e);
         } finally {
-            File f = new File(path);
-            if (f.exists()) f.delete();
+//            File f = new File(path);
+//            if (f.exists()) f.delete();
         }
         return null;
     }
