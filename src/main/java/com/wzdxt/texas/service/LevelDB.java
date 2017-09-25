@@ -18,12 +18,14 @@ import java.util.List;
 @Slf4j
 @Component
 public class LevelDB {
-    private DB db;
+    private DB db75;
+    private DB db23;
 
     public LevelDB() {
         Options options = new Options().createIfMissing(true);
         try {
-            db = new Iq80DBFactory().open(new File(Constants.LEVELDB_DIR), options);
+            db75 = new Iq80DBFactory().open(new File(Constants.LEVELDB_75_DIR), options);
+            db23 = new Iq80DBFactory().open(new File(Constants.LEVELDB_23_DIR), options);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -35,7 +37,7 @@ public class LevelDB {
      * @return
      */
     public Long get7to5(long set) {
-        byte[] bytes = db.get(ByteUtil.build(set));
+        byte[] bytes = db75.get(ByteUtil.build(set));
         if (bytes == null) return null;
         return ByteUtil.parseToLong(bytes);
     }
@@ -47,22 +49,23 @@ public class LevelDB {
      * @return
      */
     public List<Double> get23toDouble(int my, int common) {
-        byte[] bytes = db.get(ByteUtil.build(my, common));
+        byte[] bytes = db23.get(ByteUtil.build(my, common));
         if (bytes == null) return null;
         List<Double> list = ByteUtil.parseToDoubleList(bytes);
         return list;
     }
 
     public void put7to5(long set, long hand) {
-        db.put(ByteUtil.build(set), ByteUtil.build(hand));
+        db75.put(ByteUtil.build(set), ByteUtil.build(hand));
     }
 
     public void put23toDouble(int my, int common, List<Double> list) {
-        db.put(ByteUtil.build(my, common), ByteUtil.build(list));
+        db23.put(ByteUtil.build(my, common), ByteUtil.build(list));
     }
 
     public void finalize() throws IOException {
-        db.close();
+        db75.close();
+        db23.close();
     }
 }
 

@@ -27,11 +27,11 @@ public class LevelDBTest {
 
         set = CardSetTest.royalFlush();
         targetId = levelDB.get7to5(set.getId());
-        assertEquals(AbsHand.from7(set), AbsHand.of(targetId));
+        assertEquals(AbsHand.from7Raw(set), AbsHand.of(targetId));
 
         set = CardSetTest.threeR();
         targetId = levelDB.get7to5(set.getId());
-        assertEquals(AbsHand.from7(set), AbsHand.of(targetId));
+        assertEquals(AbsHand.from7Raw(set), AbsHand.of(targetId));
     }
 
     @Test
