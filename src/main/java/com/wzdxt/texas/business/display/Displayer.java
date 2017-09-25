@@ -145,11 +145,11 @@ public class Displayer {
         boolean[] playerRemain = phaseManager.getPlayerRemain();
         playerRemain[0] = phaseManager.amILive();
         int callNeed = phaseManager.getCallNeed();
-        boolean[] playerExist = phaseManager.getPlayerExist();
+//        boolean[] playerExist = phaseManager.getPlayerExist();
         int myCoin = phaseManager.getMyCoin();
         List<Card> myCard = phaseManager.getMyCard();
         List<Card> commonCard = phaseManager.getCommonCard();
-        int currentTurn = phaseManager.getCurrentTurn();
+//        int currentTurn = phaseManager.getCurrentTurn();
         int totalPool = phaseManager.getTotalPool();
         int bigBlind = phaseManager.getBigBlind();
 
@@ -157,11 +157,11 @@ public class Displayer {
         status.setPlayerPools(playerPools);
         status.setPlayerRemain(playerRemain);
         status.setCallNeed(callNeed);
-        status.setPlayerExist(playerExist);
+//        status.setPlayerExist(playerExist);
         status.setMyCoin(myCoin);
         status.setMyCard(myCard);
         status.setCommonCard(commonCard);
-        status.setCurrentTurn(currentTurn);
+//        status.setCurrentTurn(currentTurn);
         status.setTotalPool(totalPool);
         status.setBigBlind(bigBlind);
 
