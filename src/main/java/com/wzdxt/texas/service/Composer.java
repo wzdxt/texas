@@ -31,6 +31,7 @@ public class Composer {
         Set<Integer> used = new HashSet<>();
         river.forEach(card -> used.add(card.getId()));
         except.forEach(card -> used.add(card.getId()));
+        boolean b = false;
         for (int i = 0; i < Constants.TOTAL_CARD; i++) {
             if (!used.contains(i)) {
                 for (int j = i + 1; j < Constants.TOTAL_CARD; j++) {
@@ -42,9 +43,10 @@ public class Composer {
                         if (hand.compareTo(myHand) > 0) {
                             ret.add(set);
                         } else if (hand.compareTo(myHand) == 0) {
-                            if (rand.nextInt(2) == 0) {
-//                                ret.add(set);
+                            if (b) {
+                                ret.add(set);
                             }
+                            b = !b;
                         }
                     }
                 }
