@@ -26,9 +26,18 @@ public class CardSet extends TreeSet<Card> {
         int idx = 0;
         int ret = 0;
         for (Card card : this) {
-            ret += Math.pow(Constants.TOTAL_CARD, idx++) * card.getId();
+            ret += Math.pow((Constants.TOTAL_CARD + 1), idx++) * (card.getId() + 1);
         }
         return ret;
+    }
+
+    public static CardSet of(long id) {
+        CardSet cardSet = new CardSet();
+        while (id > 0) {
+            cardSet.add(Card.of((int) (id % (Constants.TOTAL_CARD + 1)) - 1));
+            id /= (Constants.TOTAL_CARD + 1);
+        }
+        return cardSet;
     }
 
 }

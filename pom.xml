@@ -64,11 +64,17 @@
       <!--<artifactId>tess4j</artifactId>-->
     <!--</dependency>-->
 
+    <!--<dependency>-->
+      <!--<groupId>jfree</groupId>-->
+      <!--<artifactId>jfreechart</artifactId>-->
+      <!--<version>1.0.13</version>-->
+    <!--</dependency>-->
     <dependency>
-      <groupId>jfree</groupId>
-      <artifactId>jfreechart</artifactId>
-      <version>1.0.13</version>
+      <groupId>org.iq80.leveldb</groupId>
+      <artifactId>leveldb</artifactId>
+      <version>0.9</version>
     </dependency>
+
 
 
   </dependencies>

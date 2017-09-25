@@ -53,7 +53,7 @@ public class Composer {
         return ret;
     }
 
-    AbsHand composeHand(CardSet all) {
+    public AbsHand composeHand(CardSet all) {
         if (all.size() != 7) {
             throw new IllegalArgumentException();
         }

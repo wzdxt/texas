@@ -49,4 +49,42 @@ abstract public class AbsHand extends CardSet implements Comparable<AbsHand> {
         return getSort() != o.getSort() ? getSort() - o.getSort() : (Long.compare(getValue(), o.getValue()));
     }
 
+    /**
+     * @param id Card set id
+     * @return
+     */
+    public static AbsHand of(long id) {
+        CardSet cardSet = CardSet.of(id);
+        AbsHand hand;
+        if ((hand = RoyalFlush.compose(cardSet)) != null) return hand;
+        if ((hand = StraightFlush.compose(cardSet)) != null) return hand;
+        if ((hand = FourRank.compose(cardSet)) != null) return hand;
+        if ((hand = FullHouse.compose(cardSet)) != null) return hand;
+        if ((hand = Flush.compose(cardSet)) != null) return hand;
+        if ((hand = Straight.compose(cardSet)) != null) return hand;
+        if ((hand = ThreeRank.compose(cardSet)) != null) return hand;
+        if ((hand = TwoPair.compose(cardSet)) != null) return hand;
+        if ((hand = OnePair.compose(cardSet)) != null) return hand;
+        return HighCard.compose(cardSet);
+    }
+
+    /**
+     *
+     * @param cardSet
+     * @return
+     */
+    public static AbsHand from7(CardSet cardSet) {
+        AbsHand hand;
+        if ((hand = RoyalFlush.compose7(cardSet)) != null) return hand;
+        if ((hand = StraightFlush.compose7(cardSet)) != null) return hand;
+        if ((hand = FourRank.compose7(cardSet)) != null) return hand;
+        if ((hand = FullHouse.compose7(cardSet)) != null) return hand;
+        if ((hand = Flush.compose7(cardSet)) != null) return hand;
+        if ((hand = Straight.compose7(cardSet)) != null) return hand;
+        if ((hand = ThreeRank.compose7(cardSet)) != null) return hand;
+        if ((hand = TwoPair.compose7(cardSet)) != null) return hand;
+        if ((hand = OnePair.compose7(cardSet)) != null) return hand;
+        return HighCard.compose7(cardSet);
+    }
+
 }

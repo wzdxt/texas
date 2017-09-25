@@ -50,5 +50,5 @@ public class Constants {
         RANK_MAP.forEach((k, v) -> RANK_REVERCE_MAP.put(v, k));
     }
 
-    ;
+    public static final String LEVELDB_DIR = "./data/leveldb";
 }
