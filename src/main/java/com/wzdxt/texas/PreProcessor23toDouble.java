@@ -2,39 +2,27 @@ package com.wzdxt.texas;
 
 import com.wzdxt.texas.model.Card;
 import com.wzdxt.texas.model.CardSet;
+import com.wzdxt.texas.service.Calculator;
+import com.wzdxt.texas.service.CalculatorFactory;
 import com.wzdxt.texas.service.LevelDB;
-import com.wzdxt.texas.util.ByteUtil;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.iq80.leveldb.DB;
-import org.iq80.leveldb.Options;
-import org.iq80.leveldb.WriteBatch;
-import org.iq80.leveldb.impl.Iq80DBFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.context.annotation.ComponentScan;
 
-import java.io.File;
-import java.nio.ByteBuffer;
 import java.util.BitSet;
+import java.util.List;
 
 @Slf4j
-public class PreProcessor23toDouble {
-
-    public static void main(String[] args) throws Exception {
-        // open new db
-        Options options = new Options().createIfMissing(true);
-        DB db = new Iq80DBFactory().open(new File(Constants.LEVELDB_DIR), options);
-        // write an empty batch
-        WriteBatch batch = db.createWriteBatch();
-        batch.put(ByteUtil.build(111, 222L), ByteUtil.build(333L, 444L));
-        batch.close();
-        db.write(batch);
-        // read
-        byte[] bytes = db.get(ByteUtil.build(111, 222L));
-        ByteBuffer buffer = ByteBuffer.wrap(bytes);
-        buffer.put(bytes);
-        buffer.flip();
-        log.info("{} {}", buffer.getLong(), buffer.getLong());
-        // close the db
-        db.close();
-    }
+@SpringBootApplication
+@ComponentScan(basePackages = {"com.wzdxt.texas"})
+public class PreProcessor23toDouble implements CommandLineRunner {
+    @Autowired
+    private LevelDB levelDB;
 
     public void process() {
         BitSet selected = new BitSet(Constants.TOTAL_CARD);
@@ -95,16 +83,31 @@ public class PreProcessor23toDouble {
     }
 
     private boolean start = false;
-    private LevelDB levelDB;
+    private int proceed = 0;
 
     public void process(CardSet my, CardSet common) {
         if (!start) {
+            start = levelDB.get23toDouble((int) my.getId(), (int) common.getId()) == null;
         }
 
         if (start) {
-
+            Calculator calc = CalculatorFactory.getCalculatorRaw(common);
+            List<Double> possibility = calc.calculate(my, common);
+            levelDB.put23toDouble((int) my.getId(), (int) common.getId(), possibility);
+        }
+        proceed++;
+        if (proceed % 1 == 0) {
+            log.info("proceed {}, started: {}, my {}, common {}", proceed, start, my, common);
         }
     }
 
+    public static void main(String[] args) throws Exception {
+        new SpringApplicationBuilder(PreProcessor23toDouble.class).headless(false).run(args);
+    }
+
+    @Override
+    public void run(String... args) throws Exception {
+        this.process();
+    }
 }
 

@@ -1,8 +1,10 @@
 package com.wzdxt.texas.model.hand;
 
+import com.wzdxt.texas.ApplicationContextHolder;
 import com.wzdxt.texas.Constants;
 import com.wzdxt.texas.model.Card;
 import com.wzdxt.texas.model.CardSet;
+import com.wzdxt.texas.service.LevelDB;
 import lombok.Getter;
 
 import java.util.Collection;
@@ -69,11 +71,23 @@ abstract public class AbsHand extends CardSet implements Comparable<AbsHand> {
     }
 
     /**
+     * @param cardSet
+     * @return
+     * @implNote use levelDB for speed up
+     */
+    public static AbsHand from7(CardSet cardSet) {
+        assert cardSet.size() == 7;
+        long targetId = ApplicationContextHolder.get().getBean(LevelDB.class).get7to5(cardSet.getId());
+        return AbsHand.of(targetId);
+    }
+
+    /**
+     * the original logic
      *
      * @param cardSet
      * @return
      */
-    public static AbsHand from7(CardSet cardSet) {
+    public static AbsHand from7Raw(CardSet cardSet) {
         AbsHand hand;
         if ((hand = RoyalFlush.compose7(cardSet)) != null) return hand;
         if ((hand = StraightFlush.compose7(cardSet)) != null) return hand;

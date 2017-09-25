@@ -46,9 +46,11 @@ public class LevelDB {
      * @param common
      * @return
      */
-    public Long get23toDouble(int my, int common) {
-
-        return null;
+    public List<Double> get23toDouble(int my, int common) {
+        byte[] bytes = db.get(ByteUtil.build(my, common));
+        if (bytes == null) return null;
+        List<Double> list = ByteUtil.parseToDoubleList(bytes);
+        return list;
     }
 
     public void put7to5(long set, long hand) {
@@ -56,7 +58,7 @@ public class LevelDB {
     }
 
     public void put23toDouble(int my, int common, List<Double> list) {
-
+        db.put(ByteUtil.build(my, common), ByteUtil.build(list));
     }
 
     public void finalize() throws IOException {

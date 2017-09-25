@@ -3,34 +3,13 @@ package com.wzdxt.texas;
 import com.wzdxt.texas.model.Card;
 import com.wzdxt.texas.model.CardSet;
 import com.wzdxt.texas.model.hand.AbsHand;
-import com.wzdxt.texas.model.hand.Flush;
-import com.wzdxt.texas.model.hand.FourRank;
-import com.wzdxt.texas.model.hand.FullHouse;
-import com.wzdxt.texas.model.hand.OnePair;
-import com.wzdxt.texas.model.hand.RoyalFlush;
-import com.wzdxt.texas.model.hand.Straight;
-import com.wzdxt.texas.model.hand.StraightFlush;
-import com.wzdxt.texas.model.hand.ThreeRank;
-import com.wzdxt.texas.model.hand.TwoPair;
 import com.wzdxt.texas.service.LevelDB;
-import com.wzdxt.texas.util.ByteUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.iq80.leveldb.DB;
-import org.iq80.leveldb.Options;
-import org.iq80.leveldb.WriteBatch;
-import org.iq80.leveldb.impl.Iq80DBFactory;
-
-import java.io.File;
-import java.io.IOException;
-import java.nio.ByteBuffer;
-import java.util.ArrayList;
-import java.util.BitSet;
-import java.util.List;
 
 @Slf4j
 public class PreProcessor7to5 {
 
-    private PreProcessor7to5() throws IOException {
+    private PreProcessor7to5() {
         levelDB = new LevelDB();
     }
 
@@ -58,7 +37,7 @@ public class PreProcessor7to5 {
             start = levelDB.get7to5(cardSet.getId()) == null;
         }
         if (start) {
-            AbsHand hand = AbsHand.from7(cardSet);
+            AbsHand hand = AbsHand.from7Raw(cardSet);
             levelDB.put7to5(cardSet.getId(), hand.getId());
         }
         proceed++;

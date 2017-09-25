@@ -11,16 +11,31 @@ public class CalculatorFactory {
     private static FlopImpl flop = new FlopImpl();
     private static TurnImpl turn = new TurnImpl();
     private static RiverImpl river = new RiverImpl();
+
     public static Calculator getCalculator(Collection<Card> common) {
         switch (common.size()) {
-            case 3:
-                return flop;
-            case 4:
-                return turn;
-            case 5:
-                return river;
-            default:
-                throw new IllegalArgumentException();
+        case 3:
+            return flop;
+        case 4:
+            return turn;
+        case 5:
+            return river;
+        default:
+            throw new IllegalArgumentException();
         }
     }
+
+    public static Calculator getCalculatorRaw(Collection<Card> common) {
+        switch (common.size()) {
+        case 3:
+            return flop;
+        case 4:
+            return turn;
+        case 5:
+            return river;
+        default:
+            throw new IllegalArgumentException();
+        }
+    }
+
 }

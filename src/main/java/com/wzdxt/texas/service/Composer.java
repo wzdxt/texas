@@ -57,16 +57,6 @@ public class Composer {
         if (all.size() != 7) {
             throw new IllegalArgumentException();
         }
-        AbsHand hand;
-        if ((hand = RoyalFlush.compose7(all)) != null) return hand;
-        if ((hand = StraightFlush.compose7(all)) != null) return hand;
-        if ((hand = FourRank.compose7(all)) != null) return hand;
-        if ((hand = FullHouse.compose7(all)) != null) return hand;
-        if ((hand = Flush.compose7(all)) != null) return hand;
-        if ((hand = Straight.compose7(all)) != null) return hand;
-        if ((hand = ThreeRank.compose7(all)) != null) return hand;
-        if ((hand = TwoPair.compose7(all)) != null) return hand;
-        if ((hand = OnePair.compose7(all)) != null) return hand;
-        return HighCard.compose7(all);
+        return AbsHand.from7(all);
     }
 }

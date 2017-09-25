@@ -1,6 +1,8 @@
 package com.wzdxt.texas.util;
 
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by dai_x on 17-9-25.
@@ -20,24 +22,42 @@ public class ByteUtil {
         return buffer.array();
     }
 
+    public static byte[] build(int i1, int i2) {
+        ByteBuffer buffer = ByteBuffer.allocate(2 * Integer.BYTES);
+        buffer.putInt(i1);
+        buffer.putInt(i2);
+        return buffer.array();
+    }
+
     public static byte[] build(long l) {
         ByteBuffer buffer = ByteBuffer.allocate(Long.BYTES);
         buffer.putLong(l);
         return buffer.array();
     }
 
+    public static byte[] build(List<Double> list) {
+        ByteBuffer buffer = ByteBuffer.allocate(list.size() * Double.BYTES);
+        list.forEach(buffer::putDouble);
+        return buffer.array();
+    }
+
     public static long parseToLong(byte[] bytes) {
-        ByteBuffer buffer = ByteBuffer.allocate(Long.BYTES);
-        buffer.put(bytes);
-        buffer.flip();
+        ByteBuffer buffer = ByteBuffer.wrap(bytes);
         return buffer.getLong();
     }
 
     public static Tuple<Long, Long> parseToLongLong(byte[] bytes) {
-        ByteBuffer buffer = ByteBuffer.allocate(2 * Long.BYTES);
-        buffer.put(bytes);
-        buffer.flip();
+        ByteBuffer buffer = ByteBuffer.wrap(bytes);
         return Tuple.of(buffer.getLong(), buffer.getLong());
+    }
+
+    public static List<Double> parseToDoubleList(byte[] bytes) {
+        ByteBuffer buffer = ByteBuffer.wrap(bytes);
+        List<Double> list = new ArrayList<>(bytes.length / Double.BYTES);
+        while (buffer.hasRemaining()) {
+            list.add(buffer.getDouble());
+        }
+        return list;
     }
 
 }
