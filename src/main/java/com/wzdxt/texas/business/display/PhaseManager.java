@@ -67,7 +67,7 @@ public class PhaseManager {
 
     protected String getTotalCoinOcrRes() {
         int[] area = configure.getOcrArea().getTotalCoin();
-        return ocr(area[0], area[1], area[2], area[3]);
+        return ocrAmount(area[0], area[1], area[2], area[3]);
     }
 
     public int getTotalCoin() {
@@ -79,7 +79,7 @@ public class PhaseManager {
         int[] ret = new int[6];
         for (int i = 0; i < 6; i++) {
             int[] area = configure.getOcrArea().getPlayerPool()[i];
-            String s = ocr(area[0], area[1], area[2], area[3]);
+            String s = ocrAmount(area[0], area[1], area[2], area[3]);
             ret[i] = s == null ? 0 : str2int(s);
         }
         return ret;
@@ -115,7 +115,7 @@ public class PhaseManager {
 
     public int getMyCoin() {
         int[] area = configure.getOcrArea().getMyCoin();
-        String s = ocr(area[0], area[1], area[2], area[3]);
+        String s = ocrAmount(area[0], area[1], area[2], area[3]);
         if (s != null) {
             return str2int(s);
         } else {
@@ -215,6 +215,10 @@ public class PhaseManager {
 
     protected String ocr(int x1, int y1, int x2, int y2) {
         return ocr(x1, y1, x2, y2, "-l texas -psm 7");
+    }
+
+    protected String ocrAmount(int x1, int y1, int x2, int y2) {
+        return ocr(x1, y1, x2, y2, "-l texas-amount -psm 7");
     }
 
     protected String ocrRank(int x1, int y1, int x2, int y2) {
