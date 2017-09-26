@@ -4,6 +4,7 @@ import com.wzdxt.texas.Constants;
 import com.wzdxt.texas.model.Card;
 import com.wzdxt.texas.model.CardSet;
 import com.wzdxt.texas.model.hand.*;
+import com.wzdxt.texas.util.Tuple;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -19,15 +20,16 @@ public class Composer {
         final CardSet myAll = new CardSet(river);
         myAll.addAll(mine);
         AbsHand myHand = composeHand(myAll);
-        return getLarger(river, mine, myHand);
+        return getLargerEqual(river, mine, myHand).left;
     }
 
     List<CardSet> largerHandsAfterRiver(final Collection<Card> river, final Collection<Card> mine, final AbsHand myHand) {
-        return getLarger(river, mine, myHand);
+        return getLargerEqual(river, mine, myHand).left;
     }
 
-    List<CardSet> getLarger(final Collection<Card> river, final Collection<Card> except, final AbsHand myHand) {
-        List<CardSet> ret = new ArrayList<>();
+    public Tuple<List<CardSet>, List<CardSet>> getLargerEqual(final Collection<Card> river, final Collection<Card> except, final AbsHand myHand) {
+        List<CardSet> larger = new ArrayList<>();
+        List<CardSet> equal = new ArrayList<>();
         Set<Integer> used = new HashSet<>();
         river.forEach(card -> used.add(card.getId()));
         except.forEach(card -> used.add(card.getId()));
@@ -43,11 +45,9 @@ public class Composer {
                         set.add(card2);
                         AbsHand hand = composeHand(set);
                         if (hand.compareTo(myHand) > 0) {
-                            ret.add(set);
+                            larger.add(set);
                         } else if (hand.compareTo(myHand) == 0) {
-                            // consider as win
-                            // larger is considered in other case
-                            // even if equal with one, I can win other's money
+                            equal.add(set);
                         }
                         set.remove(card2);
                     }
@@ -55,7 +55,7 @@ public class Composer {
                 set.remove(card1);
             }
         }
-        return ret;
+        return Tuple.of(larger, equal);
     }
 
     public AbsHand composeHand(CardSet all) {

@@ -2,14 +2,13 @@ package com.wzdxt.texas;
 
 import com.wzdxt.texas.model.Card;
 import com.wzdxt.texas.model.CardSet;
-import com.wzdxt.texas.service.Calculator;
-import com.wzdxt.texas.service.CalculatorFactory;
+import com.wzdxt.texas.model.hand.AbsHand;
+import com.wzdxt.texas.service.Composer;
 import com.wzdxt.texas.service.LevelDB;
-import lombok.AllArgsConstructor;
+import com.wzdxt.texas.util.Tuple;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.annotation.ComponentScan;
@@ -23,9 +22,11 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Slf4j
 @SpringBootApplication
 @ComponentScan(basePackages = {"com.wzdxt.texas"})
-public class PreProcessor23toDouble implements CommandLineRunner {
+public class PreProcessorRiverLarger implements CommandLineRunner {
     @Autowired
     private LevelDB levelDB;
+    @Autowired
+    private Composer composer;
 
     private volatile int proceed = 0;
 
@@ -66,24 +67,41 @@ public class PreProcessor23toDouble implements CommandLineRunner {
                                     if (!selected.get(common3)) {
                                         Card commonCard3 = Card.of(common3);
                                         commonSet.add(commonCard3);
+                                        selected.set(common3);
+                                        // common4
+                                        for (int common4 = common3 + 1; common4 < Constants.TOTAL_CARD; common4++) {
+                                            if (!selected.get(common4)) {
+                                                Card commonCard4 = Card.of(common4);
+                                                commonSet.add(commonCard4);
+                                                selected.set(common4);
+                                                // common5
+                                                for (int common5 = common4 + 1; common5 < Constants.TOTAL_CARD; common5++) {
+                                                    if (!selected.get(common5)) {
+                                                        Card commonCard5 = Card.of(common5);
+                                                        commonSet.add(commonCard5);
 
-                                        // process
-                                        process(mySet, commonSet, pool);
+                                                        // process
+                                                        process(mySet, commonSet, pool);
 
+                                                        commonSet.remove(commonCard5);
+                                                    }
+                                                }
+                                                selected.clear(common4);
+                                                commonSet.remove(commonCard4);
+                                            }
+                                        }
+                                        selected.clear(common3);
                                         commonSet.remove(commonCard3);
                                     }
                                 }
-
                                 selected.clear(common2);
                                 commonSet.remove(commonCard2);
                             }
                         }
-
                         selected.clear(common1);
                         commonSet.remove(commonCard1);
                     }
                 }
-
                 selected.clear(my2);
                 mySet.remove(myCard2);
             }
@@ -103,10 +121,10 @@ public class PreProcessor23toDouble implements CommandLineRunner {
         pool.submit(() -> {
                     long st = System.currentTimeMillis();
                     int spro = proceed;
-                    if (levelDB.get23toDouble((int) myCard.getId(), (int) commonCard.getId()) == null) {
-                        Calculator calc = CalculatorFactory.getCalculatorRaw(commonCard);
-                        List<Double> possibility = calc.calculate(myCard, commonCard);
-                        levelDB.put23toDouble((int) myCard.getId(), (int) commonCard.getId(), possibility);
+                    if (levelDB.getRiverLarger((int) myCard.getId(), (int) commonCard.getId()) == null) {
+                        AbsHand myHand = AbsHand.from7(commonCard);
+                        Tuple<List<CardSet>, List<CardSet>> t = composer.getLargerEqual(commonCard, myCard, myHand);
+                        levelDB.putRiverLarger((int) myCard.getId(), (int) commonCard.getId(), t.left.size(), t.right.size());
                     }
                     proceed++;
                     long cost = System.currentTimeMillis() - st;
@@ -119,12 +137,12 @@ public class PreProcessor23toDouble implements CommandLineRunner {
     }
 
     public static void main(String[] args) throws Exception {
-        new SpringApplicationBuilder(PreProcessor23toDouble.class).headless(false).run(args);
+        new SpringApplicationBuilder(PreProcessorRiverLarger.class).headless(false).run(args);
     }
 
     @Override
     public void run(String... args) throws Exception {
-//        this.process();
+        this.process();
     }
 }
 

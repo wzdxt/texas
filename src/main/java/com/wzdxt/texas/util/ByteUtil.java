@@ -46,6 +46,11 @@ public class ByteUtil {
         return buffer.getLong();
     }
 
+    public static Tuple<Integer, Integer> parseToIntegerInteger(byte[] bytes) {
+        ByteBuffer buffer = ByteBuffer.wrap(bytes);
+        return Tuple.of(buffer.getInt(), buffer.getInt());
+    }
+
     public static Tuple<Long, Long> parseToLongLong(byte[] bytes) {
         ByteBuffer buffer = ByteBuffer.wrap(bytes);
         return Tuple.of(buffer.getLong(), buffer.getLong());
