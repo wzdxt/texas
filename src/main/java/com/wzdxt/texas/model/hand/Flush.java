@@ -50,7 +50,7 @@ public class Flush extends AbsHand {
      * @return
      */
     public static Flush compose7(CardSet c) {
-        List<ArrayList<Card>> suitCardList = Arrays.asList(new ArrayList<Card>(), new ArrayList<Card>(), new ArrayList<Card>(), new ArrayList<Card>());
+        List<ArrayList<Card>> suitCardList = Arrays.asList(new ArrayList<Card>(5), new ArrayList<Card>(5), new ArrayList<Card>(5), new ArrayList<Card>(5));
         for (Card card : c.descendingSet()) {
             List<Card> list = suitCardList.get(card.getSuit());
             list.add(card);

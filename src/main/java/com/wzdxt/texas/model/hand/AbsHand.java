@@ -73,10 +73,12 @@ abstract public class AbsHand extends CardSet implements Comparable<AbsHand> {
     /**
      * @param cardSet
      * @return
-     * @implNote use levelDB for speed up
+     * @implNote use levelDB for speed up (but very slow!!!)
      */
     public static AbsHand from7(CardSet cardSet) {
-//        assert cardSet.size() == 7;
+//        if (cardSet.size() != 7) {
+//            throw new IllegalArgumentException();
+//        }
 //        long targetId = ApplicationContextHolder.get().getBean(LevelDB.class).get7to5(cardSet.getId());
 //        return AbsHand.of(targetId);
         return from7Raw(cardSet);

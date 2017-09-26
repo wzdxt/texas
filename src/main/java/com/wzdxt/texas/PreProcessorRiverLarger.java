@@ -28,7 +28,7 @@ public class PreProcessorRiverLarger implements CommandLineRunner {
     @Autowired
     private Composer composer;
 
-    private volatile int proceed = 0;
+    private volatile long proceed = 0;
 
     private AtomicInteger threadCnt = new AtomicInteger(0);
 
@@ -38,13 +38,14 @@ public class PreProcessorRiverLarger implements CommandLineRunner {
 
         BitSet selected = new BitSet(Constants.TOTAL_CARD);
         CardSet mySet = new CardSet();
+        // start from 0 5
         // my1
         for (int my1 = 0; my1 < Constants.TOTAL_CARD; my1++) {
             Card myCard1 = Card.of(my1);
             mySet.add(myCard1);
             selected.set(my1);
             // my2
-            for (int my2 = my1 + 1; my2 < Constants.TOTAL_CARD; my2++) {
+            for (int my2 = my1 + 5; my2 < Constants.TOTAL_CARD; my2++) {
                 Card myCard2 = Card.of(my2);
                 mySet.add(myCard2);
                 selected.set(my2);
@@ -112,24 +113,28 @@ public class PreProcessorRiverLarger implements CommandLineRunner {
 
     public void process(CardSet my, CardSet common, ExecutorService pool) {
         int c = 1;
-        while (threadCnt.get() > 50) try {
+        while (threadCnt.get() > 500) try {
             Thread.sleep(10 * c++);
         } catch (InterruptedException ignored) {
         }
         CardSet myCard = (CardSet) my.clone();
         CardSet commonCard = (CardSet) common.clone();
         pool.submit(() -> {
-                    long st = System.currentTimeMillis();
-                    int spro = proceed;
+                    long st = System.nanoTime();
+                    long spro = proceed;
                     if (levelDB.getRiverLarger((int) myCard.getId(), (int) commonCard.getId()) == null) {
-                        AbsHand myHand = AbsHand.from7(commonCard);
+                        CardSet all = (CardSet) myCard.clone();
+                        all.addAll(commonCard);
+                        AbsHand myHand = AbsHand.from7(all);
                         Tuple<List<CardSet>, List<CardSet>> t = composer.getLargerEqual(commonCard, myCard, myHand);
                         levelDB.putRiverLarger((int) myCard.getId(), (int) commonCard.getId(), t.left.size(), t.right.size());
                     }
                     proceed++;
-                    long cost = System.currentTimeMillis() - st;
-                    log.info("proceed {}, per-cost {}, my {}, common {}",
-                            proceed, cost / (proceed - spro), myCard, commonCard);
+                    long cost = System.nanoTime() - st;
+                    long pro = proceed - spro;
+                    if (proceed % 1000 == 0)
+                        log.info("proceed {}, per-cost {}, my {}, common {}",
+                                proceed, cost / pro, myCard, commonCard);
                     threadCnt.decrementAndGet();
                 }
         );
@@ -142,7 +147,7 @@ public class PreProcessorRiverLarger implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        this.process();
+//        this.process();
     }
 }
 

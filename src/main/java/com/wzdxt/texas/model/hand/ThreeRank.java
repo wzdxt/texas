@@ -49,10 +49,14 @@ public class ThreeRank extends AbsHand {
      * @return
      */
     public static ThreeRank compose7(CardSet c) {
-        Map<Integer, List<Card>> allCardSet = new HashMap<>(13);
+        List<Card>[] allCardSet = new List[13];
         for (Iterator<Card> iter = c.descendingIterator(); iter.hasNext(); ) {
             Card card = iter.next();
-            List<Card> list = allCardSet.computeIfAbsent(card.getRank(), a -> new ArrayList<>(3));
+            int rank = card.getRank();
+            if (allCardSet[rank] == null)
+                allCardSet[rank] = new ArrayList<>(3);
+//            List<Card> list = allCardSet.computeIfAbsent(card.getRank(), a -> new ArrayList<>(3));
+            List<Card> list = allCardSet[rank];
             list.add(card);
             if (list.size() == 3) {
                 Card sample = list.get(0);

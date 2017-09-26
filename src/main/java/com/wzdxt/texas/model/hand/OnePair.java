@@ -4,8 +4,10 @@ import com.wzdxt.texas.Constants;
 import com.wzdxt.texas.model.Card;
 import com.wzdxt.texas.model.CardSet;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * Created by wzdxt on 2017/8/26.
@@ -54,22 +56,28 @@ public class OnePair extends AbsHand {
      * @return
      */
     public static OnePair compose7(CardSet c) {
-        CardSet fin = new CardSet();
         Card prev = null;
+        Card big1 = null;
+        Card big2 = null;
         for (Iterator<Card> iter = c.descendingIterator();iter.hasNext();) {
             Card card = iter.next();
             if (prev != null && prev.getRank() == card.getRank()) {
-                fin.add(prev);
-                fin.add(card);
+                big1 = prev;
+                big2 = card;
                 break;
             }
             prev = card;
         }
-        if (!fin.isEmpty()) {
+        if (big1 != null) {
+            List<Card> fin = new ArrayList<>();
+            fin.add(big1);
+            fin.add(big2);
             for (Card card : c.descendingSet()) {
-                fin.add(card);
-                if (fin.size() == 5) {
-                    return OnePair.of(prev, fin);
+                if (card != big1 && card != big2) {
+                    fin.add(card);
+                    if (fin.size() == 5) {
+                        return OnePair.of(prev, fin);
+                    }
                 }
             }
         }
