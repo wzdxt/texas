@@ -118,7 +118,7 @@ public class PreProcessor23toDouble implements CommandLineRunner {
         threadCnt.incrementAndGet();
     }
 
-    public static void main(String[] args) throws Exception {
+    public static void main2(String[] args) throws Exception {
         new SpringApplicationBuilder(PreProcessor23toDouble.class).headless(false).run(args);
     }
 

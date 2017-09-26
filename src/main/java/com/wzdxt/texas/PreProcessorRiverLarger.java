@@ -141,7 +141,7 @@ public class PreProcessorRiverLarger implements CommandLineRunner {
         threadCnt.incrementAndGet();
     }
 
-    public static void main(String[] args) throws Exception {
+    public static void main2(String[] args) throws Exception {
         new SpringApplicationBuilder(PreProcessorRiverLarger.class).headless(false).run(args);
     }
 

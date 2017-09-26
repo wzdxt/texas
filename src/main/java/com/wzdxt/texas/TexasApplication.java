@@ -34,11 +34,11 @@ public class TexasApplication implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-//        EventQueue.invokeLater(() -> {
-//            mainFrame.setVisible(true);
-//            UiAppender.getInstance().setMainFrame(mainFrame);
-//            displayer.run();
-//        });
+        EventQueue.invokeLater(() -> {
+            mainFrame.setVisible(true);
+            UiAppender.getInstance().setMainFrame(mainFrame);
+            displayer.run();
+        });
     }
 }
 
