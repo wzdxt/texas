@@ -4,7 +4,9 @@ import com.wzdxt.texas.Constants;
 import com.wzdxt.texas.model.Card;
 import com.wzdxt.texas.model.CardSet;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Created by wzdxt on 2017/8/27.
@@ -65,7 +67,7 @@ public class Straight extends AbsHand {
      * @return
      */
     public static Straight compose7(CardSet c) {
-        CardSet fin = new CardSet();
+        List<Card> fin = new ArrayList<>(5);
         Card prev = null;
         Card a = null;
         for (Card card : c.descendingSet()) {

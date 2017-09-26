@@ -3,7 +3,10 @@ package com.wzdxt.texas.model.hand;
 import com.wzdxt.texas.model.Card;
 import com.wzdxt.texas.model.CardSet;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Created by wzdxt on 2017/8/27.
@@ -47,12 +50,12 @@ public class Flush extends AbsHand {
      * @return
      */
     public static Flush compose7(CardSet c) {
-        CardSet[] suitCardSet = new CardSet[]{new CardSet(), new CardSet(), new CardSet(), new CardSet()};
+        List<ArrayList<Card>> suitCardList = Arrays.asList(new ArrayList<Card>(), new ArrayList<Card>(), new ArrayList<Card>(), new ArrayList<Card>());
         for (Card card : c.descendingSet()) {
-            CardSet set = suitCardSet[card.getSuit()];
-            set.add(card);
-            if (set.size() == 5) {
-                return Flush.of(set);
+            List<Card> list = suitCardList.get(card.getSuit());
+            list.add(card);
+            if (list.size() == 5) {
+                return Flush.of(list);
             }
         }
         return null;

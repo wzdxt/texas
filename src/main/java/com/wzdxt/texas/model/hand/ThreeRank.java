@@ -4,9 +4,11 @@ import com.wzdxt.texas.Constants;
 import com.wzdxt.texas.model.Card;
 import com.wzdxt.texas.model.CardSet;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -47,14 +49,14 @@ public class ThreeRank extends AbsHand {
      * @return
      */
     public static ThreeRank compose7(CardSet c) {
-        Map<Integer, CardSet> allCardSet = new HashMap<>(13);
+        Map<Integer, List<Card>> allCardSet = new HashMap<>(13);
         for (Iterator<Card> iter = c.descendingIterator(); iter.hasNext(); ) {
             Card card = iter.next();
-            CardSet set = allCardSet.computeIfAbsent(card.getRank(), a -> new CardSet());
-            set.add(card);
-            if (set.size() == 3) {
-                Card sample = set.first();
-                CardSet fin = new CardSet(set);
+            List<Card> list = allCardSet.computeIfAbsent(card.getRank(), a -> new ArrayList<>(3));
+            list.add(card);
+            if (list.size() == 3) {
+                Card sample = list.get(0);
+                CardSet fin = new CardSet(list);
                 for (Card inner : c.descendingSet()) {
                     fin.add(inner);
                     if (fin.size() == 5) {

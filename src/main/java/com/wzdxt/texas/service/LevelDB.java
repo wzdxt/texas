@@ -20,12 +20,14 @@ import java.util.List;
 public class LevelDB {
     private DB db75;
     private DB db23;
+    private DB dbRiverLarger;
 
     public LevelDB() {
         Options options = new Options().createIfMissing(true);
         try {
             db75 = new Iq80DBFactory().open(new File(Constants.LEVELDB_75_DIR), options);
             db23 = new Iq80DBFactory().open(new File(Constants.LEVELDB_23_DIR), options);
+            dbRiverLarger = new Iq80DBFactory().open(new File(Constants.LEVELDB_RIVER_LARGER_DIR), options);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

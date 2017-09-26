@@ -52,4 +52,5 @@ public class Constants {
 
     public static final String LEVELDB_75_DIR = "./data/leveldb-75";
     public static final String LEVELDB_23_DIR = "./data/leveldb-23";
+    public static final String LEVELDB_RIVER_LARGER_DIR = "./data/leveldb-river-larger";
 }
