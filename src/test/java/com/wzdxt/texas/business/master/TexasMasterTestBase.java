@@ -16,8 +16,6 @@ import static org.hamcrest.CoreMatchers.equalTo;
 /**
  * Created by dai_x on 17-9-19.
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest
 public class TexasMasterTestBase {
     @Rule
     public ErrorCollector collector = new ErrorCollector();

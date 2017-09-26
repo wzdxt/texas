@@ -46,7 +46,7 @@ public class PreProcessor7to5 {
         }
     }
 
-    public static void main(String[] args) throws Exception {
+    public static void main2(String[] args) throws Exception {
         PreProcessor7to5 pre = new PreProcessor7to5();
         pre.process(new int[7], 0, 0);
     }

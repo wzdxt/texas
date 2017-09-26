@@ -4,10 +4,14 @@ import com.wzdxt.texas.Constants;
 import com.wzdxt.texas.model.Card;
 import com.wzdxt.texas.model.CardSet;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by wzdxt on 2017/8/27.
@@ -73,21 +77,22 @@ public class FourRank extends AbsHand {
      * @return
      */
     public static FourRank compose7(CardSet c) {
-        Map<Integer, CardSet> allCardSet = new HashMap<>(13);
+        Map<Integer, List<Card>> allCardSet = new HashMap<>(13);
         Card large = null;
         for (Iterator<Card> iter = c.descendingIterator(); iter.hasNext(); ) {
             Card card = iter.next();
-            CardSet set = allCardSet.computeIfAbsent(card.getRank(), a -> new CardSet());
-            set.add(card);
-            if (set.size() == 4) {
+            List<Card> list = allCardSet.computeIfAbsent(card.getRank(), a -> new ArrayList<>(4));
+            if (allCardSet.size() > 4) break;
+            list.add(card);
+            if (list.size() == 4) {
                 if (large.getRank() == card.getRank()) {
                     large = null;
                 }
                 if (large == null) {
                     large = iter.next();
                 }
-                Card sample = set.first();
-                CardSet fin = new CardSet(set);
+                Card sample = list.get(0);
+                CardSet fin = new CardSet(list);
                 fin.add(large);
                 return FourRank.of(sample, fin);
             }

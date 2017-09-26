@@ -76,9 +76,10 @@ abstract public class AbsHand extends CardSet implements Comparable<AbsHand> {
      * @implNote use levelDB for speed up
      */
     public static AbsHand from7(CardSet cardSet) {
-        assert cardSet.size() == 7;
-        long targetId = ApplicationContextHolder.get().getBean(LevelDB.class).get7to5(cardSet.getId());
-        return AbsHand.of(targetId);
+//        assert cardSet.size() == 7;
+//        long targetId = ApplicationContextHolder.get().getBean(LevelDB.class).get7to5(cardSet.getId());
+//        return AbsHand.of(targetId);
+        return from7Raw(cardSet);
     }
 
     /**
@@ -89,16 +90,35 @@ abstract public class AbsHand extends CardSet implements Comparable<AbsHand> {
      */
     public static AbsHand from7Raw(CardSet cardSet) {
         AbsHand hand;
-        if ((hand = RoyalFlush.compose7(cardSet)) != null) return hand;
-        if ((hand = StraightFlush.compose7(cardSet)) != null) return hand;
-        if ((hand = FourRank.compose7(cardSet)) != null) return hand;
-        if ((hand = FullHouse.compose7(cardSet)) != null) return hand;
+        if ((hand = Straight.compose7(cardSet)) != null) {
+            AbsHand h;
+            if ((h = RoyalFlush.compose7(cardSet)) != null) return h;
+            if ((h = StraightFlush.compose7(cardSet)) != null) return h;
+            if ((h = Flush.compose7(cardSet)) != null) return h;
+            return hand;
+        }
+        if ((hand = ThreeRank.compose7(cardSet)) != null) {
+            AbsHand h;
+            if ((h = FourRank.compose7(cardSet)) != null) return h;
+            if ((h = FullHouse.compose7(cardSet)) != null) return h;
+            if ((h = Flush.compose7(cardSet)) != null) return h;
+            return hand;
+        }
         if ((hand = Flush.compose7(cardSet)) != null) return hand;
-        if ((hand = Straight.compose7(cardSet)) != null) return hand;
-        if ((hand = ThreeRank.compose7(cardSet)) != null) return hand;
         if ((hand = TwoPair.compose7(cardSet)) != null) return hand;
         if ((hand = OnePair.compose7(cardSet)) != null) return hand;
         return HighCard.compose7(cardSet);
+
+//        if ((hand = RoyalFlush.compose7(cardSet)) != null) return hand;
+//        if ((hand = StraightFlush.compose7(cardSet)) != null) return hand;
+//        if ((hand = FourRank.compose7(cardSet)) != null) return hand;
+//        if ((hand = FullHouse.compose7(cardSet)) != null) return hand;
+//        if ((hand = Flush.compose7(cardSet)) != null) return hand;
+//        if ((hand = Straight.compose7(cardSet)) != null) return hand;
+//        if ((hand = ThreeRank.compose7(cardSet)) != null) return hand;
+//        if ((hand = TwoPair.compose7(cardSet)) != null) return hand;
+//        if ((hand = OnePair.compose7(cardSet)) != null) return hand;
+//        return HighCard.compose7(cardSet);
     }
 
 }

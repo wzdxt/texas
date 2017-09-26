@@ -93,20 +93,25 @@ public class PreProcessor23toDouble implements CommandLineRunner {
     }
 
     public void process(CardSet my, CardSet common, ExecutorService pool) {
+        int c = 1;
         while (threadCnt.get() > 50) try {
-            Thread.sleep(1000);
+            Thread.sleep(10 * c++);
         } catch (InterruptedException ignored) {
         }
-        CardSet myCard = (CardSet)my.clone();
-        CardSet commonCard = (CardSet)common.clone();
+        CardSet myCard = (CardSet) my.clone();
+        CardSet commonCard = (CardSet) common.clone();
         pool.submit(() -> {
-                    if (levelDB.get23toDouble((int)myCard.getId(), (int)commonCard.getId()) == null) {
+                    long st = System.currentTimeMillis();
+                    int spro = proceed;
+                    if (levelDB.get23toDouble((int) myCard.getId(), (int) commonCard.getId()) == null) {
                         Calculator calc = CalculatorFactory.getCalculatorRaw(commonCard);
                         List<Double> possibility = calc.calculate(myCard, commonCard);
-                        levelDB.put23toDouble((int)myCard.getId(), (int)commonCard.getId(), possibility);
+                        levelDB.put23toDouble((int) myCard.getId(), (int) commonCard.getId(), possibility);
                     }
                     proceed++;
-                    log.info("proceed {}, my {}, common {}", proceed, myCard, commonCard);
+                    long cost = System.currentTimeMillis() - st;
+                    log.info("proceed {}, per-cost {}, my {}, common {}",
+                            proceed, cost / (proceed - spro), myCard, commonCard);
                     threadCnt.decrementAndGet();
                 }
         );
