@@ -163,8 +163,9 @@ public class MainFrame extends JFrame {
     }
 
     public void addLog(ILoggingEvent e) {
-        EventQueue.invokeLater(() ->
-                logPane.setText(logPane.getText() + e.toString() + "\n"));
+        // todo
+//        EventQueue.invokeLater(() ->
+//                logPane.setText(logPane.getText() + e.toString() + "\n"));
     }
 
     {
