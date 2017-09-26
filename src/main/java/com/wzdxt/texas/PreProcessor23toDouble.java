@@ -16,6 +16,9 @@ import org.springframework.context.annotation.ComponentScan;
 
 import java.util.BitSet;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Slf4j
 @SpringBootApplication
@@ -24,7 +27,14 @@ public class PreProcessor23toDouble implements CommandLineRunner {
     @Autowired
     private LevelDB levelDB;
 
+    private volatile int proceed = 0;
+
+    private AtomicInteger threadCnt = new AtomicInteger(0);
+
     public void process() {
+        int processors = Runtime.getRuntime().availableProcessors();
+        ExecutorService pool = Executors.newFixedThreadPool(processors + 1);
+
         BitSet selected = new BitSet(Constants.TOTAL_CARD);
         CardSet mySet = new CardSet();
         // my1
@@ -58,7 +68,7 @@ public class PreProcessor23toDouble implements CommandLineRunner {
                                         commonSet.add(commonCard3);
 
                                         // process
-                                        process(mySet, commonSet);
+                                        process(mySet, commonSet, pool);
 
                                         commonSet.remove(commonCard3);
                                     }
@@ -82,23 +92,25 @@ public class PreProcessor23toDouble implements CommandLineRunner {
         }
     }
 
-    private boolean start = false;
-    private int proceed = 0;
-
-    public void process(CardSet my, CardSet common) {
-        if (!start) {
-            start = levelDB.get23toDouble((int) my.getId(), (int) common.getId()) == null;
+    public void process(CardSet my, CardSet common, ExecutorService pool) {
+        while (threadCnt.get() > 50) try {
+            Thread.sleep(1000);
+        } catch (InterruptedException ignored) {
         }
-
-        if (start) {
-            Calculator calc = CalculatorFactory.getCalculatorRaw(common);
-            List<Double> possibility = calc.calculate(my, common);
-            levelDB.put23toDouble((int) my.getId(), (int) common.getId(), possibility);
-        }
-        proceed++;
-        if (proceed % 1 == 0) {
-            log.info("proceed {}, started: {}, my {}, common {}", proceed, start, my, common);
-        }
+        CardSet myCard = (CardSet)my.clone();
+        CardSet commonCard = (CardSet)common.clone();
+        pool.submit(() -> {
+                    if (levelDB.get23toDouble((int)myCard.getId(), (int)commonCard.getId()) == null) {
+                        Calculator calc = CalculatorFactory.getCalculatorRaw(commonCard);
+                        List<Double> possibility = calc.calculate(myCard, commonCard);
+                        levelDB.put23toDouble((int)myCard.getId(), (int)commonCard.getId(), possibility);
+                    }
+                    proceed++;
+                    log.info("proceed {}, my {}, common {}", proceed, myCard, commonCard);
+                    threadCnt.decrementAndGet();
+                }
+        );
+        threadCnt.incrementAndGet();
     }
 
     public static void main(String[] args) throws Exception {
