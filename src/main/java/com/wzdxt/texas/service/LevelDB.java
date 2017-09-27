@@ -22,17 +22,17 @@ public class LevelDB {
     private DB db75;    // (7 cards) - (compose hand)
     private DB db23;    // (my cards, common cards) - (List<Float>)
     private DB dbRiverLarger;   // (my cards, river) - (larger, equal)
-//
-//    public LevelDB() {
-//        Options options = new Options().createIfMissing(true);
-//        try {
-//            db75 = new Iq80DBFactory().open(new File(Constants.LEVELDB_75_DIR), options);
-//            db23 = new Iq80DBFactory().open(new File(Constants.LEVELDB_23_DIR), options);
-//            dbRiverLarger = new Iq80DBFactory().open(new File(Constants.LEVELDB_RIVER_LARGER_DIR), options);
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
+
+    public LevelDB() {
+        Options options = new Options().createIfMissing(true);
+        try {
+            db75 = new Iq80DBFactory().open(new File(Constants.LEVELDB_75_DIR), options);
+            db23 = new Iq80DBFactory().open(new File(Constants.LEVELDB_23_DIR), options);
+            dbRiverLarger = new Iq80DBFactory().open(new File(Constants.LEVELDB_RIVER_LARGER_DIR), options);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     /****************************************************************************
      * convert 7 cards set to 5 cards hand
