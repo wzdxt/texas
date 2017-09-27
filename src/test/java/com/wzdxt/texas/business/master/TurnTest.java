@@ -34,7 +34,7 @@ public class TurnTest extends TexasMasterTestBase {
     @Test
     public void suggest1010() throws Exception {
         test("♠10♥10", "♣A♦K♦3♣J", MasterDecision.CALL_2);
-        test("♠10♥10", "♣A♦K♦Q♣J", MasterDecision.ALL_IN);
+        test("♠10♥10", "♣A♦K♦Q♣J", MasterDecision.BET_25_50);
         test("♠10♥10", "♣3♦K♦3♣J", MasterDecision.CALL_2);
         test("♠10♥10", "♣K♦K♦3♣J", MasterDecision.CALL_10);
         test("♠10♥10", "♣K♦K♦10♣9", MasterDecision.ALL_IN);
