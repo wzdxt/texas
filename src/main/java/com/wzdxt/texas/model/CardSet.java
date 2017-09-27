@@ -23,10 +23,11 @@ public class CardSet extends TreeSet<Card> {
 
 
     public long getId() {
-        int idx = 0;
-        int ret = 0;
-        for (Card card : this) {
-            ret += Math.pow((Constants.TOTAL_CARD + 1), idx++) * (card.getId() + 1);
+//        int idx = 0;
+        long ret = 0;
+        for (Card card : this.descendingSet()) {
+            ret = ret * (Constants.TOTAL_CARD + 1) + card.getId() + 1;
+//            ret += Math.pow((Constants.TOTAL_CARD + 1), idx++) * (card.getId() + 1);
         }
         return ret;
     }
