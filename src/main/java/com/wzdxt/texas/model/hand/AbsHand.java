@@ -29,14 +29,6 @@ abstract public class AbsHand extends CardSet implements Comparable<AbsHand> {
      * @return
      */
     public long getValue() {
-//        int idx = 0;
-//        int ret = 0;
-//        for (Card card : this) {
-//            if (card.getRank() != rank) {
-//                ret += Math.pow(Constants.TOTAL_RANK, idx++) * card.getRank();
-//            }
-//        }
-//        ret += Math.pow(Constants.TOTAL_RANK, idx++) * rank;
         int ret = rank;
         for (Card card : this.descendingSet()) {
             if (card.getRank() != rank) {
@@ -115,17 +107,6 @@ abstract public class AbsHand extends CardSet implements Comparable<AbsHand> {
         if ((hand = TwoPair.compose7(cardSet)) != null) return hand;
         if ((hand = OnePair.compose7(cardSet)) != null) return hand;
         return HighCard.compose7(cardSet);
-
-//        if ((hand = RoyalFlush.compose7(cardSet)) != null) return hand;
-//        if ((hand = StraightFlush.compose7(cardSet)) != null) return hand;
-//        if ((hand = FourRank.compose7(cardSet)) != null) return hand;
-//        if ((hand = FullHouse.compose7(cardSet)) != null) return hand;
-//        if ((hand = Flush.compose7(cardSet)) != null) return hand;
-//        if ((hand = Straight.compose7(cardSet)) != null) return hand;
-//        if ((hand = ThreeRank.compose7(cardSet)) != null) return hand;
-//        if ((hand = TwoPair.compose7(cardSet)) != null) return hand;
-//        if ((hand = OnePair.compose7(cardSet)) != null) return hand;
-//        return HighCard.compose7(cardSet);
     }
 
 }
