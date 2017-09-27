@@ -1,5 +1,6 @@
 package com.wzdxt.texas.business.display;
 
+import com.wzdxt.texas.config.Config;
 import com.wzdxt.texas.model.Card;
 import org.junit.Rule;
 import org.junit.Test;
@@ -18,7 +19,7 @@ import static org.junit.Assert.assertEquals;
  * Created by wzdxt on 2017/9/9.
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(classes = Config.class)
 public class PhaseManagerTest extends ScreenTestBase {
     @Rule
     public ErrorCollector collector = new ErrorCollector();
@@ -385,6 +386,57 @@ public class PhaseManagerTest extends ScreenTestBase {
         assertArrayEquals(new int[]{150, 0, 300, 0, 300, 150}, phaseManager.getPlayerPool());
         assertEquals(9700, phaseManager.getMyCoin());
         assertEquals(150, phaseManager.getCallNeed());
+    }
+
+    @Test
+    public void testE2() throws Exception {
+        switchTo("error/2.bmp");
+        assertEquals(GameStatus.Phase.PLAYING, phaseManager.getCurrentPhase());
+//        assertEquals(70200, phaseManager.getTotalCoin());
+        assertEquals(GameStatus.Status.MY_TURN, phaseManager.getCurrentStatus());
+        assertArrayEquals(new boolean[]{true, true, true, true, true, true}, phaseManager.getPlayerExist());
+        assertEquals(150, phaseManager.getBigBlind());
+        assertArrayEquals(new boolean[]{false, true, true, true, false, true}, phaseManager.getPlayerRemain());
+        assertEquals(true, phaseManager.amILive());
+        assertEquals(0, phaseManager.getCurrentTurn());
+        assertEquals(375, phaseManager.getTotalPool());
+        assertArrayEquals(new int[]{0, 0, 75, 150, 0, 150}, phaseManager.getPlayerPool());
+        assertEquals(9475, phaseManager.getMyCoin());
+        assertEquals(150, phaseManager.getCallNeed());
+    }
+
+    @Test
+    public void testE3() throws Exception {
+        switchTo("error/3.bmp");
+        assertEquals(GameStatus.Phase.PLAYING, phaseManager.getCurrentPhase());
+//        assertEquals(70200, phaseManager.getTotalCoin());
+        assertEquals(GameStatus.Status.MY_TURN, phaseManager.getCurrentStatus());
+        assertArrayEquals(new boolean[]{true, true, true, true, true, true}, phaseManager.getPlayerExist());
+        assertEquals(150, phaseManager.getBigBlind());
+        assertArrayEquals(new boolean[]{false, true, true, true, true, true}, phaseManager.getPlayerRemain());
+        assertEquals(true, phaseManager.amILive());
+        assertEquals(0, phaseManager.getCurrentTurn());
+        assertEquals(375, phaseManager.getTotalPool());
+        assertArrayEquals(new int[]{0, 0, 0, 75, 150, 150}, phaseManager.getPlayerPool());
+        assertEquals(9475, phaseManager.getMyCoin());
+        assertEquals(150, phaseManager.getCallNeed());
+    }
+
+    @Test
+    public void testE4() throws Exception {
+        switchTo("error/4.bmp");
+        assertEquals(GameStatus.Phase.PLAYING, phaseManager.getCurrentPhase());
+//        assertEquals(70200, phaseManager.getTotalCoin());
+        assertEquals(GameStatus.Status.MY_TURN, phaseManager.getCurrentStatus());
+        assertArrayEquals(new boolean[]{true, true, true, true, true, true}, phaseManager.getPlayerExist());
+        assertEquals(150, phaseManager.getBigBlind());
+        assertArrayEquals(new boolean[]{false, true, true, true, true, true}, phaseManager.getPlayerRemain());
+        assertEquals(true, phaseManager.amILive());
+        assertEquals(0, phaseManager.getCurrentTurn());
+        assertEquals(3275, phaseManager.getTotalPool());
+        assertArrayEquals(new int[]{0, 75, 150, 150, 150, 2750}, phaseManager.getPlayerPool());
+        assertEquals(11600, phaseManager.getMyCoin());
+        assertEquals(2750, phaseManager.getCallNeed());
     }
 
     protected void switchTo(String s) throws Exception {

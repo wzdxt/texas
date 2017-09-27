@@ -92,21 +92,19 @@ abstract public class AbsHand extends CardSet implements Comparable<AbsHand> {
      */
     public static AbsHand from7Raw(CardSet cardSet) {
         AbsHand hand;
-        if ((hand = Straight.compose7(cardSet)) != null) {
+        if ((hand = Flush.compose7(cardSet)) != null) {
             AbsHand h;
             if ((h = RoyalFlush.compose7(cardSet)) != null) return h;
             if ((h = StraightFlush.compose7(cardSet)) != null) return h;
-            if ((h = Flush.compose7(cardSet)) != null) return h;
             return hand;
         }
         if ((hand = ThreeRank.compose7(cardSet)) != null) {
             AbsHand h;
             if ((h = FourRank.compose7(cardSet)) != null) return h;
             if ((h = FullHouse.compose7(cardSet)) != null) return h;
-            if ((h = Flush.compose7(cardSet)) != null) return h;
             return hand;
         }
-        if ((hand = Flush.compose7(cardSet)) != null) return hand;
+        if ((hand = Straight.compose7(cardSet)) != null) return hand;
         if ((hand = TwoPair.compose7(cardSet)) != null) return hand;
         if ((hand = OnePair.compose7(cardSet)) != null) return hand;
         return HighCard.compose7(cardSet);

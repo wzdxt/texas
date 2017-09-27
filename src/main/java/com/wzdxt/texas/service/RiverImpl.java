@@ -15,11 +15,11 @@ import static com.wzdxt.texas.util.C.C;
 @Component
 public class RiverImpl extends AbsCalculator implements Calculator {
     @Override
-    public List<Double> calculate(Collection<Card> my, Collection<Card> river) {
-        List<Double> ret = new ArrayList<>();
+    public List<Float> calculate(Collection<Card> my, Collection<Card> river) {
+        List<Float> ret = new ArrayList<>();
         int all = C(45, 2);
         int larger = composer.largerHandsAfterRiver(river, my).size();
-        double p = 1 - larger * 1.0 / all;
+        float p = 1 - larger * 1f / all;
         for (int i = 0; i < 101; i++) {
             ret.add(p);
         }

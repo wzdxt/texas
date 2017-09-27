@@ -44,9 +44,10 @@ public class Composer {
                         Card card2 = Card.of(j);
                         set.add(card2);
                         AbsHand hand = composeHand(set);
-                        if (hand.compareTo(myHand) > 0) {
+                        int compRes = hand.compareTo(myHand);
+                        if (compRes > 0) {
                             larger.add(set);
-                        } else if (hand.compareTo(myHand) == 0) {
+                        } else if (compRes == 0) {
                             equal.add(set);
                         }
                         set.remove(card2);

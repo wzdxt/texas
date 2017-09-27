@@ -17,7 +17,7 @@ public class FlopTest {
     @Test
     public void calculate() throws Exception {
         Calculator calc  = new FlopImpl();
-        List<Double> list = calc.calculate(Arrays.asList(
+        List<Float> list = calc.calculate(Arrays.asList(
                 new Card(0, Constants.RANK_10),
                 new Card(0, Constants.RANK_J)
         ), Arrays.asList(

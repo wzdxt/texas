@@ -5,14 +5,13 @@ import com.wzdxt.texas.model.CardSet;
 import com.wzdxt.texas.service.Calculator;
 import com.wzdxt.texas.service.CalculatorFactory;
 import com.wzdxt.texas.service.LevelDB;
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Profile;
 
 import java.util.BitSet;
 import java.util.List;
@@ -23,7 +22,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Slf4j
 @SpringBootApplication
 @ComponentScan(basePackages = {"com.wzdxt.texas"})
-public class PreProcessor23toDouble implements CommandLineRunner {
+@Profile("23toList")
+public class PreProcessor23toList implements CommandLineRunner {
     @Autowired
     private LevelDB levelDB;
 
@@ -103,10 +103,10 @@ public class PreProcessor23toDouble implements CommandLineRunner {
         pool.submit(() -> {
                     long st = System.currentTimeMillis();
                     int spro = proceed;
-                    if (levelDB.get23toDouble((int) myCard.getId(), (int) commonCard.getId()) == null) {
+                    if (levelDB.get23toList((int) myCard.getId(), (int) commonCard.getId()) == null) {
                         Calculator calc = CalculatorFactory.getCalculatorRaw(commonCard);
-                        List<Double> possibility = calc.calculate(myCard, commonCard);
-                        levelDB.put23toDouble((int) myCard.getId(), (int) commonCard.getId(), possibility);
+                        List<Float> possibility = calc.calculate(myCard, commonCard);
+                        levelDB.put23toList((int) myCard.getId(), (int) commonCard.getId(), possibility);
                     }
                     proceed++;
                     long cost = System.currentTimeMillis() - st;
@@ -118,13 +118,13 @@ public class PreProcessor23toDouble implements CommandLineRunner {
         threadCnt.incrementAndGet();
     }
 
-    public static void main2(String[] args) throws Exception {
-        new SpringApplicationBuilder(PreProcessor23toDouble.class).headless(false).run(args);
+    public static void main(String[] args) throws Exception {
+        new SpringApplicationBuilder(PreProcessor23toList.class).headless(false).profiles("23toList").run(args);
     }
 
     @Override
     public void run(String... args) throws Exception {
-//        this.process();
+        this.process();
     }
 }
 

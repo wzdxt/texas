@@ -40,7 +40,7 @@ public class TexasMasterImpl implements TexasMaster {
             }
         } else {
             Calculator calc = CalculatorFactory.getCalculator(common);
-            List<Double> possibility = calc.calculate(my, common);
+            List<Float> possibility = calc.calculate(my, common);
             log.debug("possibility:[{}][{}]:{}", my, common, possibility);
             MasterConfigure.CheckConf[] checkConfs;
             switch (common.size()) {
@@ -70,9 +70,9 @@ public class TexasMasterImpl implements TexasMaster {
         return MasterDecision.CHECK_OR_FOLD;
     }
 
-    private double getPossibility(List<Double> poss, int check) {
+    private float getPossibility(List<Float> poss, int check) {
         int idx = poss.size() * check / 100;
-        double total = 0;
+        float total = 0;
         for (int i = 0; i <= idx; i++) {
             total += poss.get(i);
         }

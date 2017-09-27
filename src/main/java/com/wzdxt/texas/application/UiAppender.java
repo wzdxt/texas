@@ -25,7 +25,8 @@ public class UiAppender extends AppenderBase<ILoggingEvent> {
 
     @Override
     protected void append(ILoggingEvent event) {
-        mainFrame.addLog(event);
+        if (mainFrame != null)
+            mainFrame.addLog(event);
     }
 
     public static UiAppender getInstance() {

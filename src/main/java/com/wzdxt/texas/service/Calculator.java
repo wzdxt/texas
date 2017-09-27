@@ -14,5 +14,5 @@ public interface Calculator {
      * @param common
      * @return from 0 to 100 percent, the possibility to win
      */
-    List<Double> calculate(Collection<Card> my, Collection<Card> common);
+    List<Float> calculate(Collection<Card> my, Collection<Card> common);
 }

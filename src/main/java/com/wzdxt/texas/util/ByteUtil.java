@@ -35,9 +35,9 @@ public class ByteUtil {
         return buffer.array();
     }
 
-    public static byte[] build(List<Double> list) {
-        ByteBuffer buffer = ByteBuffer.allocate(list.size() * Double.BYTES);
-        list.forEach(buffer::putDouble);
+    public static byte[] build(List<Float> list) {
+        ByteBuffer buffer = ByteBuffer.allocate(list.size() * Float.BYTES);
+        list.forEach(buffer::putFloat);
         return buffer.array();
     }
 
@@ -56,11 +56,11 @@ public class ByteUtil {
         return Tuple.of(buffer.getLong(), buffer.getLong());
     }
 
-    public static List<Double> parseToDoubleList(byte[] bytes) {
+    public static List<Float> parseToFloatList(byte[] bytes) {
         ByteBuffer buffer = ByteBuffer.wrap(bytes);
-        List<Double> list = new ArrayList<>(bytes.length / Double.BYTES);
+        List<Float> list = new ArrayList<>(bytes.length / Float.BYTES);
         while (buffer.hasRemaining()) {
-            list.add(buffer.getDouble());
+            list.add(buffer.getFloat());
         }
         return list;
     }

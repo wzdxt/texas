@@ -12,5 +12,5 @@ abstract public class AbsCalculator implements Calculator {
     public Composer composer = new Composer();
 
     @Override
-    abstract public List<Double> calculate(Collection<Card> my, Collection<Card> river);
+    abstract public List<Float> calculate(Collection<Card> my, Collection<Card> river);
 }

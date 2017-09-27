@@ -17,8 +17,8 @@ import static com.wzdxt.texas.util.C.C;
 @Slf4j
 public class FlopImpl extends AbsCalculator implements Calculator {
     @Override
-    public List<Double> calculate(Collection<Card> my, Collection<Card> flop) {
-        List<Double> ret = new ArrayList<>();
+    public List<Float> calculate(Collection<Card> my, Collection<Card> flop) {
+        List<Float> ret = new ArrayList<>();
         int total = C(45, 2);
         BitSet used = new BitSet();
         my.forEach(card -> used.set(card.getId()));
@@ -37,12 +37,12 @@ public class FlopImpl extends AbsCalculator implements Calculator {
                         if (!(myHand instanceof HighCard)) {
                             river.add(Card.of(j));
                             int larger = composer.largerHandsAfterRiver(river, my, myHand).size();
-                            double rate = 1 - larger * 1.0 / total;
+                            float rate = 1 - larger * 1f / total;
 //                            log.debug("{}, {}", rate, river);
                             ret.add(rate);
                             river.remove(Card.of(j));
                         } else {
-                            ret.add(0.0);
+                            ret.add(0f);
                         }
                         all.remove(Card.of(j));
                     }

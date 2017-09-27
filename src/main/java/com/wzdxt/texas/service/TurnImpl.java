@@ -4,7 +4,6 @@ import com.wzdxt.texas.Constants;
 import com.wzdxt.texas.model.Card;
 import com.wzdxt.texas.model.CardSet;
 import com.wzdxt.texas.model.hand.AbsHand;
-import com.wzdxt.texas.model.hand.HighCard;
 
 import java.util.*;
 
@@ -15,8 +14,8 @@ import static com.wzdxt.texas.util.C.C;
  */
 public class TurnImpl extends AbsCalculator implements Calculator {
     @Override
-    public List<Double> calculate(Collection<Card> my, Collection<Card> turn) {
-        List<Double> ret = new ArrayList<>();
+    public List<Float> calculate(Collection<Card> my, Collection<Card> turn) {
+        List<Float> ret = new ArrayList<>();
         int total = C(45, 2);
         BitSet used = new BitSet();
         my.forEach(card -> used.set(card.getId()));
@@ -32,7 +31,7 @@ public class TurnImpl extends AbsCalculator implements Calculator {
                     CardSet river = new CardSet(turn);
                     river.add(Card.of(i));
                     int larger = composer.largerHandsAfterRiver(river, my, myHand).size();
-                    ret.add(1 - larger * 1.0 / total);
+                    ret.add(1 - larger * 1f / total);
 //                } else {
 //                    ret.add(0.0);
 //                }

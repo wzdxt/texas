@@ -20,19 +20,19 @@ import java.util.List;
 @Component
 public class LevelDB {
     private DB db75;    // (7 cards) - (compose hand)
-    private DB db23;    // (my cards, common cards) - (List<Double>)
+    private DB db23;    // (my cards, common cards) - (List<Float>)
     private DB dbRiverLarger;   // (my cards, river) - (larger, equal)
-
-    public LevelDB() {
-        Options options = new Options().createIfMissing(true);
-        try {
-            db75 = new Iq80DBFactory().open(new File(Constants.LEVELDB_75_DIR), options);
-            db23 = new Iq80DBFactory().open(new File(Constants.LEVELDB_23_DIR), options);
-            dbRiverLarger = new Iq80DBFactory().open(new File(Constants.LEVELDB_RIVER_LARGER_DIR), options);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
+//
+//    public LevelDB() {
+//        Options options = new Options().createIfMissing(true);
+//        try {
+//            db75 = new Iq80DBFactory().open(new File(Constants.LEVELDB_75_DIR), options);
+//            db23 = new Iq80DBFactory().open(new File(Constants.LEVELDB_23_DIR), options);
+//            dbRiverLarger = new Iq80DBFactory().open(new File(Constants.LEVELDB_RIVER_LARGER_DIR), options);
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
 
     /****************************************************************************
      * convert 7 cards set to 5 cards hand
@@ -50,19 +50,19 @@ public class LevelDB {
     }
 
     /****************************************************************************
-     * convert 2 my cards and 3-5 common cards to Double List
+     * convert 2 my cards and 3-5 common cards to Float List
      * @param my
      * @param common
      * @return
      */
-    public List<Double> get23toDouble(int my, int common) {
+    public List<Float> get23toList(int my, int common) {
         byte[] bytes = db23.get(ByteUtil.build(my, common));
         if (bytes == null) return null;
-        List<Double> list = ByteUtil.parseToDoubleList(bytes);
+        List<Float> list = ByteUtil.parseToFloatList(bytes);
         return list;
     }
 
-    public void put23toDouble(int my, int common, List<Double> list) {
+    public void put23toList(int my, int common, List<Float> list) {
         db23.put(ByteUtil.build(my, common), ByteUtil.build(list));
     }
 

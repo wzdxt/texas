@@ -57,7 +57,7 @@ public abstract class AbsCheck implements Operation {
             if (mistake < configure.getCheck().getRgbMistake()) {
                 return true;
             } else {
-                log.debug("{} fail. mistake: {}", this.getClass().getSimpleName(), mistake);
+//                log.debug("{} fail. mistake: {}", this.getClass().getSimpleName(), mistake);
             }
             if (i < retry - 1) {
                 delay(0.2);
