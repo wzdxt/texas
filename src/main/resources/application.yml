@@ -259,4 +259,7 @@ displayer:   # 线条大坐标不变, 区块大坐标+1
       - 740, 77, 732, 73
       - 940, 311, 935, 307
       - 786, 410, 781, 406
+logging:
+  pattern:
+    console: "%clr(%d{MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%logger{5}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}"
 

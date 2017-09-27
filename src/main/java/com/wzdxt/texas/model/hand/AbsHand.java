@@ -29,14 +29,21 @@ abstract public class AbsHand extends CardSet implements Comparable<AbsHand> {
      * @return
      */
     public long getValue() {
-        int idx = 0;
-        int ret = 0;
-        for (Card card : this) {
+//        int idx = 0;
+//        int ret = 0;
+//        for (Card card : this) {
+//            if (card.getRank() != rank) {
+//                ret += Math.pow(Constants.TOTAL_RANK, idx++) * card.getRank();
+//            }
+//        }
+//        ret += Math.pow(Constants.TOTAL_RANK, idx++) * rank;
+        int ret = rank;
+        for (Card card : this.descendingSet()) {
             if (card.getRank() != rank) {
-                ret += Math.pow(Constants.TOTAL_RANK, idx++) * card.getRank();
+                ret = ret * Constants.TOTAL_RANK + card.getRank();
             }
         }
-        ret += Math.pow(Constants.TOTAL_RANK, idx++) * rank;
+
         return ret;
     }
 

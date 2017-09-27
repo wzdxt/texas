@@ -25,15 +25,23 @@ public class TwoPair extends AbsHand {
 
     @Override
     public long getValue() {
-        int idx = 0;
-        int ret = 0;
-        for (Card card : this) {
+//        int idx = 0;
+//        int ret = 0;
+//        for (Card card : this) {
+//            if (card.getRank() != rank && card.getRank() != rank2) {
+//                ret += Math.pow(Constants.TOTAL_RANK, idx++) * card.getRank();
+//            }
+//        }
+//        ret += Math.pow(Constants.TOTAL_RANK, idx++) * rank;
+//        ret += Math.pow(Constants.TOTAL_RANK, idx++) * rank2;
+        int ret = rank2;
+        ret = ret * Constants.TOTAL_RANK + rank;
+        for (Card card : this.descendingSet()) {
             if (card.getRank() != rank && card.getRank() != rank2) {
-                ret += Math.pow(Constants.TOTAL_RANK, idx++) * card.getRank();
+                ret = ret * Constants.TOTAL_RANK + card.getRank();
             }
         }
-        ret += Math.pow(Constants.TOTAL_RANK, idx++) * rank;
-        ret += Math.pow(Constants.TOTAL_RANK, idx++) * rank2;
+
         return ret;
     }
 

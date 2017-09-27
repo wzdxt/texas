@@ -1,15 +1,17 @@
 package com.wzdxt.texas.business.master;
 
+import com.wzdxt.texas.config.Config;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Profile;
 import org.springframework.test.context.junit4.SpringRunner;
 
 /**
  * Created by dai_x on 17-9-19.
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(classes = Config.class)
 public class FlopTest extends TexasMasterTestBase {
 
     @Test
