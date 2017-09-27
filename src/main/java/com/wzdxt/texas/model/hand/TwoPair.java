@@ -4,7 +4,9 @@ import com.wzdxt.texas.Constants;
 import com.wzdxt.texas.model.Card;
 import com.wzdxt.texas.model.CardSet;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Created by wzdxt on 2017/8/26.
@@ -100,7 +102,7 @@ public class TwoPair extends AbsHand {
             }
         }
         if (rank22 > -1) {
-            CardSet fin = new CardSet();
+            List<Card> fin = new ArrayList<>(5);
             Card c2 = null, c22 = null;
             for (Card card : c.descendingSet()) {
                 if (card.getRank() == rank2) c2 = card;
