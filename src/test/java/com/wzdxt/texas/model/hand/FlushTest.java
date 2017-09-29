@@ -28,19 +28,19 @@ public class FlushTest {
         assertNull(Flush.compose7(CardSetTest.threeR()));
         assertNull(Flush.compose7(CardSetTest.twoP()));
     }
-
-    @Test
-    public void testPredefined() throws Exception {
-        AllHands.init();
-        Map<Long, Integer> map = new HashMap<>();
-        int idx = 0;
-        for (Flush flush : AllHands.FLUSH) {
-            long id = flush.getId();
-            assertFalse(String.format("same of %d and %d: %s", map.get(id), idx, flush), map.containsKey(id));
-            assertNotNull(String.format("%d is illegal", idx), Flush.compose(flush));
-            map.put(id, idx++);
-        }
-        assertEquals(AllHands.FLUSH_SIZE, AllHands.FLUSH.size());
-    }
+//
+//    @Test
+//    public void testPredefined() throws Exception {
+//        AllHands.init();
+//        Map<Long, Integer> map = new HashMap<>();
+//        int idx = 0;
+//        for (Flush flush : AllHands.FLUSH) {
+//            long id = flush.getId();
+//            assertFalse(String.format("same of %d and %d: %s", map.get(id), idx, flush), map.containsKey(id));
+//            assertNotNull(String.format("%d is illegal", idx), Flush.compose(flush));
+//            map.put(id, idx++);
+//        }
+//        assertEquals(AllHands.FLUSH_SIZE, AllHands.FLUSH.size());
+//    }
 
 }

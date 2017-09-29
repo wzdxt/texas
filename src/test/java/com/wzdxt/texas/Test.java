@@ -1,5 +1,7 @@
 package com.wzdxt.texas;
 
+import org.junit.Ignore;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +11,7 @@ import java.util.List;
  */
 public class Test {
     @org.junit.Test
+    @Ignore
     public void test() throws Exception {
         File img = new File("/Users/wzdxt/projects/texas/src/main/resources/static/train/totalCoin.bmp");
         List<String> cmd = new ArrayList<String>(); // 存放命令行参数的数组

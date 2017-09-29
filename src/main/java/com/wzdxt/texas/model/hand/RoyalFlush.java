@@ -11,6 +11,8 @@ import java.util.Collection;
  * Created by wzdxt on 2017/8/26.
  */
 public class RoyalFlush extends AbsHand {
+    public static final int SORT = 9;
+
     @Getter
     protected int suit;
 

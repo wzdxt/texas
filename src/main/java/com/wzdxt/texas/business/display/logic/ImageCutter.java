@@ -62,7 +62,7 @@ public class ImageCutter {
         return image.getSubimage(left, top, right - left + 1, bottom - top + 1);
     }
 
-    public List<BufferedImage> cutCharactors(BufferedImage image) {
+    public List<BufferedImage> cutCharacters(BufferedImage image) {
         List<BufferedImage> ret = new ArrayList<>();
         int background = imageComparator.getBackgroundRgb(image);
         int front = imageComparator.getFrontRgb(image, background);

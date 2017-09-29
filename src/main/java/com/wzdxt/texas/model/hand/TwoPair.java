@@ -12,6 +12,8 @@ import java.util.List;
  * Created by wzdxt on 2017/8/26.
  */
 public class TwoPair extends AbsHand {
+    public static final int SORT = 2;
+
     protected int rank2; //larger than rank
 
     protected TwoPair(Collection<Card> c) {

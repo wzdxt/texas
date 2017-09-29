@@ -63,7 +63,7 @@ public class AllHands {
     static void process(int[] selected) {
         List<Card> cardList = new ArrayList<>(5);
         for (int i : selected) {
-            cardList.add(Card.of(i));
+            cardList.add(Card.CARD_LIST.get(i));
         }
         AbsHand hand;
         if ((hand = RoyalFlush.compose(cardList)) != null) {

@@ -12,6 +12,8 @@ import java.util.List;
  * Created by wzdxt on 2017/8/27.
  */
 public class Flush extends AbsHand {
+    public static final int SORT = 5;
+
     protected int suit;
 
     protected Flush(Collection<Card> c) {

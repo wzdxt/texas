@@ -26,7 +26,7 @@ public class AnchorHolderTest {
     public void testAnchorTransform() throws Exception {
         File f = new File(AnchorHolder.class.getClassLoader().getResource("static/anchor.bmp").getPath());
         BufferedImage biRobot = ImageIO.read(f);
-        f = new File(AnchorHolder.class.getClassLoader().getResource("static/train/1.PNG").getPath());
+        f = new File(AnchorHolder.class.getClassLoader().getResource("static/screen/1.PNG").getPath());
         BufferedImage biWinCap = ImageIO.read(f);
         BufferedImage biTrans = transform(biWinCap);
         assertEquals(biRobot.getType(), biTrans.getType());

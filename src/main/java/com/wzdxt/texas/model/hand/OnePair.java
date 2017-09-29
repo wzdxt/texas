@@ -13,6 +13,8 @@ import java.util.List;
  * Created by wzdxt on 2017/8/26.
  */
 public class OnePair extends AbsHand {
+    public static final int SORT = 1;
+
     protected OnePair(Collection<Card> c) {
         super(c);
     }

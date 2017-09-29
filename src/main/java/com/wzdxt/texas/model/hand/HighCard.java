@@ -10,6 +10,8 @@ import java.util.Collection;
  * Created by wzdxt on 2017/8/26.
  */
 public class HighCard extends AbsHand {
+    public static final int SORT = 0;
+
 
     protected HighCard(Collection<Card> c) {
         super(c);

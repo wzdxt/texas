@@ -1,7 +1,11 @@
 package com.wzdxt.texas.util;
 
+import com.google.common.primitives.UnsignedBytes;
+
 import java.nio.ByteBuffer;
+import java.nio.LongBuffer;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -35,6 +39,13 @@ public class ByteUtil {
         return buffer.array();
     }
 
+    public static byte[] build(byte[] b1, byte[] b2) {
+        ByteBuffer buffer = ByteBuffer.allocate(Byte.BYTES * (b1.length + b2.length));
+        buffer.put(b1);
+        buffer.put(b2);
+        return buffer.array();
+    }
+
     public static byte[] build(List<Float> list) {
         ByteBuffer buffer = ByteBuffer.allocate(list.size() * Float.BYTES);
         list.forEach(buffer::putFloat);
@@ -42,8 +53,11 @@ public class ByteUtil {
     }
 
     public static long parseToLong(byte[] bytes) {
-        ByteBuffer buffer = ByteBuffer.wrap(bytes);
-        return buffer.getLong();
+        long ret = 0;
+        for (int i = bytes.length - 1; i >= 0; i--) {
+            ret = (ret << 8) | (bytes[i] & 0xff);
+        }
+        return ret;
     }
 
     public static Tuple<Integer, Integer> parseToIntegerInteger(byte[] bytes) {

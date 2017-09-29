@@ -5,6 +5,7 @@ import com.wzdxt.texas.model.CardSetTest;
 import com.wzdxt.texas.model.hand.AbsHand;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -23,18 +24,19 @@ public class LevelDBTest {
     @Test
     public void get7to5() throws Exception {
         CardSet set;
-        long targetId;
+        Long targetId;
 
         set = CardSetTest.royalFlush();
-        targetId = levelDB.get7to5(set.getId());
+        targetId = levelDB.get7to5(set.serialize());
         assertEquals(AbsHand.from7Raw(set), AbsHand.of(targetId));
 
         set = CardSetTest.threeR();
-        targetId = levelDB.get7to5(set.getId());
+        targetId = levelDB.get7to5(set.serialize());
         assertEquals(AbsHand.from7Raw(set), AbsHand.of(targetId));
     }
 
     @Test
+    @Ignore
     public void get23toDouble() throws Exception {
     }
 

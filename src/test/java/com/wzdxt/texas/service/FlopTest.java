@@ -16,14 +16,14 @@ import static org.junit.Assert.*;
 public class FlopTest {
     @Test
     public void calculate() throws Exception {
-        Calculator calc  = new FlopImpl();
+        Calculator calc = new FlopImpl();
         List<Float> list = calc.calculate(Arrays.asList(
-                new Card(0, Constants.RANK_10),
-                new Card(0, Constants.RANK_J)
+                Card.of((byte) 0, Constants.RANK_10),
+                Card.of((byte) 0, Constants.RANK_J)
         ), Arrays.asList(
-                new Card(0, Constants.RANK_3),
-                new Card(1, Constants.RANK_A),
-                new Card(0, Constants.RANK_9)
+                Card.of((byte) 0, Constants.RANK_3),
+                Card.of((byte) 1, Constants.RANK_A),
+                Card.of((byte) 0, Constants.RANK_9)
         ));
         assertEquals(C(47, 2), list.size());
         System.out.println(list);

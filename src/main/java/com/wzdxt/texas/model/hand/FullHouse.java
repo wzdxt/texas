@@ -13,6 +13,8 @@ import java.util.Map;
  * Created by wzdxt on 2017/8/27.
  */
 public class FullHouse extends AbsHand {
+    public static final int SORT = 6;
+
     protected int rank2; // triple
 
     protected FullHouse(Collection<Card> c) {

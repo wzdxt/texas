@@ -20,35 +20,37 @@ public class FlopImpl extends AbsCalculator implements Calculator {
     public List<Float> calculate(Collection<Card> my, Collection<Card> flop) {
         List<Float> ret = new ArrayList<>();
         int total = C(45, 2);
-        BitSet used = new BitSet();
-        my.forEach(card -> used.set(card.getId()));
-        flop.forEach(card -> used.set(card.getId()));
+        boolean[] used = new boolean[64];
+        my.forEach(card -> used[card.getId()] = true);
+        flop.forEach(card -> used[card.getId()] = true);
         CardSet all = new CardSet(flop);
         all.addAll(my);
         for (int i = 0; i < Constants.TOTAL_CARD; i++) {
-            if (!used.get(i)) {
-                all.add(Card.of(i));
+            if (!used[i]) {
+                Card common4 = Card.CARD_LIST.get(i);
+                all.add(common4);
                 CardSet river = new CardSet(flop);
-                river.add(Card.of(i));
+                river.add(common4);
                 for (int j = i + 1; j < Constants.TOTAL_CARD; j++) {
-                    if (!used.get(j)) {
-                        all.add(Card.of(j));
+                    if (!used[j]) {
+                        Card common5 = Card.CARD_LIST.get(j);
+                        all.add(common5);
                         AbsHand myHand = composer.composeHand(all);
                         if (!(myHand instanceof HighCard)) {
-                            river.add(Card.of(j));
+                            river.add(common5);
                             int larger = composer.largerHandsAfterRiver(river, my, myHand).size();
                             float rate = 1 - larger * 1f / total;
 //                            log.debug("{}, {}", rate, river);
                             ret.add(rate);
-                            river.remove(Card.of(j));
+                            river.remove(common5);
                         } else {
                             ret.add(0f);
                         }
-                        all.remove(Card.of(j));
+                        all.remove(common5);
                     }
                 }
-                river.remove(Card.of(i));
-                all.remove(Card.of(i));
+                river.remove(common4);
+                all.remove(common4);
             }
         }
         Collections.sort(ret);

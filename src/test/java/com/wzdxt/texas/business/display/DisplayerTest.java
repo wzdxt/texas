@@ -2,6 +2,7 @@ package com.wzdxt.texas.business.display;
 
 import com.wzdxt.texas.TestUtil;
 import com.wzdxt.texas.model.Card;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,7 @@ public class DisplayerTest extends ScreenTestBase {
     }
 
     @Test
+    @Ignore
     public void test2PNG() throws Exception {
         switchTo("2.PNG");
         GameStatus status = displayer.getGameStatus();
@@ -44,6 +46,7 @@ public class DisplayerTest extends ScreenTestBase {
     }
 
     @Test
+    @Ignore
     public void test3PNG() throws Exception {
         switchTo("3.PNG");
         GameStatus status = displayer.getGameStatus();
@@ -51,6 +54,7 @@ public class DisplayerTest extends ScreenTestBase {
     }
 
     @Test
+    @Ignore
     public void test4PNG() throws Exception {
         switchTo("4.PNG");
         GameStatus status = displayer.getGameStatus();
@@ -59,6 +63,7 @@ public class DisplayerTest extends ScreenTestBase {
     }
 
     @Test
+    @Ignore
     public void test5PNG() throws Exception {
         switchTo("5.PNG");
         GameStatus status = displayer.getGameStatus();
@@ -80,6 +85,7 @@ public class DisplayerTest extends ScreenTestBase {
     }
 
     @Test
+    @Ignore
     public void test6PNG() throws Exception {
         switchTo("6.PNG");
         GameStatus status = displayer.getGameStatus();
@@ -101,6 +107,7 @@ public class DisplayerTest extends ScreenTestBase {
     }
 
     @Test
+    @Ignore
     public void test8PNG() throws Exception {
         switchTo("8.PNG");
         GameStatus status = displayer.getGameStatus();
@@ -122,6 +129,7 @@ public class DisplayerTest extends ScreenTestBase {
     }
 
     @Test
+    @Ignore
     public void test9PNG() throws Exception {
         switchTo("9.PNG");
         GameStatus status = displayer.getGameStatus();

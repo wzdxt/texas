@@ -12,6 +12,8 @@ import java.util.List;
  * Created by wzdxt on 2017/8/27.
  */
 public class Straight extends AbsHand {
+    public static final int SORT = 4;
+
     protected Straight(Collection<Card> c) {
         super(c);
     }

@@ -15,6 +15,8 @@ import java.util.Map;
  * Created by wzdxt on 2017/8/27.
  */
 public class ThreeRank extends AbsHand {
+    public static final int SORT = 3;
+
     protected ThreeRank(Collection<Card> c) {
         super(c);
     }

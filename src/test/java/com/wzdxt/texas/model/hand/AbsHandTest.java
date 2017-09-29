@@ -2,6 +2,7 @@ package com.wzdxt.texas.model.hand;
 
 import com.wzdxt.texas.model.CardSet;
 import com.wzdxt.texas.model.CardSetTest;
+import com.wzdxt.texas.util.ByteUtil;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -15,7 +16,7 @@ public class AbsHandTest {
         CardSet set;
         set = CardSetTest.royalFlush();
         RoyalFlush rf = RoyalFlush.compose7(set);
-        assertEquals(rf, AbsHand.of(rf.getId()));
+        assertEquals(rf, AbsHand.of(ByteUtil.parseToLong(rf.serialize())));
     }
 
 }

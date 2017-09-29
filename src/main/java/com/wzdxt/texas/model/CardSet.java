@@ -3,6 +3,8 @@ package com.wzdxt.texas.model;
 import com.wzdxt.texas.Constants;
 import lombok.EqualsAndHashCode;
 
+import java.util.Arrays;
+import java.util.BitSet;
 import java.util.Collection;
 import java.util.TreeSet;
 
@@ -21,24 +23,17 @@ public class CardSet extends TreeSet<Card> {
     }
 
 
-
-    public long getId() {
-//        int idx = 0;
+    /**
+     * ONLY FOR 7 CARDS!!
+     * @return byte[6] = 42 bit
+     */
+    public byte[] serialize() {
         long ret = 0;
-        for (Card card : this.descendingSet()) {
-            ret = ret * (Constants.TOTAL_CARD + 1) + card.getId() + 1;
-//            ret += Math.pow((Constants.TOTAL_CARD + 1), idx++) * (card.getId() + 1);
+        for (Card card : this) {
+            ret  = (ret << 6) | card.getId();
         }
-        return ret;
-    }
-
-    public static CardSet of(long id) {
-        CardSet cardSet = new CardSet();
-        while (id > 0) {
-            cardSet.add(Card.of((int) (id % (Constants.TOTAL_CARD + 1)) - 1));
-            id /= (Constants.TOTAL_CARD + 1);
-        }
-        return cardSet;
+        BitSet bs = BitSet.valueOf(new long[]{ret});
+        return bs.toByteArray();
     }
 
 }

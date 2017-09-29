@@ -13,4 +13,11 @@ public class ByteUtilTest {
         assertEquals(Tuple.of(10L, 20L), ByteUtil.parseToLongLong(ByteUtil.build(10L, 20L)));
     }
 
+    @Test
+    public void testLong() throws Exception {
+        long l = 9016293145L;
+        byte[] bytes = new byte[]{25, -73, 105, 25, 2};
+        assertEquals(l, ByteUtil.parseToLong(bytes));
+    }
+
 }

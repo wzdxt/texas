@@ -39,14 +39,14 @@ public class LevelDB {
      * @param set
      * @return
      */
-    public Long get7to5(long set) {
-        byte[] bytes = db75.get(ByteUtil.build(set));
+    public Long get7to5(byte[] set) {
+        byte[] bytes = db75.get(set);
         if (bytes == null) return null;
         return ByteUtil.parseToLong(bytes);
     }
 
-    public void put7to5(long set, long hand) {
-        db75.put(ByteUtil.build(set), ByteUtil.build(hand));
+    public void put7to5(byte[] set, byte[] hand) {
+        db75.put(set, hand);
     }
 
     /****************************************************************************
@@ -55,14 +55,14 @@ public class LevelDB {
      * @param common
      * @return
      */
-    public List<Float> get23toList(int my, int common) {
+    public List<Float> get23toList(byte[] my, byte[] common) {
         byte[] bytes = db23.get(ByteUtil.build(my, common));
         if (bytes == null) return null;
         List<Float> list = ByteUtil.parseToFloatList(bytes);
         return list;
     }
 
-    public void put23toList(int my, int common, List<Float> list) {
+    public void put23toList(byte[] my, byte[] common, List<Float> list) {
         db23.put(ByteUtil.build(my, common), ByteUtil.build(list));
     }
 
@@ -72,13 +72,13 @@ public class LevelDB {
      * @param common
      * @return Tuple of larger and equal
      */
-    public Tuple<Integer, Integer> getRiverLarger(int my, int common) {
+    public Tuple<Integer, Integer> getRiverLarger(byte[] my, byte[] common) {
         byte[] bytes = dbRiverLarger.get(ByteUtil.build(my, common));
         if (bytes == null) return null;
         return ByteUtil.parseToIntegerInteger(bytes);
     }
 
-    public void putRiverLarger(int my, int common, int larger, int equal) {
+    public void putRiverLarger(byte[] my, byte[] common, int larger, int equal) {
         dbRiverLarger.put(ByteUtil.build(my, common), ByteUtil.build(larger, equal));
     }
 

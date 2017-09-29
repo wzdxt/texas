@@ -30,18 +30,18 @@ public class Composer {
     public Tuple<List<CardSet>, List<CardSet>> getLargerEqual(final Collection<Card> river, final Collection<Card> except, final AbsHand myHand) {
         List<CardSet> larger = new ArrayList<>();
         List<CardSet> equal = new ArrayList<>();
-        Set<Integer> used = new HashSet<>();
-        river.forEach(card -> used.add(card.getId()));
-        except.forEach(card -> used.add(card.getId()));
+        boolean[] used = new boolean[64];
+        river.forEach(card -> used[card.getId()] = true);
+        except.forEach(card -> used[card.getId()] = true);
         int b = 1;
         CardSet set = new CardSet(river);
         for (int i = 0; i < Constants.TOTAL_CARD; i++) {
-            if (!used.contains(i)) {
-                Card card1 = Card.of(i);
+            if (!used[i]) {
+                Card card1 = Card.CARD_LIST.get(i);
                 set.add(card1);
                 for (int j = i + 1; j < Constants.TOTAL_CARD; j++) {
-                    if (!used.contains(j)) {
-                        Card card2 = Card.of(j);
+                    if (!used[j]) {
+                        Card card2 = Card.CARD_LIST.get(j);
                         set.add(card2);
                         AbsHand hand = composeHand(set);
                         int compRes = hand.compareTo(myHand);

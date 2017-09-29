@@ -17,6 +17,8 @@ import java.util.Set;
  * Created by wzdxt on 2017/8/27.
  */
 public class FourRank extends AbsHand {
+    public static final int SORT = 7;
+
     protected int rank1; // single
 
     protected FourRank(Collection<Card> c) {
@@ -77,7 +79,7 @@ public class FourRank extends AbsHand {
      * @return
      */
     public static FourRank compose7(CardSet c) {
-        Map<Integer, List<Card>> allCardSet = new HashMap<>(13);
+        Map<Byte, List<Card>> allCardSet = new HashMap<>(13);
         Card large = null;
         for (Iterator<Card> iter = c.descendingIterator(); iter.hasNext(); ) {
             Card card = iter.next();

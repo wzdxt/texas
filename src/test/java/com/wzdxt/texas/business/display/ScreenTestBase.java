@@ -1,7 +1,9 @@
 package com.wzdxt.texas.business.display;
 
+import com.wzdxt.texas.TestBase;
 import com.wzdxt.texas.TexasApplication;
 import com.wzdxt.texas.business.display.logic.GameWindow;
+import com.wzdxt.texas.config.Config;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.*;
@@ -18,10 +20,7 @@ import java.net.URI;
 /**
  * Created by wzdxt on 2017/9/15.
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest
-@ContextConfiguration(classes = TexasApplication.class)
-abstract public class ScreenTestBase {
+abstract public class ScreenTestBase extends TestBase {
 
     protected void setScreen(InputStream is) {
         try {

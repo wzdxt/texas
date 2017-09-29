@@ -10,6 +10,8 @@ import java.util.Collection;
  * Created by wzdxt on 2017/8/27.
  */
 public class StraightFlush extends AbsHand {
+    public static final int SORT = 8;
+
     protected int suit;
 
     protected StraightFlush(Collection<Card> c) {

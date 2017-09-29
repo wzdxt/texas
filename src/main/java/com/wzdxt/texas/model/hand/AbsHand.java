@@ -7,7 +7,11 @@ import com.wzdxt.texas.model.CardSet;
 import com.wzdxt.texas.service.LevelDB;
 import lombok.Getter;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.BitSet;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Created by wzdxt on 2017/8/26.
@@ -51,22 +55,54 @@ abstract public class AbsHand extends CardSet implements Comparable<AbsHand> {
     }
 
     /**
-     * @param id Card set id
+     * @param id (6)card*5 (4)type
      * @return
      */
     public static AbsHand of(long id) {
-        CardSet cardSet = CardSet.of(id);
-        AbsHand hand;
-        if ((hand = RoyalFlush.compose(cardSet)) != null) return hand;
-        if ((hand = StraightFlush.compose(cardSet)) != null) return hand;
-        if ((hand = FourRank.compose(cardSet)) != null) return hand;
-        if ((hand = FullHouse.compose(cardSet)) != null) return hand;
-        if ((hand = Flush.compose(cardSet)) != null) return hand;
-        if ((hand = Straight.compose(cardSet)) != null) return hand;
-        if ((hand = ThreeRank.compose(cardSet)) != null) return hand;
-        if ((hand = TwoPair.compose(cardSet)) != null) return hand;
-        if ((hand = OnePair.compose(cardSet)) != null) return hand;
-        return HighCard.compose(cardSet);
+        int type = (int) (id & 0xf);
+        id >>= 4;
+        List<Card> cardList = new ArrayList<>(5);
+        for (int i = 0; i < 5; i++) {
+            cardList.add(Card.of((byte) (id & 0x3f)));
+            id >>= 6;
+        }
+        switch (type) {
+        case HighCard.SORT:
+            return HighCard.compose(cardList);
+        case OnePair.SORT:
+            return OnePair.compose(cardList);
+        case TwoPair.SORT:
+            return TwoPair.compose(cardList);
+        case ThreeRank.SORT:
+            return ThreeRank.compose(cardList);
+        case Straight.SORT:
+            return Straight.compose(cardList);
+        case Flush.SORT:
+            return Flush.compose(cardList);
+        case FullHouse.SORT:
+            return FullHouse.compose(cardList);
+        case FourRank.SORT:
+            return FourRank.compose(cardList);
+        case StraightFlush.SORT:
+            return StraightFlush.compose(cardList);
+        case RoyalFlush.SORT:
+            return RoyalFlush.compose(cardList);
+        }
+        return null;
+    }
+
+    /**
+     * ONLY FOR 5 CARDS!!!!!
+     * @return byte[5] (6)card*5 (4)type
+     */
+    public byte[] serialize() {
+        long ret = 0;
+        for (Card card : this) {
+            ret = (ret << 6) | card.getId();
+        }
+        ret = (ret << 4) | this.getSort();
+        BitSet bs = BitSet.valueOf(new long[]{ret});
+        return bs.toByteArray();
     }
 
     /**
@@ -75,12 +111,12 @@ abstract public class AbsHand extends CardSet implements Comparable<AbsHand> {
      * @implNote use levelDB for speed up (but very slow!!!)
      */
     public static AbsHand from7(CardSet cardSet) {
-        if (cardSet.size() != 7) {
-            throw new IllegalArgumentException();
-        }
-        long targetId = ApplicationContextHolder.get().getBean(LevelDB.class).get7to5(cardSet.getId());
-        return AbsHand.of(targetId);
-//        return from7Raw(cardSet);
+//        if (cardSet.size() != 7) {
+//            throw new IllegalArgumentException();
+//        }
+//        long targetId = ApplicationContextHolder.get().getBean(LevelDB.class).get7to5(cardSet.serialize());
+//        return AbsHand.of(targetId);
+        return from7Raw(cardSet);
     }
 
     /**

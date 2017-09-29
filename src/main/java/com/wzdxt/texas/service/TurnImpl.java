@@ -24,12 +24,12 @@ public class TurnImpl extends AbsCalculator implements Calculator {
         all.addAll(my);
         for (int i = 0; i < Constants.TOTAL_CARD; i++) {
             if (!used.get(i)) {
-                all.add(Card.of(i));
+                all.add(Card.CARD_LIST.get(i));
                 AbsHand myHand = composer.composeHand(all);
-                all.remove(Card.of(i));
+                all.remove(Card.CARD_LIST.get(i));
 //                if (!(myHand instanceof HighCard)) {
                     CardSet river = new CardSet(turn);
-                    river.add(Card.of(i));
+                    river.add(Card.CARD_LIST.get(i));
                     int larger = composer.largerHandsAfterRiver(river, my, myHand).size();
                     ret.add(1 - larger * 1f / total);
 //                } else {

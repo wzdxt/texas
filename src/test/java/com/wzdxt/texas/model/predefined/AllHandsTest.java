@@ -28,7 +28,7 @@ public class AllHandsTest {
     @Test
     public void testProcess() {
         AllHands.STRAIGHT.clear();
-        AllHands.process(new int[]{12, 24, 36, 48, 8});
+        AllHands.process(new int[]{44, 41, 38, 35, 28});
         assertEquals(1, AllHands.STRAIGHT.size());
     }
 

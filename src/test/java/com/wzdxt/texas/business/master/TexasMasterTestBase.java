@@ -1,5 +1,6 @@
 package com.wzdxt.texas.business.master;
 
+import com.wzdxt.texas.TestBase;
 import com.wzdxt.texas.model.Card;
 import org.junit.Rule;
 import org.junit.rules.ErrorCollector;
@@ -16,7 +17,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 /**
  * Created by dai_x on 17-9-19.
  */
-public class TexasMasterTestBase {
+public class TexasMasterTestBase extends TestBase {
     @Rule
     public ErrorCollector collector = new ErrorCollector();
     @Autowired

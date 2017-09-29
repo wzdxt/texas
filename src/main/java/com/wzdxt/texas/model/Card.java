@@ -1,18 +1,48 @@
 package com.wzdxt.texas.model;
 
 import com.wzdxt.texas.Constants;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.Value;
+import lombok.experimental.FieldDefaults;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by wzdxt on 2017/8/26.
  */
-@Value
+@Getter
+@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Card implements Comparable<Card> {
-    private int suit;
-    private int rank;
+    private byte suit;
+    private byte rank;
 
-    public int getId() {
-        return Constants.TOTAL_RANK * suit + rank;
+    public static final List<Card> CARD_LIST;
+    public static final Map<Byte, Card> CARD_MAP;
+    public static final Map<Card, Byte> CARD_ID_MAP;
+
+    static {
+        CARD_LIST = new ArrayList<>(52);
+        CARD_MAP = new HashMap<>(52);
+        CARD_ID_MAP = new HashMap<>(52);
+        for (byte r = 0; r < Constants.TOTAL_RANK; r++) {
+            for (byte s = 0; s < Constants.TOTAL_SUIT; s++) {
+                byte id = (byte) ((r << 2) | s);
+                Card card = new Card(s, r);
+                CARD_LIST.add(card);
+                CARD_MAP.put(id, card);
+                CARD_ID_MAP.put(card, id);
+            }
+        }
+    }
+
+    public byte getId() {
+        return CARD_ID_MAP.get(this);
     }
 
     public String toString() {
@@ -21,27 +51,30 @@ public class Card implements Comparable<Card> {
 
     @Override
     public int compareTo(Card o) {
-        return rank > o.rank ? 1 : (rank < o.rank ? -1 : (suit - o.suit));
+        return CARD_ID_MAP.get(this) - CARD_ID_MAP.get(o);
     }
 
     @Override
     public boolean equals(Object o) {
-        return !(o == null || !(o instanceof Card)) && this.getId() == ((Card)o).getId();
+        return this == o;
     }
 
-    public static Card of(int id) {
-        if (id < 0 || id >= Constants.TOTAL_CARD)
-            throw new IllegalArgumentException();
-        int suit = id / Constants.TOTAL_RANK;
-        int rank = id % Constants.TOTAL_RANK;
-        return new Card(suit, rank);
+    public static Card of(byte id) {
+        return CARD_MAP.get(id);
     }
 
     public static Card of(String s) {
-        Integer suit = Constants.SUIT_REVERCE_MAP.get(s.substring(0, 1));
-        Integer rank = Constants.RANK_REVERCE_MAP.get(s.substring(1));
+        Byte suit = Constants.SUIT_REVERSE_MAP.get(s.substring(0, 1));
+        Byte rank = Constants.RANK_REVERSE_MAP.get(s.substring(1));
         assert suit != null;
         assert rank != null;
-        return new Card(suit, rank);
+        byte id = (byte) ((rank << 2) | suit);
+        return CARD_MAP.get(id);
     }
+
+    public static Card of(byte suit, byte rank) {
+        byte id = (byte) ((rank << 2) | suit);
+        return CARD_MAP.get(id);
+    }
+
 }

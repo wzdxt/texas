@@ -43,71 +43,71 @@ public class StraightFlushTest {
 
     private List<Card> cardList1() {
         return Arrays.asList(
-                new Card(0, Constants.RANK_10),
-                new Card(0, Constants.RANK_J),
-                new Card(0, Constants.RANK_Q),
-                new Card(0, Constants.RANK_K),
-                new Card(0, Constants.RANK_9)
+                Card.of((byte)0, Constants.RANK_10),
+                Card.of((byte)0, Constants.RANK_J),
+                Card.of((byte)0, Constants.RANK_Q),
+                Card.of((byte)0, Constants.RANK_K),
+                Card.of((byte)0, Constants.RANK_9)
         );
     }
 
     private List<Card> cardList2() {
         return Arrays.asList(
-                new Card(1, Constants.RANK_A),
-                new Card(1, Constants.RANK_2),
-                new Card(1, Constants.RANK_3),
-                new Card(1, Constants.RANK_4),
-                new Card(1, Constants.RANK_5)
+                Card.of((byte)1, Constants.RANK_A),
+                Card.of((byte)1, Constants.RANK_2),
+                Card.of((byte)1, Constants.RANK_3),
+                Card.of((byte)1, Constants.RANK_4),
+                Card.of((byte)1, Constants.RANK_5)
         );
     }
 
     private List<Card> cardList3() {
         return Arrays.asList(
-                new Card(1, Constants.RANK_6),
-                new Card(1, Constants.RANK_2),
-                new Card(1, Constants.RANK_3),
-                new Card(1, Constants.RANK_4),
-                new Card(1, Constants.RANK_5)
+                Card.of((byte)1, Constants.RANK_6),
+                Card.of((byte)1, Constants.RANK_2),
+                Card.of((byte)1, Constants.RANK_3),
+                Card.of((byte)1, Constants.RANK_4),
+                Card.of((byte)1, Constants.RANK_5)
         );
     }
 
     private List<Card> cardList4() {
         return Arrays.asList(
-                new Card(1, Constants.RANK_6),
-                new Card(1, Constants.RANK_7),
-                new Card(1, Constants.RANK_3),
-                new Card(1, Constants.RANK_4),
-                new Card(1, Constants.RANK_5)
+                Card.of((byte)1, Constants.RANK_6),
+                Card.of((byte)1, Constants.RANK_7),
+                Card.of((byte)1, Constants.RANK_3),
+                Card.of((byte)1, Constants.RANK_4),
+                Card.of((byte)1, Constants.RANK_5)
         );
     }
 
     private List<Card> cardList5() {
         return Arrays.asList(
-                new Card(1, Constants.RANK_A),
-                new Card(1, Constants.RANK_K),
-                new Card(1, Constants.RANK_Q),
-                new Card(1, Constants.RANK_J),
-                new Card(1, Constants.RANK_10)
+                Card.of((byte)1, Constants.RANK_A),
+                Card.of((byte)1, Constants.RANK_K),
+                Card.of((byte)1, Constants.RANK_Q),
+                Card.of((byte)1, Constants.RANK_J),
+                Card.of((byte)1, Constants.RANK_10)
         );
     }
 
     private List<Card> cardList6() {
         return Arrays.asList(
-                new Card(1, Constants.RANK_10),
-                new Card(1, Constants.RANK_J),
-                new Card(1, Constants.RANK_Q),
-                new Card(1, Constants.RANK_K),
-                new Card(1, Constants.RANK_A)
+                Card.of((byte)1, Constants.RANK_10),
+                Card.of((byte)1, Constants.RANK_J),
+                Card.of((byte)1, Constants.RANK_Q),
+                Card.of((byte)1, Constants.RANK_K),
+                Card.of((byte)1, Constants.RANK_A)
         );
     }
 
     private List<Card> cardListNull3() {
         return Arrays.asList(
-                new Card(1, Constants.RANK_5),
-                new Card(0, Constants.RANK_8),
-                new Card(2, Constants.RANK_9),
-                new Card(3, Constants.RANK_6),
-                new Card(0, Constants.RANK_7)
+                Card.of((byte)1, Constants.RANK_5),
+                Card.of((byte)0, Constants.RANK_8),
+                Card.of((byte)2, Constants.RANK_9),
+                Card.of((byte)3, Constants.RANK_6),
+                Card.of((byte)0, Constants.RANK_7)
         );
     }
 

@@ -48,11 +48,11 @@ public class RoyalFlushTest {
 
     private List<Card> cardList1() {
         return Arrays.asList(
-                new Card(0, Constants.RANK_10),
-                new Card(0, Constants.RANK_J),
-                new Card(0, Constants.RANK_Q),
-                new Card(0, Constants.RANK_K),
-                new Card(0, Constants.RANK_A)
+                Card.of((byte) 0, Constants.RANK_10),
+                Card.of((byte) 0, Constants.RANK_J),
+                Card.of((byte) 0, Constants.RANK_Q),
+                Card.of((byte) 0, Constants.RANK_K),
+                Card.of((byte) 0, Constants.RANK_A)
         );
     }
 
