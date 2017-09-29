@@ -7,6 +7,7 @@ import com.wzdxt.texas.model.MyCard;
 import com.wzdxt.texas.service.Calculator;
 import com.wzdxt.texas.service.CalculatorFactory;
 import com.wzdxt.texas.service.LevelDB;
+import com.wzdxt.texas.util.Tuple;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -29,11 +30,14 @@ public class PreProcessor23toList implements CommandLineRunner {
     @Autowired
     private LevelDB levelDB;
 
-    private volatile int proceed = 0;
+    private volatile int proceed = 1;
+    private volatile int totalProceed = 0;
+    private long startTime;
 
     private AtomicInteger threadCnt = new AtomicInteger(0);
 
     public void process() {
+        startTime = System.currentTimeMillis();
         int processors = Runtime.getRuntime().availableProcessors();
         ExecutorService pool = Executors.newFixedThreadPool(processors + 1);
 
@@ -100,8 +104,11 @@ public class PreProcessor23toList implements CommandLineRunner {
             Thread.sleep(10 * c++);
         } catch (InterruptedException ignored) {
         }
-        MyCard myCard = (MyCard) my.clone();
-        CommonCard commonCard = (CommonCard) common.clone();
+        Tuple<MyCard, CommonCard> t = CardSet.uniform(my, common);
+        MyCard myCard = t.left;
+        CommonCard commonCard = t.right;
+        MyCard myCardOrigin = (MyCard) my.clone();
+        CommonCard commonCardOrigin = (CommonCard) common.clone();
         pool.submit(() -> {
                     long st = System.currentTimeMillis();
                     int spro = proceed;
@@ -109,11 +116,16 @@ public class PreProcessor23toList implements CommandLineRunner {
                         Calculator calc = CalculatorFactory.getCalculatorRaw(commonCard);
                         List<Float> possibility = calc.calculate(myCard, commonCard);
                         levelDB.put23toList(myCard.serialize(), commonCard.serialize(), possibility);
+                        proceed++;
                     }
-                    proceed++;
-                    long cost = System.currentTimeMillis() - st;
-                    log.info("proceed {}, per-cost {}, my {}, common {}",
-                            proceed, cost / (proceed - spro), myCard, commonCard);
+                    totalProceed++;
+                    long perCost = System.currentTimeMillis() - st;
+                    int perPro = proceed - spro;
+                    if (perPro == 0) perPro = 1;    // avoid divide 0
+                    log.info("proceed {}/{}, per-cost {}/{}, my {}, common {}",
+                            proceed, totalProceed,
+                            perCost / perPro, (System.currentTimeMillis() - startTime) / proceed,
+                            myCardOrigin, commonCardOrigin);
                     threadCnt.decrementAndGet();
                 }
         );
