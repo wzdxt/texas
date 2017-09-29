@@ -32,12 +32,12 @@ public class PreProcessor23toList implements CommandLineRunner {
 
     private volatile int proceed = 1;
     private volatile int totalProceed = 0;
-    private long startTime;
+    private long time100last;
+    private long time100;
 
     private AtomicInteger threadCnt = new AtomicInteger(0);
 
     public void process() {
-        startTime = System.currentTimeMillis();
         int processors = Runtime.getRuntime().availableProcessors();
         ExecutorService pool = Executors.newFixedThreadPool(processors + 1);
 
@@ -60,13 +60,11 @@ public class PreProcessor23toList implements CommandLineRunner {
                     if (!selected.get(common1)) {
                         Card commonCard1 = Card.CARD_LIST.get(common1);
                         commonCard.add(commonCard1);
-                        selected.set(common1);
                         // common2
                         for (int common2 = common1 + 1; common2 < Constants.TOTAL_CARD; common2++) {
                             if (!selected.get(common2)) {
                                 Card commonCard2 = Card.CARD_LIST.get(common2);
                                 commonCard.add(commonCard2);
-                                selected.set(common2);
                                 // common3
                                 for (int common3 = common2 + 1; common3 < Constants.TOTAL_CARD; common3++) {
                                     if (!selected.get(common3)) {
@@ -80,12 +78,10 @@ public class PreProcessor23toList implements CommandLineRunner {
                                     }
                                 }
 
-                                selected.clear(common2);
                                 commonCard.remove(commonCard2);
                             }
                         }
 
-                        selected.clear(common1);
                         commonCard.remove(commonCard1);
                     }
                 }
@@ -118,14 +114,21 @@ public class PreProcessor23toList implements CommandLineRunner {
                         levelDB.put23toList(myCard.serialize(), commonCard.serialize(), possibility);
                         proceed++;
                     }
+
                     totalProceed++;
                     long perCost = System.currentTimeMillis() - st;
                     int perPro = proceed - spro;
                     if (perPro == 0) perPro = 1;    // avoid divide 0
+                    long now = System.currentTimeMillis();
+                    if (totalProceed % 100 == 0) {
+                        time100 = (now - time100last) / 100;
+                        time100last = now;
+                    }
                     log.info("proceed {}/{}, per-cost {}/{}, my {}, common {}",
                             proceed, totalProceed,
-                            perCost / perPro, (System.currentTimeMillis() - startTime) / proceed,
+                            perCost / perPro, (time100),
                             myCardOrigin, commonCardOrigin);
+
                     threadCnt.decrementAndGet();
                 }
         );
