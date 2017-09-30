@@ -55,6 +55,20 @@ public class FlopImpl extends AbsCalculator implements Calculator {
         }
         Collections.sort(ret);
         Collections.reverse(ret);
+        return convert100(ret);
+    }
+
+    public List<Float> convert100(List<Float> list) {
+        List<Float> ret = new ArrayList<>(100);
+        int length = list.size();
+        int percent = 1;
+        for (int i = 0; i < list.size(); i++) {
+            if ((i+1.0000001) / length * 100 >= percent) {
+                ret.add(list.get(i));
+                percent++;
+            }
+        }
         return ret;
     }
+
 }

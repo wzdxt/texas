@@ -73,10 +73,10 @@ public class TexasMasterImpl implements TexasMaster {
     private float getPossibility(List<Float> poss, int check) {
         int idx = poss.size() * check / 100;
         float total = 0;
-        for (int i = 0; i <= idx; i++) {
+        for (int i = 0; i < idx; i++) {
             total += poss.get(i);
         }
-        return total / (idx+1);
+        return total / (idx);
     }
 
     private class Beginner {

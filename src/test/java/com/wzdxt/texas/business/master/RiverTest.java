@@ -8,8 +8,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 /**
  * Created by dai_x on 17-9-19.
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest
 public class RiverTest extends TexasMasterTestBase {
 
     @Test

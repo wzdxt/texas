@@ -30,7 +30,7 @@ texas:
         decides:
           - rate: 90
             bet: bet_25_50
-          - rate: 80
+          - rate: 85
             bet: bet_10_50
       - check: 80
         decides:
@@ -38,18 +38,20 @@ texas:
             bet: bet_5_25
           - rate: 80
             bet: bet_2_10
-          - rate: 70
+      - check: 70
+        decides:
+          - rate: 80
             bet: call_10
       - check: 50
         decides:
           - rate: 80
-            bet: call_10
-          - rate: 70
             bet: call_5
       - check: 30
         decides:
           - rate: 80
-            bet: call_5
+            bet: call_2
+      - check: 90
+        decides:
           - rate: 70
             bet: call_2
     river:

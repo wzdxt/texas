@@ -10,8 +10,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 /**
  * Created by dai_x on 17-9-19.
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = Config.class)
 public class FlopTest extends TexasMasterTestBase {
 
     @Test
@@ -65,7 +63,7 @@ public class FlopTest extends TexasMasterTestBase {
         test("♠4♥9", "♣3♦K♦3", MasterDecision.CHECK_OR_FOLD);
         test("♠4♥9", "♣K♦K♦3", MasterDecision.CHECK_OR_FOLD);
         test("♠4♥9", "♣K♦K♦10", MasterDecision.CHECK_OR_FOLD);
-        test("♠4♥9", "♣5♦4♦J", MasterDecision.CALL_2);
+        test("♠4♥9", "♣5♦4♦J", MasterDecision.CHECK_OR_FOLD);
         test("♠4♥9", "♣8♦6♦K", MasterDecision.CHECK_OR_FOLD);
     }
 
