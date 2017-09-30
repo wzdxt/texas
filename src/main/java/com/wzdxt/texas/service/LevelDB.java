@@ -30,7 +30,7 @@ public class LevelDB {
             db23 = new Iq80DBFactory().open(new File(Constants.LEVELDB_23_DIR), options);
             dbRiverLarger = new Iq80DBFactory().open(new File(Constants.LEVELDB_RIVER_LARGER_DIR), options);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+//            throw new RuntimeException(e);
         }
     }
 

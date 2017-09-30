@@ -1,10 +1,12 @@
 package com.wzdxt.texas.business.master;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 /**
  * Created by wzdxt on 2017/9/3.
  */
+@Getter
 @AllArgsConstructor
 public enum MasterDecision {
     CHECK_OR_FOLD(0, 0),

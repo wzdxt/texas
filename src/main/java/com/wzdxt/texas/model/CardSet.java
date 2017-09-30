@@ -13,7 +13,7 @@ import java.util.TreeSet;
 /**
  * Created by wzdxt on 2017/8/26.
  */
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = true)
 public class CardSet extends TreeSet<Card> {
 
     public CardSet(Collection<Card> c) {

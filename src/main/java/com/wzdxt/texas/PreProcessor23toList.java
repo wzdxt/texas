@@ -106,34 +106,38 @@ public class PreProcessor23toList implements CommandLineRunner {
         CommonCard commonCard = t.right;
         MyCard myCardOrigin = (MyCard) my.clone();
         CommonCard commonCardOrigin = (CommonCard) common.clone();
-        pool.submit(() -> {
-                    long st = System.currentTimeMillis();
-                    int spro = proceed;
-                    if (levelDB.get23toList(myCard.serialize(), commonCard.serialize()) == null) {
-                        Calculator calc = CalculatorFactory.getCalculatorRaw(commonCard);
-                        List<Float> possibility = calc.calculate(myCard, commonCard);
-                        levelDB.put23toList(myCard.serialize(), commonCard.serialize(), possibility);
-                        proceed++;
-                    }
+        if (myCard.equals(myCardOrigin) && commonCard.equals(commonCardOrigin)) {
+            pool.submit(() -> {
+                        long st = System.currentTimeMillis();
+                        int spro = proceed;
+                        if (levelDB.get23toList(myCard.serialize(), commonCard.serialize()) == null) {
+                            Calculator calc = CalculatorFactory.getCalculatorRaw(commonCard);
+                            List<Float> possibility = calc.calculate(myCard, commonCard);
+                            levelDB.put23toList(myCard.serialize(), commonCard.serialize(), possibility);
+                            proceed++;
+                        }
 
-                    totalProceed++;
-                    long perCost = System.currentTimeMillis() - st;
-                    int perPro = proceed - spro;
-                    if (perPro == 0) perPro = 1;    // avoid divide 0
-                    long now = System.currentTimeMillis();
-                    if (totalProceed % 100 == 0) {
-                        time100 = (now - time100last) / 100;
-                        time100last = now;
-                    }
-                    log.info("proceed {}/{}, per-cost {}/{}, my {}, common {}",
-                            proceed, totalProceed,
-                            perCost / perPro, (time100),
-                            myCardOrigin, commonCardOrigin);
+                        totalProceed++;
+                        long perCost = System.currentTimeMillis() - st;
+                        int perPro = proceed - spro;
+                        if (perPro == 0) perPro = 1;    // avoid divide 0
+                        long now = System.currentTimeMillis();
+                        if (totalProceed % 100 == 0) {
+                            time100 = (now - time100last) / 100;
+                            time100last = now;
+                        }
+                        log.info("proceed {}/{}, per-cost {}/{}, my {}, common {}",
+                                proceed, totalProceed,
+                                perCost / perPro, (time100),
+                                myCardOrigin, commonCardOrigin);
 
-                    threadCnt.decrementAndGet();
-                }
-        );
-        threadCnt.incrementAndGet();
+                        threadCnt.decrementAndGet();
+                    }
+            );
+            threadCnt.incrementAndGet();
+        } else {
+            totalProceed++;
+        }
     }
 
     public static void main(String[] args) throws Exception {
