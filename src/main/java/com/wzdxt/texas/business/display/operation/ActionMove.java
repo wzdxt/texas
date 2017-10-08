@@ -27,7 +27,7 @@ public class ActionMove extends AbsAction {
 
     @Override
     public boolean doPerform() throws AWTException {
-        new Robot().mouseMove(x, y);
+        new Robot().mouseMove(screenParam.getGameX1() + x, screenParam.getGameY1() + y);
         return true;
     }
 

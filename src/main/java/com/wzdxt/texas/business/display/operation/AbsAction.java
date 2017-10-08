@@ -1,5 +1,6 @@
 package com.wzdxt.texas.business.display.operation;
 
+import com.wzdxt.texas.business.display.ScreenParam;
 import com.wzdxt.texas.business.display.logic.GameWindow;
 import com.wzdxt.texas.config.DisplayerConfigure;
 import lombok.NoArgsConstructor;
@@ -18,7 +19,7 @@ public abstract class AbsAction implements Operation {
     @Autowired
     protected DisplayerConfigure configure;
     @Autowired
-    protected GameWindow window;
+    protected ScreenParam screenParam;
 
     @Override
     public boolean perform() {

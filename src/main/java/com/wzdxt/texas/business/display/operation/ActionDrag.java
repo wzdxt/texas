@@ -32,10 +32,10 @@ public class ActionDrag extends AbsAction {
     @Override
     public boolean doPerform() throws AWTException, InterruptedException {
         Robot robot = new Robot();
-        robot.mouseMove(x1, y1);
+        robot.mouseMove(screenParam.getGameX1() + x1, screenParam.getGameY1() + y1);
         robot.mousePress(BUTTON1_DOWN_MASK);
         Thread.sleep(100);
-        robot.mouseMove(x2, y2);
+        robot.mouseMove(screenParam.getGameX1() + x2, screenParam.getGameY1() + y2);
         robot.mouseRelease(BUTTON1_DOWN_MASK);
         return true;
     }

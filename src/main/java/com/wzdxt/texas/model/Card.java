@@ -4,7 +4,6 @@ import com.wzdxt.texas.Constants;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Value;
 import lombok.experimental.FieldDefaults;
 
 import java.util.ArrayList;

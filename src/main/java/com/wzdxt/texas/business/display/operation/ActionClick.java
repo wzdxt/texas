@@ -30,7 +30,7 @@ public class ActionClick extends AbsAction {
     @Override
     public boolean doPerform() throws AWTException, InterruptedException {
         Robot robot = new Robot();
-        robot.mouseMove(x, y);
+        robot.mouseMove(screenParam.getGameX1() + x, screenParam.getGameY1() + y);
         robot.mousePress(BUTTON1_DOWN_MASK);
         Thread.sleep(100);
         robot.mouseRelease(BUTTON1_DOWN_MASK);
