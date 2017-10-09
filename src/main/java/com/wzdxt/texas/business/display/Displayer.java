@@ -58,7 +58,6 @@ public class Displayer {
 
     @Async
     public void run() {
-//        boolean noticed = false;
         GameStatus lastStatus = null;
         while (true) {
             try {
@@ -75,7 +74,6 @@ public class Displayer {
                                 log.info("AI建议: {}", masterDecision);
                                 TexasPlayer.FinalAction finalAction = player.makeAction(masterDecision, status);
                                 log.info("最终操作: {}", finalAction);
-//                                noticed = true;
                                 if (autoRun || actOnce) {
                                     try {
                                         player.act(finalAction);
@@ -89,8 +87,6 @@ public class Displayer {
                                 lastStatus = status;
                                 Thread.sleep(2000);
                             }
-                        } else {
-//                            noticed = false;
                         }
                     }
                 }

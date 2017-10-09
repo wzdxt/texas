@@ -6,7 +6,10 @@ import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.wzdxt.texas.business.display.Displayer;
 import com.wzdxt.texas.business.display.GameStatus;
 import com.wzdxt.texas.business.display.ScreenParam;
+import com.wzdxt.texas.business.display.TexasPlayer;
 import com.wzdxt.texas.business.display.logic.GameWindow;
+import com.wzdxt.texas.business.display.operation.ActionClick;
+import com.wzdxt.texas.business.display.operation.OperationEngine;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +55,7 @@ public class MainFrame extends JFrame {
     private JButton saveButton;
     //
     private JButton clearLogButton;
+    private JButton testButton;
 
     private final List<JComponent> componentList;
 
@@ -61,6 +65,8 @@ public class MainFrame extends JFrame {
     private GameWindow window;
     @Autowired
     private ApplicationContext ctx;
+    @Autowired
+    private TexasPlayer player;
 
     public MainFrame() {
         this.add(panel1);
@@ -160,10 +166,51 @@ public class MainFrame extends JFrame {
 
         clearLogButton.addActionListener(e -> EventQueue.invokeLater(() -> logPane.setText("")));
 
+        checkCallButton.addActionListener(e -> performAction(TexasPlayer.FinalAction.CHECK_OR_CALL));
+        foldButton.addActionListener(e -> performAction(TexasPlayer.FinalAction.FOLD));
+        raiseButton.addActionListener(e -> performAction(TexasPlayer.FinalAction.RAISE_DOUBLE));
+        allInButton.addActionListener(e -> performAction(TexasPlayer.FinalAction.ALL_IN));
+        bet5xButton.addActionListener(e -> performAction(TexasPlayer.FinalAction.BET_5));
+        bet10xButton.addActionListener(e -> performAction(TexasPlayer.FinalAction.BET_10));
+        bet25xButton.addActionListener(e -> performAction(TexasPlayer.FinalAction.BET_25));
+        bet50xButton.addActionListener(e -> performAction(TexasPlayer.FinalAction.BET_50));
+
+        testButton.addActionListener(e -> new SwingWorker<Object, Void>() {
+            @Override
+            public Object doInBackground() throws Exception {
+                Thread.sleep(1000);
+                ctx.getBean(ActionClick.class).set(0, 0).perform();
+                log.info("clicked");
+                Thread.sleep(1000);
+                ctx.getBean(ActionClick.class).set(0, 0).perform();
+                log.info("clicked");
+                Thread.sleep(1000);
+                ctx.getBean(ActionClick.class).set(0, 0).perform();
+                log.info("clicked");
+                return null;
+            }
+            @Override
+            public void done() {
+                try {
+                    get();
+                    log.info("done");
+                } catch (InterruptedException | ExecutionException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        }.execute());
+    }
+
+    private void performAction(TexasPlayer.FinalAction action) {
+        try {
+            player.act(action);
+        } catch (OperationEngine.OperationException e) {
+            e.printStackTrace();
+            log.error("{}:{}", e.toString(), e.getStackTrace());
+        }
     }
 
     public void addLog(ILoggingEvent e) {
-        // todo
         EventQueue.invokeLater(() ->
                 logPane.setText(logPane.getText() + e.toString() + "\n"));
     }
@@ -184,7 +231,7 @@ public class MainFrame extends JFrame {
      */
     private void $$$setupUI$$$() {
         panel1 = new JPanel();
-        panel1.setLayout(new GridLayoutManager(7, 1, new Insets(0, 0, 0, 0), -1, -1));
+        panel1.setLayout(new GridLayoutManager(8, 1, new Insets(0, 0, 0, 0), -1, -1));
         panel1.setFocusable(false);
         panel1.putClientProperty("html.disable", Boolean.FALSE);
         matchAnchorButton = new JButton();
@@ -192,7 +239,7 @@ public class MainFrame extends JFrame {
         matchAnchorButton.setFocusCycleRoot(true);
         matchAnchorButton.setSelected(false);
         matchAnchorButton.setText("Match Anchor");
-        panel1.add(matchAnchorButton, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, 1, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel1.add(matchAnchorButton, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, 1, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JScrollPane scrollPane1 = new JScrollPane();
         panel1.add(scrollPane1, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         logPane = new JEditorPane();
@@ -200,7 +247,7 @@ public class MainFrame extends JFrame {
         scrollPane1.setViewportView(logPane);
         final JPanel panel2 = new JPanel();
         panel2.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
-        panel1.add(panel2, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel1.add(panel2, new GridConstraints(4, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         panel2.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Status"));
         currentPhaseButton = new JButton();
         currentPhaseButton.setEnabled(false);
@@ -212,7 +259,7 @@ public class MainFrame extends JFrame {
         panel2.add(gameStatusButton, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, 1, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JPanel panel3 = new JPanel();
         panel3.setLayout(new GridLayoutManager(4, 2, new Insets(0, 0, 0, 0), -1, -1, true, true));
-        panel1.add(panel3, new GridConstraints(4, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel1.add(panel3, new GridConstraints(5, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         panel3.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Action"));
         checkCallButton = new JButton();
         checkCallButton.setEnabled(false);
@@ -248,7 +295,7 @@ public class MainFrame extends JFrame {
         panel3.add(allInButton, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(126, 34), null, 0, false));
         final JPanel panel4 = new JPanel();
         panel4.setLayout(new GridLayoutManager(3, 3, new Insets(0, 0, 0, 0), -1, -1));
-        panel1.add(panel4, new GridConstraints(5, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel1.add(panel4, new GridConstraints(6, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         panel4.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Automation"));
         autoYesButton = new JRadioButton();
         autoYesButton.setEnabled(false);
@@ -285,6 +332,9 @@ public class MainFrame extends JFrame {
         clearLogButton = new JButton();
         clearLogButton.setText("Clear Log");
         panel1.add(clearLogButton, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        testButton = new JButton();
+        testButton.setText("Test");
+        panel1.add(testButton, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         ButtonGroup buttonGroup;
         buttonGroup = new ButtonGroup();
         buttonGroup.add(autoYesButton);
