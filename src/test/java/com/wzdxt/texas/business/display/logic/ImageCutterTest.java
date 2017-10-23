@@ -25,7 +25,7 @@ public class ImageCutterTest extends TestBase {
 
     @Test
     public void cutCharacters() throws Exception {
-        BufferedImage bi2 = ImageIO.read(this.getClass().getResourceAsStream("image/cutEdge.bmp"));
+        BufferedImage bi2 = ImageIO.read(this.getClass().getResourceAsStream("/image/cutEdge.bmp"));
         List<BufferedImage> list = imageCutter.cutCharacters(bi2);
         for (int i = 0; i < list.size(); i++) {
             TestUtil.save(list.get(i), String.valueOf(i));

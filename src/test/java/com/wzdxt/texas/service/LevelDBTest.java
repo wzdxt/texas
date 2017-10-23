@@ -22,6 +22,7 @@ public class LevelDBTest {
     }
 
     @Test
+    @Ignore
     public void get7to5() throws Exception {
         CardSet set;
         Long targetId;

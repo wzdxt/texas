@@ -23,6 +23,6 @@ public class ConfigureTest extends TestBase {
         assertNotNull(displayerConfigure.getOcrArea().getMyCard()[1].getRank());
         assertNotNull(displayerConfigure.getOcrPix().get("2")[1]);
         assertNotNull(masterConfigure.getRiver()[0].decides[0].bet);
-        assertNotNull(displayerConfigure.getOperation().get("call_or_check").get(0).getCheck().get(0).getPoint());
+        assertNotNull(displayerConfigure.getOperation().get("check_or_call").get(0).getCheck().get(0).getPoint());
     }
 }
