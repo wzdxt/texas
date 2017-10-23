@@ -2,6 +2,8 @@ package com.wzdxt.texas.business.master;
 
 import com.wzdxt.texas.TestBase;
 import com.wzdxt.texas.model.Card;
+import com.wzdxt.texas.model.CommonCard;
+import com.wzdxt.texas.model.MyCard;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.rules.ErrorCollector;
@@ -26,8 +28,8 @@ public class TexasMasterTestBase extends TestBase {
     protected TexasMaster texasMaster;
 
     protected void test(String myStr, String commonStr, MasterDecision expected) {
-        List<Card> my = new ArrayList<>(myStr.length() / 2);
-        List<Card> common = new ArrayList<>(commonStr.length() / 2);
+        MyCard my = new MyCard();
+        CommonCard common = new CommonCard();
         int step;
         for (int i = 0; i < myStr.length(); i+=step) {
             step = 2;

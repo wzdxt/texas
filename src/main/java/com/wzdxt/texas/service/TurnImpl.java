@@ -3,7 +3,10 @@ package com.wzdxt.texas.service;
 import com.wzdxt.texas.Constants;
 import com.wzdxt.texas.model.Card;
 import com.wzdxt.texas.model.CardSet;
+import com.wzdxt.texas.model.CommonCard;
+import com.wzdxt.texas.model.MyCard;
 import com.wzdxt.texas.model.hand.AbsHand;
+import org.springframework.stereotype.Component;
 
 import java.util.*;
 
@@ -12,6 +15,7 @@ import static com.wzdxt.texas.util.C.C;
 /**
  * Created by wzdxt on 2017/9/1.
  */
+@Component
 public class TurnImpl extends AbsCalculator implements Calculator {
     @Override
     public List<Float> calculate(Collection<Card> my, Collection<Card> turn) {
@@ -40,5 +44,10 @@ public class TurnImpl extends AbsCalculator implements Calculator {
         Collections.sort(ret);
         Collections.reverse(ret);
         return ret;
+    }
+
+    @Override
+    public List<Float> calculate(MyCard my, CommonCard common) {
+        return calculate(new ArrayList<>(my), common);
     }
 }

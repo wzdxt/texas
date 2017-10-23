@@ -112,7 +112,7 @@ public class PreProcessor23toList implements CommandLineRunner {
                         int spro = proceed;
                         if (levelDB.get23toList(myCard.serialize(), commonCard.serialize()) == null) {
                             Calculator calc = CalculatorFactory.getCalculatorRaw(commonCard);
-                            List<Float> possibility = calc.calculate(myCard, commonCard);
+                            List<Float> possibility = calc.calculate(new ArrayList<>(myCard), commonCard);
                             levelDB.put23toList(myCard.serialize(), commonCard.serialize(), possibility);
                             proceed++;
                         }

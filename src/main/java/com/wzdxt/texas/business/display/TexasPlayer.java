@@ -4,6 +4,8 @@ import com.wzdxt.texas.business.display.operation.OperationEngine;
 import com.wzdxt.texas.business.master.MasterDecision;
 import com.wzdxt.texas.business.master.TexasMaster;
 import com.wzdxt.texas.config.DisplayerConfigure;
+import com.wzdxt.texas.model.CommonCard;
+import com.wzdxt.texas.model.MyCard;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -21,7 +23,7 @@ public class TexasPlayer {
     private OperationEngine operationEngine;
 
     public MasterDecision askMaster(GameStatus status) {
-        return master.suggest(status.getMyCard(), status.getCommonCard());
+        return master.suggest(new MyCard(status.getMyCard()), new CommonCard(status.getCommonCard()));
     }
 
     public FinalAction makeAction(MasterDecision masterDecision, GameStatus status) {

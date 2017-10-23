@@ -3,9 +3,14 @@ package com.wzdxt.texas.service;
 import com.wzdxt.texas.Constants;
 import com.wzdxt.texas.model.Card;
 import com.wzdxt.texas.model.CardSet;
+import com.wzdxt.texas.model.CommonCard;
+import com.wzdxt.texas.model.MyCard;
 import com.wzdxt.texas.model.hand.AbsHand;
 import com.wzdxt.texas.model.hand.HighCard;
+import com.wzdxt.texas.util.Tuple;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.*;
 
@@ -15,7 +20,24 @@ import static com.wzdxt.texas.util.C.C;
  * Created by wzdxt on 2017/9/1.
  */
 @Slf4j
+@Component
 public class FlopImpl extends AbsCalculator implements Calculator {
+    @Autowired
+    private LevelDB levelDB;
+
+    @Override
+    public List<Float> calculate(MyCard my, CommonCard flop) {
+        Tuple<MyCard, CommonCard> t = CardSet.uniform(my, flop);
+        my = t.left;
+        flop = t.right;
+        List<Float> cache = levelDB.get23toList(my.serialize(), flop.serialize());
+        if (cache != null) {
+            return cache;
+        } else {
+            return calculate(new ArrayList<>(my), flop);
+        }
+    }
+
     @Override
     public List<Float> calculate(Collection<Card> my, Collection<Card> flop) {
         List<Float> ret = new ArrayList<>();
@@ -63,7 +85,7 @@ public class FlopImpl extends AbsCalculator implements Calculator {
         int length = list.size();
         int percent = 1;
         for (int i = 0; i < list.size(); i++) {
-            if ((i+1.0000001) / length * 100 >= percent) {
+            if ((i + 1.0000001) / length * 100 >= percent) {
                 ret.add(list.get(i));
                 percent++;
             }

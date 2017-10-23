@@ -3,6 +3,8 @@ package com.wzdxt.texas.business.master;
 import com.wzdxt.texas.config.MasterConfigure;
 import com.wzdxt.texas.Constants;
 import com.wzdxt.texas.model.Card;
+import com.wzdxt.texas.model.CommonCard;
+import com.wzdxt.texas.model.MyCard;
 import com.wzdxt.texas.service.Calculator;
 import com.wzdxt.texas.service.CalculatorFactory;
 import lombok.Value;
@@ -25,7 +27,7 @@ public class TexasMasterImpl implements TexasMaster {
     private Beginner beginner = new Beginner();
 
     @Override
-    public MasterDecision suggest(Collection<Card> my, Collection<Card> common) {
+    public MasterDecision suggest(MyCard my, CommonCard common) {
         if (common.isEmpty()) {
             Iterator<Card> iter = my.iterator();
             BeginnerResult result = beginner.evaluate(iter.next(), iter.next());

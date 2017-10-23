@@ -1,6 +1,8 @@
 package com.wzdxt.texas.service;
 
 import com.wzdxt.texas.model.Card;
+import com.wzdxt.texas.model.CommonCard;
+import com.wzdxt.texas.model.MyCard;
 
 import java.util.Collection;
 import java.util.List;
@@ -15,4 +17,5 @@ public interface Calculator {
      * @return from 0 to 100 percent, the possibility to win
      */
     List<Float> calculate(Collection<Card> my, Collection<Card> common);
+    List<Float> calculate(MyCard my, CommonCard common);
 }

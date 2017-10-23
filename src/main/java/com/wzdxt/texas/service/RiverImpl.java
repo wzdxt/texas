@@ -1,7 +1,10 @@
 package com.wzdxt.texas.service;
 
 import com.wzdxt.texas.model.Card;
+import com.wzdxt.texas.model.CommonCard;
+import com.wzdxt.texas.model.MyCard;
 import org.springframework.stereotype.Component;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -24,5 +27,10 @@ public class RiverImpl extends AbsCalculator implements Calculator {
             ret.add(p);
         }
         return ret;
+    }
+
+    @Override
+    public List<Float> calculate(MyCard my, CommonCard common) {
+        return calculate(new ArrayList<>(my), common);
     }
 }

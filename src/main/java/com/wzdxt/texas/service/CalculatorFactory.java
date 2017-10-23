@@ -1,5 +1,6 @@
 package com.wzdxt.texas.service;
 
+import com.wzdxt.texas.ApplicationContextHolder;
 import com.wzdxt.texas.model.Card;
 
 import java.util.Collection;
@@ -8,9 +9,14 @@ import java.util.Collection;
  * Created by wzdxt on 2017/9/3.
  */
 public class CalculatorFactory {
-    private static FlopImpl flop = new FlopImpl();
-    private static TurnImpl turn = new TurnImpl();
-    private static RiverImpl river = new RiverImpl();
+    private static FlopImpl flop;
+    private static TurnImpl turn;
+    private static RiverImpl river;
+    static {
+        flop = ApplicationContextHolder.get().getBean(FlopImpl.class);
+        turn = ApplicationContextHolder.get().getBean(TurnImpl.class);
+        river = ApplicationContextHolder.get().getBean(RiverImpl.class);
+    }
 
     public static Calculator getCalculator(Collection<Card> common) {
         switch (common.size()) {
