@@ -87,6 +87,7 @@ public class DisplayerConfigure {
         public int[] move;
         public int[] click;
         public int[] drag;
+        public char key;
     }
 
     @Data

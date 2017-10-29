@@ -147,6 +147,99 @@ displayer:   # 线条大坐标不变, 区块大坐标+1
       - check:
         - point: 807, 555, 0x6fc53d
       - act:
+        - key: C
+      - check:
+        - point: 602, 552, 0x906db3
+    fold:
+      - check:
+        - point: 605, 555, 0xdb7554
+      - act:
+        - key: F
+      - check:
+        - point: 257, 561, 0x594b5f
+    raise:
+      - check:
+        - point:
+      - act:
+        - key: R
+      - check:
+        - point:
+      - act:
+        - key: R
+      - check:
+        - point: 602, 552, 0x906db3
+    bet_5:
+      - check:
+        - point:
+      - act:
+        - key: R
+      - check:
+        - point:
+      - act:
+        - key: 1
+      - check:
+        - point: 602, 552, 0x906db3
+    bet_10:
+      - check:
+        - point:
+      - act:
+        - key: R
+      - check:
+        - point:
+      - act:
+        - key: 2
+      - check:
+        - point: 602, 552, 0x906db3
+    bet_25:
+      - check:
+        - point:
+      - act:
+        - key: R
+      - check:
+        - point:
+      - act:
+        - key: 3
+      - check:
+        - point: 602, 552, 0x906db3
+    bet_50:
+      - check:
+        - point:
+      - act:
+        - key: R
+      - check:
+        - point:
+      - act:
+        - key: 4
+      - check:
+        - point: 602, 552, 0x906db3
+    all_in:
+      - check:
+        - point:
+      - act:
+        - click:
+      - check:
+        - point:
+      - act:
+        - drag:
+      - check:
+        - point:
+      - act:
+        - click:
+      - check:
+        - point: 602, 552, 0x906db3
+    direct_all_in:
+      - check:
+        - point:
+      - act:
+        - key: R
+      - check:
+        - point: 602, 552, 0x906db3
+
+  operation_bak:    # 操作定义配置
+    check_or_call:
+      - check:
+        - point: 807, 555, 0x6fc53d
+      - act:
         - click: 649, 555
       - check:
         - point: 602, 552, 0x906db3

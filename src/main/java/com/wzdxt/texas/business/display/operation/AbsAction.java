@@ -48,6 +48,9 @@ public abstract class AbsAction implements Operation {
             } else if (operation.drag != null) {
                 action = cxt.getBean(ActionDrag.class);
                 action.set(operation.drag);
+            } else if (operation.key != 0) {
+                action = cxt.getBean(ActionKey.class);
+                ((ActionKey)action).set(operation.key);
             }
             if (action != null) list.add(action);
         }

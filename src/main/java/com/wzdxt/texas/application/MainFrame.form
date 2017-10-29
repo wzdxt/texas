@@ -34,7 +34,7 @@
           <component id="25568" class="javax.swing.JEditorPane" binding="logPane" default-binding="true">
             <constraints/>
             <properties>
-              <editable value="false"/>
+              <editable value="true"/>
             </properties>
           </component>
         </children>

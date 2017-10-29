@@ -23,7 +23,10 @@ public class TexasPlayer {
     private OperationEngine operationEngine;
 
     public MasterDecision askMaster(GameStatus status) {
-        return master.suggest(new MyCard(status.getMyCard()), new CommonCard(status.getCommonCard()));
+        MasterDecision ret = master.suggest(new MyCard(status.getMyCard()), new CommonCard(status.getCommonCard()));
+        if (ret == MasterDecision.ALL_IN)
+            ret = MasterDecision.BET_25_50;
+        return ret;
     }
 
     public FinalAction makeAction(MasterDecision masterDecision, GameStatus status) {

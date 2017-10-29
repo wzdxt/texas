@@ -9,6 +9,7 @@ import com.wzdxt.texas.business.display.ScreenParam;
 import com.wzdxt.texas.business.display.TexasPlayer;
 import com.wzdxt.texas.business.display.logic.GameWindow;
 import com.wzdxt.texas.business.display.operation.ActionClick;
+import com.wzdxt.texas.business.display.operation.ActionKey;
 import com.wzdxt.texas.business.display.operation.OperationEngine;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Component;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.util.Arrays;
 import java.util.concurrent.ExecutionException;
 import java.util.List;
@@ -179,16 +181,23 @@ public class MainFrame extends JFrame {
             @Override
             public Object doInBackground() throws Exception {
                 Thread.sleep(1000);
-                ctx.getBean(ActionClick.class).set(0, 0).perform();
-                log.info("clicked");
+                ctx.getBean(ActionKey.class).set('A').perform();
                 Thread.sleep(1000);
-                ctx.getBean(ActionClick.class).set(0, 0).perform();
-                log.info("clicked");
+                ctx.getBean(ActionKey.class).set('A').perform();
                 Thread.sleep(1000);
-                ctx.getBean(ActionClick.class).set(0, 0).perform();
-                log.info("clicked");
+                ctx.getBean(ActionKey.class).set('A').perform();
+//                Thread.sleep(1000);
+//                ctx.getBean(ActionClick.class).set(0, 0).perform();
+//                log.info("clicked");
+//                Thread.sleep(1000);
+//                ctx.getBean(ActionClick.class).set(0, 0).perform();
+//                log.info("clicked");
+//                Thread.sleep(1000);
+//                ctx.getBean(ActionClick.class).set(0, 0).perform();
+//                log.info("clicked");
                 return null;
             }
+
             @Override
             public void done() {
                 try {
@@ -243,7 +252,7 @@ public class MainFrame extends JFrame {
         final JScrollPane scrollPane1 = new JScrollPane();
         panel1.add(scrollPane1, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         logPane = new JEditorPane();
-        logPane.setEditable(false);
+        logPane.setEditable(true);
         scrollPane1.setViewportView(logPane);
         final JPanel panel2 = new JPanel();
         panel2.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
